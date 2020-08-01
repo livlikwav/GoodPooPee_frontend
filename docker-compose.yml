@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+    flutter:
+        container_name: "gpp-app"
+        image: cirrusci/flutter:latest
+        volumes:
+            - .:/gppapp

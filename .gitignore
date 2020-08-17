@@ -106,4 +106,10 @@ lib/generated_plugin_registrant.dart
 # Ignore all local history of files
 .history
 
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # End of https://www.toptal.com/developers/gitignore/api/git,flutter,dart,visualstudiocode

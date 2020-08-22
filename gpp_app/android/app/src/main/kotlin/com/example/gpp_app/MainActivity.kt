@@ -1,4 +1,4 @@
-package com.example.gppapp
+package com.example.gpp_app
 
 import io.flutter.embedding.android.FlutterActivity
 

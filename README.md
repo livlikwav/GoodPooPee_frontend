@@ -1,4 +1,4 @@
-![gpp_log](readme_media/gpp_logo.png)
+![gpp_logo](readme_media/gpp_logo.png)
 
 # Frontend Repo
 

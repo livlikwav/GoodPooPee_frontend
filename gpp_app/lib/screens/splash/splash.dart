@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/widgets/app_icon_widget.dart';
+import 'package:gpp_app/util/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -21,6 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     developer.log('splash.dart: splash build', name: 'MY.DEBUG', level: 10);
+    // You have to call it on your starting screen
+    SizeConfig().init(context);
     return Material(
       child: Center(child: AppIconWidget(image: Assets.appLogo)),
     );

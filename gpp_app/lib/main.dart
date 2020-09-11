@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       home: SplashScreen(),
       routes: Routes.routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

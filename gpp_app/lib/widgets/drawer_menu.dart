@@ -12,7 +12,7 @@ class DrawerMenu extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Theme.of(context).primaryColor,
               ),
               child: _dogProfile()),
           Container(
@@ -88,6 +88,7 @@ Widget _dogProfile() {
           Text('우리집 굿푸피',
               style: new TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.bold,
               )),
           SizedBox(height: getBlockSizeVertical(2)),
           CircleAvatar(

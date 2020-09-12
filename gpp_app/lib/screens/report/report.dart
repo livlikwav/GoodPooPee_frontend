@@ -18,7 +18,16 @@ class _ReportScreenState extends State<ReportScreen> {
       primary: true,
       appBar: AppBar(title: Text('배변훈련 리포트')),
       drawer: DrawerMenu(),
-      body: Text('와우'),
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(context) {
+    return Container(
+      color: Theme.of(context).accentColor,
+      child: Center(
+        child: Text('와우'),
+      ),
     );
   }
 }

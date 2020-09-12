@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
+import 'package:gpp_app/constants/text_style.dart';
+import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/custom_text_field.dart';
+import 'package:gpp_app/widgets/default_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -19,12 +22,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildBody() {
     return Material(
         child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Expanded(flex: 1, child: Text(' ')),
-        Expanded(flex: 4, child: _buildUpSide()),
-        Expanded(flex: 1, child: Text(' ')),
-        Expanded(flex: 1, child: _buildDownSide()),
-        Expanded(flex: 2, child: Text(' ')),
+        _buildUpSide(),
+        SizedBox(height: getBlockSizeVertical(15)),
+        _buildDownSide(),
       ],
     ));
   }
@@ -33,59 +35,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Material(
         child: Column(
       children: <Widget>[
-        Expanded(child: Center(child: Text('굿푸피 계정을 만드세요'))),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '이메일',
-            ),
+        Center(
+          child: Text(
+            '굿푸피 계정을 만드세요',
+            style: h2Style,
           ),
         ),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '성함',
-            ),
-          ),
+        SizedBox(height: getBlockSizeVertical(2)),
+        Container(
+          width: getBlockSizeHorizontal(70),
+          height: getBlockSizeVertical(7),
+          child: CustomTextField('이메일', '당신의 이메일을 입력하세요'),
         ),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '비밀번호',
-            ),
-          ),
+        SizedBox(height: getBlockSizeVertical(1)),
+        Container(
+          width: getBlockSizeHorizontal(70),
+          height: getBlockSizeVertical(7),
+          child: CustomTextField('닉네임', '당신의 닉네임을 입력하세요'),
         ),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '비밀번호 확인',
-            ),
-          ),
+        SizedBox(height: getBlockSizeVertical(1)),
+        Container(
+          width: getBlockSizeHorizontal(70),
+          height: getBlockSizeVertical(7),
+          child: CustomTextField('비밀번호', '당신의 비밀번호를 입력하세요'),
         ),
-        Expanded(
+        SizedBox(height: getBlockSizeVertical(1)),
+        Container(
+          width: getBlockSizeHorizontal(70),
+          height: getBlockSizeVertical(7),
+          child: CustomTextField('닉네임', '비밀번호를 한번 더 입력하세요'),
+        ),
+        SizedBox(height: getBlockSizeVertical(2)),
+        Container(
+          width: getBlockSizeHorizontal(70),
+          height: getBlockSizeVertical(7),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
             child: Center(
-                child: Text(
-                    'By creating account you agree to our Terms of Service and Privacy Policy'))),
+              child: Text(
+                'By creating account you agree to our Terms of Service and Privacy Policy',
+                style: footerStyle,
+              ),
+            ),
+          ),
+        ),
       ],
     ));
   }
 
   Widget _buildDownSide() {
-    return Material(
-      child: RaisedButton(
-        child: Text('확인'),
-        onPressed: clickMe,
-        textColor: Colors.white,
-        color: Colors.black,
+    return Container(
+      width: getBlockSizeHorizontal(70),
+      child: DefaultButton(
+        text: '확인',
+        press: onPressed,
       ),
     );
   }
 
-  void clickMe() {
+  void onPressed() {
     print('Clicked');
   }
 }

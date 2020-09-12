@@ -7,6 +7,8 @@ import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 import 'package:gpp_app/widgets/app_icon_widget.dart';
+import 'package:gpp_app/widgets/custom_text_field.dart';
+import 'package:gpp_app/widgets/default_button.dart';
 import 'package:gpp_app/constants/text_style.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -36,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: <Widget>[
         Expanded(flex: 5, child: _buildUpSide()),
         Expanded(flex: 3, child: _buildCenterSide()),
-        Expanded(flex: 1, child: _buildDownSide()),
+        Expanded(flex: 2, child: _buildDownSide(context)),
       ],
     ));
   }
@@ -60,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.topCenter,
                 child: Text('반려견 지능형 배변훈련 서비스',
                     style: new TextStyle(
-                      fontSize: h2Style.fontSize,
+                      fontSize: h3Style.fontSize,
                       color: Colors.black,
                     )))),
       ],
@@ -71,47 +73,28 @@ class _LoginScreenState extends State<LoginScreen> {
     return Material(
         child: Column(
       children: <Widget>[
-        SizedBox(height: getBlockSizeVertical(0.8)),
+        SizedBox(height: getBlockSizeVertical(1)),
         Container(
           width: getBlockSizeHorizontal(70),
           height: getBlockSizeVertical(7),
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Email",
-              hintText: "Enter your email",
-            ),
-          ),
+          child: CustomTextField("이메일", "이메일을 입력하세요"),
         ),
-        SizedBox(height: getBlockSizeVertical(0.8)),
+        SizedBox(height: getBlockSizeVertical(1)),
         Container(
-          width: getBlockSizeHorizontal(70),
-          height: getBlockSizeVertical(7),
-          child: TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Password',
-              hintText: "Enter your password",
-            ),
-          ),
-        ),
-        SizedBox(height: getBlockSizeVertical(0.8)),
+            width: getBlockSizeHorizontal(70),
+            height: getBlockSizeVertical(7),
+            child: CustomTextField("비밀번호", "비밀번호를 입력하세요")),
+        SizedBox(height: getBlockSizeVertical(1)),
         SizedBox(
           width: getBlockSizeHorizontal(70),
           height: getBlockSizeVertical(7),
-          child: RaisedButton(
-            child: Text('로그인'),
-            onPressed: loginTapped,
-            textColor: Colors.white,
-            color: kPrimaryLightColor,
-          ),
+          child: DefaultButton(text: '확인', press: loginTapped),
         ),
       ],
     ));
   }
 
-  Widget _buildDownSide() {
+  Widget _buildDownSide(context) {
     return Material(
         child: Center(
             child: RichText(
@@ -123,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
           text: '회원가입',
           style: new TextStyle(
               fontSize: h2Style.fontSize,
-              color: kPrimaryColor,
+              color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold),
           recognizer: new TapGestureRecognizer()..onTap = registerTapped)
     ]))));

@@ -1,5 +1,4 @@
 import 'package:gpp_app/constants/colors.dart';
-import 'package:gpp_app/util/size_config.dart';
 
 import 'package:flutter/material.dart';
 

@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/constants/assets.dart';
-import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 import 'package:gpp_app/widgets/app_icon_widget.dart';
@@ -77,13 +76,13 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           width: getBlockSizeHorizontal(70),
           height: getBlockSizeVertical(7),
-          child: CustomTextField("이메일", "이메일을 입력하세요"),
+          child: customTextField("이메일", "이메일을 입력하세요"),
         ),
         SizedBox(height: getBlockSizeVertical(1)),
         Container(
             width: getBlockSizeHorizontal(70),
             height: getBlockSizeVertical(7),
-            child: CustomTextField("비밀번호", "비밀번호를 입력하세요")),
+            child: customTextField("비밀번호", "비밀번호를 입력하세요")),
         SizedBox(height: getBlockSizeVertical(1)),
         SizedBox(
           width: getBlockSizeHorizontal(70),

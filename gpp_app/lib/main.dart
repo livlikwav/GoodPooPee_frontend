@@ -2,7 +2,7 @@
 /// MAINTAINER : Gyeongmin Ha
 /// gaonrudal@gmail.com
 ///
-import 'package:gpp_app/constants/strings.dart';
+import 'package:gpp_app/constants/constants.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/screens/splash/splash.dart';

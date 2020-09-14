@@ -27,6 +27,7 @@ dependencies:
   
   # url_launcher for making hyperlik text
   # url_launcher: ^5.5.3
+  flutter_svg: ^0.18.0 # help us to use SVG in our app
 
 
   # The following adds the Cupertino Icons font to your application.

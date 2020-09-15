@@ -28,6 +28,7 @@ dependencies:
   # url_launcher for making hyperlik text
   # url_launcher: ^5.5.3
   flutter_svg: ^0.18.0 # help us to use SVG in our app
+  fab_circular_menu: ^1.0.0 # create a nice circular menu using a Floating Action Button.
 
 
   # The following adds the Cupertino Icons font to your application.

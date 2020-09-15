@@ -97,28 +97,30 @@ Widget _userProfile() {
 Widget _dogProfile() {
   return Material(
       color: Colors.transparent,
-      child: Column(
-        children: <Widget>[
-          Text('우리집 굿푸피',
-              style: new TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              )),
-          SizedBox(height: getBlockSizeVertical(2)),
-          CircleAvatar(
-            backgroundImage: new AssetImage(Assets.dogProfile),
-          ),
-          SizedBox(height: getBlockSizeVertical(2)),
-          Text('포동이',
-              style: new TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              )),
-          SizedBox(height: getBlockSizeVertical(1)),
-          Text('요크셔테리어, 수컷, 7살',
-              style: new TextStyle(
-                color: Colors.white,
-              )),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Text('우리집 굿푸피',
+                style: new TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(height: getBlockSizeVertical(2)),
+            CircleAvatar(
+              backgroundImage: new AssetImage(Assets.dogProfile),
+            ),
+            SizedBox(height: getBlockSizeVertical(2)),
+            Text('포동이',
+                style: new TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                )),
+            SizedBox(height: getBlockSizeVertical(1)),
+            Text('요크셔테리어, 수컷, 7살',
+                style: new TextStyle(
+                  color: Colors.white,
+                )),
+          ],
+        ),
       ));
 }

@@ -5,7 +5,8 @@ import 'package:gpp_app/widgets/default_button.dart';
 
 import '../routes.dart';
 
-void showYesAlertDialog(BuildContext cont, String title) async {
+void showYesAlertDialog(
+    BuildContext context, String route, String title) async {
   return showDialog<void>(
     // barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
@@ -27,12 +28,12 @@ void showYesAlertDialog(BuildContext cont, String title) async {
                     name: 'MY.DEBUG',
                     level: 10,
                   );
-                  Navigator.of(context).pushNamed(Routes.login);
+                  Navigator.of(context).pushNamed(route);
                 }),
           )
         ],
       );
     },
-    context: cont,
+    context: context,
   );
 }

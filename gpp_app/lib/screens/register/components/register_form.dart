@@ -7,7 +7,7 @@ import 'package:gpp_app/widgets/default_button.dart';
 import 'package:gpp_app/widgets/form_error.dart';
 import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 
-import '../../routes.dart';
+import '../../../routes.dart';
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -210,7 +210,7 @@ class _RegisterFormState extends State<RegisterForm> {
       _formKey.currentState.save();
       // if all are valid then go to success screen
       // *****Fail to use named parameter*****
-      showYesAlertDialog(context, '회원가입이 완료되었습니다.');
+      showYesAlertDialog(context, Routes.login, '회원가입이 완료되었습니다.');
     }
   }
 }

@@ -5,6 +5,7 @@ import 'screens/splash/splash.dart';
 import 'screens/login/login.dart';
 import 'screens/register/register.dart';
 import 'screens/report/report.dart';
+import 'screens/streaming/streaming.dart';
 
 class Routes {
   Routes._();
@@ -14,11 +15,13 @@ class Routes {
   static const String login = '/login';
   static const String register = '/register';
   static const String report = '/report';
+  static const String streaming = '/streaming';
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
     login: (BuildContext context) => LoginScreen(),
     register: (BuildContext context) => RegisterScreen(),
     report: (BuildContext context) => ReportScreen(),
+    streaming: (BuildContext context) => StreamingScreen(),
   };
 }

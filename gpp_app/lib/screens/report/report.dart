@@ -26,7 +26,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return Container(
       color: Theme.of(context).accentColor,
       child: Center(
-        child: Text('와우'),
+        child: Text('리포트화면'),
       ),
     );
   }

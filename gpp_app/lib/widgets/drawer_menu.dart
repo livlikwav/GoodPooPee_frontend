@@ -23,6 +23,10 @@ class DrawerMenu extends StatelessWidget {
               '내 푸피캠 확인하기',
               textAlign: TextAlign.center,
             ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.streaming);
+            },
           ),
           Divider(
             color: Colors.black,
@@ -107,6 +111,7 @@ Widget _dogProfile() {
           SizedBox(height: getBlockSizeVertical(2)),
           Text('포동이',
               style: new TextStyle(
+                fontWeight: FontWeight.bold,
                 color: Colors.white,
               )),
           SizedBox(height: getBlockSizeVertical(1)),

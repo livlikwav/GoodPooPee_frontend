@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/text_style.dart';
-import 'package:gpp_app/screens/register/register_form.dart';
+import 'package:gpp_app/screens/register/components/register_form.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'dart:developer' as developer;
 

@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 /// Goodpoopee App
 /// MAINTAINER : Gyeongmin Ha
 /// gaonrudal@gmail.com
@@ -13,6 +15,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Set portraitUp only.
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
       title: Strings.appName,
       theme: themeData,

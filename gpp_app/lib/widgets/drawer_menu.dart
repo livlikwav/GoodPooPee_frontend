@@ -38,6 +38,12 @@ class DrawerMenu extends StatelessWidget {
               '배변 기록 확인하기',
               textAlign: TextAlign.center,
             ),
+            onTap: () {
+              // Enhancement
+              // When now on report screen, there is overhead
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.logs);
+            },
           ),
           // ListTile(
           //   title: Text(
@@ -50,7 +56,10 @@ class DrawerMenu extends StatelessWidget {
               '배변훈련 리포트',
               textAlign: TextAlign.center,
             ),
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.report);
+            },
           ),
           Divider(
             color: Colors.black,
@@ -62,6 +71,10 @@ class DrawerMenu extends StatelessWidget {
               '기기 및 환경설정',
               textAlign: TextAlign.center,
             ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.settings);
+            },
           ),
           ListTile(
             title: Text(

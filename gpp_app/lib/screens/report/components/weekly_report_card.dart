@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/screens/report/components/percent_card.dart';
 import 'package:gpp_app/screens/report/components/stat_card.dart';
+import 'package:gpp_app/screens/report/components/weekly_bar_chart.dart';
 import 'package:gpp_app/util/size_config.dart';
 
 class WeeklyReportCard extends StatefulWidget {
@@ -28,7 +29,7 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
                 ),
               ],
             ),
-            // Flexible(flex: 3, child: DailyPieChart()),
+            Flexible(flex: 3, child: WeeklyBarChart()),
             Row(
               children: [
                 statCard(

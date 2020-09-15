@@ -45,9 +45,7 @@ class _ReportScreenState extends State<ReportScreen> {
               child: Column(
                 children: <Widget>[
                   DailyReportCard(),
-                  SizedBox(height: getBlockSizeVertical(2)),
                   WeeklyReportCard(),
-                  SizedBox(height: getBlockSizeVertical(2)),
                   MonthlyReportCard(),
                 ],
               ),

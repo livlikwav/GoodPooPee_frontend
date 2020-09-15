@@ -1,9 +1,11 @@
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/constants.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_surfix_icon.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 import 'package:gpp_app/widgets/form_error.dart';
+import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 
 import '../../routes.dart';
 
@@ -199,10 +201,16 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void onPressed() {
+    developer.log(
+      'register_form.dart: butten tapped',
+      name: 'MY.DEBUG',
+      level: 10,
+    );
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       // if all are valid then go to success screen
-      Navigator.of(context).pushNamed(Routes.report);
+      // *****Fail to use named parameter*****
+      showYesAlertDialog(context, '회원가입이 완료되었습니다.');
     }
   }
 }

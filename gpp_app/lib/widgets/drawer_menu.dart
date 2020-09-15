@@ -24,24 +24,34 @@ class DrawerMenu extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
+          Divider(
+            color: Colors.black,
+            indent: getBlockSizeHorizontal(10),
+            endIndent: getBlockSizeHorizontal(10),
+          ),
           ListTile(
             title: Text(
               '배변 기록 확인하기',
               textAlign: TextAlign.center,
             ),
           ),
-          ListTile(
-            title: Text(
-              '클리커 훈련하기',
-              textAlign: TextAlign.center,
-            ),
-          ),
+          // ListTile(
+          //   title: Text(
+          //     '클리커 훈련하기',
+          //     textAlign: TextAlign.center,
+          //   ),
+          // ),
           ListTile(
             title: Text(
               '배변훈련 리포트',
               textAlign: TextAlign.center,
             ),
             onTap: () => Navigator.pop(context),
+          ),
+          Divider(
+            color: Colors.black,
+            indent: getBlockSizeHorizontal(10),
+            endIndent: getBlockSizeHorizontal(10),
           ),
           ListTile(
             title: Text(

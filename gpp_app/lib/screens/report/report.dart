@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/screens/report/components/daily_report_card.dart';
+import 'package:gpp_app/screens/report/components/monthly_report_card.dart';
+import 'package:gpp_app/screens/report/components/weekly_report_card.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 
@@ -43,9 +45,10 @@ class _ReportScreenState extends State<ReportScreen> {
               child: Column(
                 children: <Widget>[
                   DailyReportCard(),
-                  // Text('일간 리포트'),
-                  Text('주간 리포트'),
-                  Text('월간 리포트'),
+                  SizedBox(height: getBlockSizeVertical(2)),
+                  WeeklyReportCard(),
+                  SizedBox(height: getBlockSizeVertical(2)),
+                  MonthlyReportCard(),
                 ],
               ),
             ),

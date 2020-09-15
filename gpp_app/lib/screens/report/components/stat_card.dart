@@ -6,7 +6,7 @@ Expanded statCard(String title, String content, Color color, {int flex = 1}) {
   return Expanded(
     flex: flex,
     child: Container(
-      margin: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(5.0),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: color,

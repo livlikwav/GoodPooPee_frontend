@@ -24,7 +24,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: getBlockSizeVertical(4)),
+        padding: EdgeInsets.symmetric(
+          horizontal: getBlockSizeVertical(4),
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [

@@ -88,7 +88,7 @@ Widget _userProfile() {
         backgroundImage: new AssetImage(Assets.appLogo),
       ),
       SizedBox(height: getBlockSizeVertical(2)),
-      Text('User ID', style: new TextStyle(fontWeight: FontWeight.bold)),
+      Text('User Nickname', style: new TextStyle(fontWeight: FontWeight.bold)),
       SizedBox(height: getBlockSizeVertical(3)),
     ],
   ));

@@ -5,20 +5,23 @@ import 'package:flutter/material.dart';
 final kPrimaryColor = AppColors.orange[700];
 final kAccentColor = AppColors.orange[500];
 final kTextColor = Colors.black;
+final kBackgroundColor = AppColors.orange[100];
 
 final ThemeData themeData = new ThemeData(
-    scaffoldBackgroundColor: Colors.white,
-    appBarTheme: appBarTheme(),
-    // textTheme: textTheme(),
-    // Set scaled text size on runtime by text_style.dart
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-    // Details
-    brightness: Brightness.light,
-    primarySwatch: MaterialColor(AppColors.orange[500].value, AppColors.orange),
-    primaryColor: kPrimaryColor,
-    primaryColorBrightness: Brightness.light,
-    accentColor: kAccentColor,
-    accentColorBrightness: Brightness.light);
+  scaffoldBackgroundColor: Colors.white,
+  appBarTheme: appBarTheme(),
+  // textTheme: textTheme(),
+  // Set scaled text size on runtime by text_style.dart
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  // Details
+  brightness: Brightness.light,
+  primarySwatch: MaterialColor(AppColors.orange[500].value, AppColors.orange),
+  primaryColor: kPrimaryColor,
+  primaryColorBrightness: Brightness.light,
+  accentColor: kAccentColor,
+  accentColorBrightness: Brightness.light,
+  backgroundColor: kBackgroundColor,
+);
 
 AppBarTheme appBarTheme() {
   return AppBarTheme(

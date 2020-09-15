@@ -27,8 +27,15 @@ final h3Style = TextStyle(
 
 // Plain text
 final pStyle = TextStyle(
-  fontSize: getBlockSizeHorizontal(4),
+  fontSize: getBlockSizeHorizontal(3),
   fontWeight: FontWeight.normal,
+  color: Colors.black,
+  // height: 1.5,
+);
+
+final pBoldStyle = TextStyle(
+  fontSize: getBlockSizeHorizontal(4),
+  fontWeight: FontWeight.bold,
   color: Colors.black,
   // height: 1.5,
 );

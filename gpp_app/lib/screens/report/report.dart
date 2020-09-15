@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/screens/report/components/daily_report_card.dart';
+import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -24,10 +26,30 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget _buildBody(context) {
     return Container(
-      color: Theme.of(context).accentColor,
-      child: Center(
-        child: Text('리포트화면'),
-      ),
+      color: Theme.of(context).backgroundColor,
+      child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            getBlockSizeHorizontal(5),
+            getBlockSizeHorizontal(5),
+            getBlockSizeHorizontal(5),
+            0,
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  DailyReportCard(),
+                  // Text('일간 리포트'),
+                  Text('주간 리포트'),
+                  Text('월간 리포트'),
+                ],
+              ),
+            ),
+          )),
     );
   }
 }

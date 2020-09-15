@@ -8,8 +8,9 @@ class CustomCircularMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FabCircularMenu(
-      ringDiameter: getBlockSizeHorizontal(50),
-      ringWidth: getBlockSizeHorizontal(10),
+      // Ring rendered before orientation changed
+      ringDiameter: getBlockSizeVertical(50),
+      ringWidth: getBlockSizeVertical(10),
       fabOpenColor: Colors.white,
       children: <Widget>[
         _backMenu(context),

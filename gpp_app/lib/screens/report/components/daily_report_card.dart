@@ -13,11 +13,17 @@ class _DailyReportCardState extends State<DailyReportCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+          ),
+          color: Colors.white,
+        ),
         margin: const EdgeInsets.all(15.0),
         padding: const EdgeInsets.all(10.0),
         // width: getBlockSizeHorizontal(100),
         height: getBlockSizeVertical(70),
-        color: Colors.lightBlue,
         child: Column(
           children: <Widget>[
             Row(
@@ -40,7 +46,7 @@ class _DailyReportCardState extends State<DailyReportCard> {
                 statCard(
                   'XX회',
                   '성공 횟수',
-                  Colors.lightGreen,
+                  Colors.orangeAccent,
                 ),
               ],
             ),
@@ -55,7 +61,8 @@ class _DailyReportCardState extends State<DailyReportCard> {
                 percentCard(
                   Icons.arrow_upward,
                   'XX.X%',
-                  Colors.green,
+                  Colors.orange,
+                  Colors.white,
                 ),
               ],
             ),

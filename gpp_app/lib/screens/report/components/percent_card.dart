@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Flexible percentCard(IconData iconData, String content, Color color) {
+Flexible percentCard(
+    IconData iconData, String content, Color color, Color stringColor) {
   return Flexible(
     child: Container(
       margin: const EdgeInsets.all(8.0),
@@ -11,8 +12,16 @@ Flexible percentCard(IconData iconData, String content, Color color) {
       ),
       child: Column(
         children: [
-          Icon(iconData),
-          Text(content),
+          Icon(
+            iconData,
+            color: stringColor,
+          ),
+          Text(
+            content,
+            style: new TextStyle(
+              color: stringColor,
+            ),
+          ),
         ],
       ),
     ),

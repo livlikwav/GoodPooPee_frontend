@@ -76,13 +76,20 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           width: getBlockSizeHorizontal(70),
           height: getBlockSizeVertical(7),
-          child: customTextField("이메일", "이메일을 입력하세요"),
+          child: customTextField(
+            "이메일",
+            "이메일을 입력하세요",
+          ),
         ),
         SizedBox(height: getBlockSizeVertical(1)),
         Container(
             width: getBlockSizeHorizontal(70),
             height: getBlockSizeVertical(7),
-            child: customTextField("비밀번호", "비밀번호를 입력하세요")),
+            child: customTextField(
+              "비밀번호",
+              "비밀번호를 입력하세요",
+              obscure: true,
+            )),
         SizedBox(height: getBlockSizeVertical(1)),
         SizedBox(
           width: getBlockSizeHorizontal(70),

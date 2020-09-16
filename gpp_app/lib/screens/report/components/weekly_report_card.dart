@@ -13,11 +13,17 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+          ),
+          color: Colors.white,
+        ),
         margin: const EdgeInsets.all(15.0),
         padding: const EdgeInsets.all(10.0),
         // width: getBlockSizeHorizontal(100),
         height: getBlockSizeVertical(70),
-        color: Colors.lightBlue,
         child: Column(
           children: <Widget>[
             Row(
@@ -35,12 +41,12 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
                 statCard(
                   'XX.X%',
                   '평균 성공률',
-                  Colors.white,
+                  Colors.orangeAccent,
                 ),
                 statCard(
                   'XX회',
                   '평균 성공 횟수',
-                  Colors.white,
+                  Colors.orangeAccent,
                 ),
               ],
             ),
@@ -55,7 +61,8 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
                 percentCard(
                   Icons.arrow_upward,
                   'XX.X%',
-                  Colors.green,
+                  Colors.orange,
+                  Colors.white,
                 ),
               ],
             ),

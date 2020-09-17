@@ -15,9 +15,9 @@ class _MonthlyReportCardState extends State<MonthlyReportCard> {
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
-          border: Border.all(
-            color: Theme.of(context).primaryColor,
-          ),
+          // border: Border.all(
+          //   color: Theme.of(context).primaryColor,
+          // ),
           color: Colors.white,
         ),
         margin: const EdgeInsets.all(15.0),

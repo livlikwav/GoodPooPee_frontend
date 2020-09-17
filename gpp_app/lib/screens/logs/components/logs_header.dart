@@ -14,11 +14,15 @@ class _LogsHeaderState extends State<LogsHeader> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: getBlockSizeHorizontal(70),
-      height: getBlockSizeVertical(5),
+      width: getBlockSizeHorizontal(75),
+      height: getBlockSizeVertical(7),
       decoration: BoxDecoration(
+        // border: Border.all(
+        //   color: Theme.of(context).backgroundColor,
+        //   width: getBlockSizeVertical(1),
+        // ),
         borderRadius: BorderRadius.circular(10),
-        color: Colors.orange,
+        color: Theme.of(context).backgroundColor,
       ),
       child: Row(
         children: [
@@ -27,7 +31,9 @@ class _LogsHeaderState extends State<LogsHeader> {
             child: Text(
               '${date}',
               textAlign: TextAlign.center,
-              style: defaultButtonStyle,
+              style: new TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
           Expanded(

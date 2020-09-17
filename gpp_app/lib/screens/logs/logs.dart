@@ -36,7 +36,7 @@ class LogsScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
             ),
             child: SingleChildScrollView(
-              // physics: const NeverScrollableScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               child: Column(
                 children: <Widget>[
                   LogsHeader(),

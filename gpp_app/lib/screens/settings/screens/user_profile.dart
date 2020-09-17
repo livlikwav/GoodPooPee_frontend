@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/widgets/drawer_menu.dart';
 
-import '../../routes.dart';
-
-class SettingsScreen extends StatelessWidget {
+class SettingUserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       primary: true,
-      appBar: AppBar(title: Text('기기 및 환경설정')),
-      drawer: DrawerMenu(),
+      appBar: AppBar(title: Text('회원 정보 설정')),
       body: _buildBody(context),
     );
   }
@@ -43,33 +40,33 @@ class SettingsScreen extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.portrait),
                       title: Text('회원 정보 설정'),
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(Routes.setting_user_profile),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.report),
                     ),
                     ListTile(
                       leading: Icon(Icons.portrait),
                       title: Text('반려견 정보 설정'),
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(Routes.setting_pet_profile),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.report),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(Icons.wifi),
                       title: Text('푸피캠/푸피스낵바 연결'),
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(Routes.setting_device),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.report),
                     ),
                     ListTile(
                       leading: Icon(Icons.access_alarm),
                       title: Text('배변패드 위치 설정'),
                       onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.setting_pad),
+                          Navigator.of(context).pushNamed(Routes.report),
                     ),
                     ListTile(
                       leading: Icon(Icons.access_alarm),
                       title: Text('간식 급여 설정'),
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(Routes.setting_feedback),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.report),
                     ),
                   ],
                 ),

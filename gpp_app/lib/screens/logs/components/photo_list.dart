@@ -61,6 +61,7 @@ class _PhotoListState extends State<PhotoList> {
       key: ValueKey(index),
       actionPane: SlidableDrawerActionPane(),
       secondaryActions: isActive
+          // Active
           ? <Widget>[
               IconSlideAction(
                 caption: '정확해요',
@@ -77,6 +78,7 @@ class _PhotoListState extends State<PhotoList> {
                 onTap: () => _setIncorrect(index),
               ),
             ]
+          // Inactive
           : null,
       child: photoListItem(
         isVisible,

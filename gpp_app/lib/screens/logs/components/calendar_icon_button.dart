@@ -7,7 +7,7 @@ IconButton calendarIconButton() {
   return IconButton(
     icon: Icon(Icons.calendar_today),
     tooltip: '배변 기록 확인할 일자를 선택하세요.',
-    color: Colors.white,
+    color: Colors.black,
     iconSize: getBlockSizeVertical(3),
     onPressed: () {
       developer.log(

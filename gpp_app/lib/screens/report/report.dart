@@ -36,19 +36,13 @@ class _ReportScreenState extends State<ReportScreen> {
             getBlockSizeHorizontal(5),
             0,
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  DailyReportCard(),
-                  WeeklyReportCard(),
-                  MonthlyReportCard(),
-                ],
-              ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                DailyReportCard(),
+                WeeklyReportCard(),
+                MonthlyReportCard(),
+              ],
             ),
           )),
     );

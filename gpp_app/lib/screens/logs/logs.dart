@@ -30,7 +30,12 @@ class LogsScreen extends StatelessWidget {
             0,
           ),
           child: Container(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.fromLTRB(
+              getBlockSizeHorizontal(3),
+              getBlockSizeHorizontal(3),
+              getBlockSizeHorizontal(3),
+              getBlockSizeHorizontal(3),
+            ),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),

@@ -41,32 +41,32 @@ class SettingsScreen extends StatelessWidget {
                   padding: EdgeInsets.all(getBlockSizeVertical(3)),
                   children: <Widget>[
                     ListTile(
-                      leading: Icon(Icons.portrait),
+                      leading: _getColoredIcon(Icons.person_pin),
                       title: Text('회원 정보 설정'),
                       onTap: () => Navigator.of(context)
                           .pushNamed(Routes.setting_user_profile),
                     ),
                     ListTile(
-                      leading: Icon(Icons.portrait),
+                      leading: _getColoredIcon(Icons.pets),
                       title: Text('반려견 정보 설정'),
                       onTap: () => Navigator.of(context)
                           .pushNamed(Routes.setting_pet_profile),
                     ),
                     Divider(),
                     ListTile(
-                      leading: Icon(Icons.wifi),
+                      leading: _getColoredIcon(Icons.settings_cell),
                       title: Text('푸피캠/푸피스낵바 연결'),
                       onTap: () => Navigator.of(context)
                           .pushNamed(Routes.setting_device),
                     ),
                     ListTile(
-                      leading: Icon(Icons.access_alarm),
+                      leading: _getColoredIcon(Icons.settings_overscan),
                       title: Text('배변패드 위치 설정'),
                       onTap: () =>
                           Navigator.of(context).pushNamed(Routes.setting_pad),
                     ),
                     ListTile(
-                      leading: Icon(Icons.access_alarm),
+                      leading: _getColoredIcon(Icons.restaurant),
                       title: Text('간식 급여 설정'),
                       onTap: () => Navigator.of(context)
                           .pushNamed(Routes.setting_feedback),
@@ -76,6 +76,14 @@ class SettingsScreen extends StatelessWidget {
               ),
             ],
           )),
+    );
+  }
+
+  CircleAvatar _getColoredIcon(IconData icon) {
+    return CircleAvatar(
+      backgroundColor: Colors.orange,
+      foregroundColor: Colors.white,
+      child: Icon(icon),
     );
   }
 }

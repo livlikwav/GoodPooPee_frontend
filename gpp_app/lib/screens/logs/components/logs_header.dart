@@ -10,7 +10,7 @@ class LogsHeader extends StatefulWidget {
 }
 
 class _LogsHeaderState extends State<LogsHeader> {
-  // Defaults to today's date
+  // Default: today's date
   DateTime _selectedDate = DateTime.now();
 
   String _formatDate(DateTime datetime) {
@@ -24,17 +24,13 @@ class _LogsHeaderState extends State<LogsHeader> {
       width: getBlockSizeHorizontal(75),
       height: getBlockSizeVertical(7),
       decoration: BoxDecoration(
-        // border: Border.all(
-        //   color: Theme.of(context).backgroundColor,
-        //   width: getBlockSizeVertical(1),
-        // ),
         borderRadius: BorderRadius.circular(10),
         color: Theme.of(context).backgroundColor,
       ),
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Text(
               _formatDate(_selectedDate),
               textAlign: TextAlign.center,

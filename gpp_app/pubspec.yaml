@@ -24,9 +24,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   
-  # url_launcher for making hyperlik text
-  # url_launcher: ^5.5.3
+  intl: ^0.16.1 # provides internationalization and localization facilities, including message translation, plurals and genders, date/number formatting and parsing, and bidirectional text.
   flutter_svg: ^0.18.0 # help us to use SVG in our app
   fab_circular_menu: ^1.0.0 # create a nice circular menu using a Floating Action Button.
   fl_chart: ^0.11.1 # A library to draw fantastic charts in Flutter

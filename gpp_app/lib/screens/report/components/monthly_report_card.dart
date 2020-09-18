@@ -15,9 +15,6 @@ class _MonthlyReportCardState extends State<MonthlyReportCard> {
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
-          // border: Border.all(
-          //   color: Theme.of(context).primaryColor,
-          // ),
           color: Colors.white,
         ),
         margin: const EdgeInsets.all(15.0),
@@ -32,6 +29,7 @@ class _MonthlyReportCardState extends State<MonthlyReportCard> {
                   '월간 배변훈련 리포트',
                   'YYYY.MM.DD',
                   Colors.white,
+                  titleLogo: true,
                 ),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
 
 import 'chart_indicator.dart';
@@ -21,6 +22,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
     return AspectRatio(
       aspectRatio: 1.3,
       child: Card(
+        elevation: 0,
         color: Colors.white,
         child: Row(
           children: <Widget>[
@@ -53,7 +55,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Indicator(
                   color: Colors.orange,
                   text: '성공',
@@ -63,7 +65,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
                   height: 4,
                 ),
                 Indicator(
-                  color: Colors.grey,
+                  color: AppColors.orange[100],
                   text: '실패',
                   isSquare: false,
                 ),
@@ -101,7 +103,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
           );
         case 1:
           return PieChartSectionData(
-            color: Colors.grey,
+            color: AppColors.orange[100],
             value: 30,
             title: 'XX%',
             radius: radius,

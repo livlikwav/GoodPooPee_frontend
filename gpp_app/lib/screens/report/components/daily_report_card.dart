@@ -32,6 +32,7 @@ class _DailyReportCardState extends State<DailyReportCard> {
                   '일간 배변훈련 리포트',
                   'YYYY.MM.DD',
                   Colors.white,
+                  titleLogo: true,
                 ),
               ],
             ),

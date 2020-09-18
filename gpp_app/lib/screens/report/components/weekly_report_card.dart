@@ -32,6 +32,7 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
                   '주간 배변훈련 리포트',
                   'YYYY.MM.DD - YYYY.MM.DD',
                   Colors.white,
+                  titleLogo: true,
                 ),
               ],
             ),

@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    developer.log('splash.dart: splash build', name: 'MY.DEBUG', level: 10);
     // You have to call it on your starting screen
     SizeConfig().init(context);
     return Material(

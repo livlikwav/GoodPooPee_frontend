@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
-import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';
@@ -49,7 +48,11 @@ class _SettingUserProfileScreenState extends State<SettingUserProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    _userAvatar(),
+                    IconButton(
+                      iconSize: getBlockSizeHorizontal(20),
+                      icon: _userAvatar(),
+                      onPressed: _changeImage,
+                    ),
                     SizedBox(
                         width: getBlockSizeHorizontal(80),
                         height: getBlockSizeVertical(5)),
@@ -73,7 +76,7 @@ class _SettingUserProfileScreenState extends State<SettingUserProfileScreen> {
 
   CircleAvatar _userAvatar() {
     return CircleAvatar(
-      radius: getBlockSizeHorizontal(15),
+      radius: getBlockSizeHorizontal(20),
       backgroundImage: new AssetImage(Assets.appLogo),
     );
   }
@@ -87,6 +90,10 @@ class _SettingUserProfileScreenState extends State<SettingUserProfileScreen> {
           child: Text(text)),
       alignment: Alignment.centerLeft,
     );
+  }
+
+  void _changeImage() {
+    print('change image tapped');
   }
 
   void _changePassword() {

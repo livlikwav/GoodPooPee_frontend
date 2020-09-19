@@ -32,42 +32,14 @@ class SettingPadScreen extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(getBlockSizeHorizontal(5)),
                 ),
-                child: ListView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(getBlockSizeVertical(3)),
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.portrait),
-                      title: Text('회원 정보 설정'),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.report),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: getBlockSizeHorizontal(80),
+                      height: getBlockSizeVertical(7),
                     ),
-                    ListTile(
-                      leading: Icon(Icons.portrait),
-                      title: Text('반려견 정보 설정'),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.report),
-                    ),
-                    Divider(),
-                    ListTile(
-                      leading: Icon(Icons.wifi),
-                      title: Text('푸피캠/푸피스낵바 연결'),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.report),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.access_alarm),
-                      title: Text('배변패드 위치 설정'),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.report),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.access_alarm),
-                      title: Text('간식 급여 설정'),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.report),
-                    ),
+                    Text(' 개 - 발 - 중 '),
+                    SizedBox(height: getBlockSizeVertical(7)),
                   ],
                 ),
               ),

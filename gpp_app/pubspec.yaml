@@ -1,5 +1,6 @@
 name: gpp_app
-description: A new Flutter project.
+description: Goodpoopee app of Team urillbwa, SWMaestro 11th.
+author: Gyeongmin Ha <gaonrudal@gmail.com>
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -23,7 +24,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
+  
+  intl: ^0.16.1 # provides internationalization and localization facilities, including message translation, plurals and genders, date/number formatting and parsing, and bidirectional text.
+  flutter_svg: ^0.18.0 # help us to use SVG in our app
+  fab_circular_menu: ^1.0.0 # create a nice circular menu using a Floating Action Button.
+  fl_chart: ^0.11.1 # A library to draw fantastic charts in Flutter
+  flutter_slidable: ^0.5.7 # A Flutter implementation of slidable list item with directional slide actions that can be dismissed.
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -45,9 +53,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+  - assets/images/
+  - assets/icons/
+  - assets/lang/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

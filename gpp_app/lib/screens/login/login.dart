@@ -1,9 +1,12 @@
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
-import 'package:gpp_app/screens/login/components/upside.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
-
+// link rest api
+import 'package:gpp_app/models/rest/rest_client.dart';
+import 'package:gpp_app/models/exceptions/network_exceptions.dart';
+// build screen
+import 'components/upside.dart';
 import 'components/center_side.dart';
 import 'components/downside.dart';
 
@@ -13,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final RestClient restClient = RestClient();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -55,7 +59,17 @@ class _LoginScreenState extends State<LoginScreen> {
         'login.dart>login.tapped\n${emailController.text}\n${passwordController.text}',
         name: 'MY.DEBUG',
         level: 10);
-    Navigator.of(context).pushNamed(Routes.report);
+    restClient.get('http://localhost:5000');
+    // try {
+    //   restClient.post(
+    //     serverUrl,
+    //     body:
+    //         "{'email' : ${emailController.text}, 'password' : ${passwordController.text}}",
+    //   );
+    // } on NetworkException catch (e) {
+    //   print(e);
+    // }
+    // Navigator.of(context).pushNamed(Routes.report);
   }
 
   void registerTapped() {

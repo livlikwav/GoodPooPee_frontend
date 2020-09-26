@@ -1,10 +1,10 @@
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
+import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 // link rest api
-import 'package:gpp_app/models/rest/rest_client.dart';
-import 'package:gpp_app/models/exceptions/network_exceptions.dart';
+import 'package:dio/dio.dart';
 // build screen
 import 'components/upside.dart';
 import 'components/center_side.dart';
@@ -16,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final RestClient restClient = RestClient();
+  final DioClient dioClient = DioClient(Dio());
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -59,17 +59,14 @@ class _LoginScreenState extends State<LoginScreen> {
         'login.dart>login.tapped\n${emailController.text}\n${passwordController.text}',
         name: 'MY.DEBUG',
         level: 10);
-    restClient.get('http://localhost:5000');
-    // try {
-    //   restClient.post(
-    //     serverUrl,
-    //     body:
-    //         "{'email' : ${emailController.text}, 'password' : ${passwordController.text}}",
-    //   );
-    // } on NetworkException catch (e) {
-    //   print(e);
-    // }
-    // Navigator.of(context).pushNamed(Routes.report);
+
+    dioClient.post(
+      'http://localhost:5000/user/login',
+      data: {
+        'email': emailController.text,
+        'password': passwordController.text
+      },
+    ).then((value) => (print(value.toString())));
   }
 
   void registerTapped() {

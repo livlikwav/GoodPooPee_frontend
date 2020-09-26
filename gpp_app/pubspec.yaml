@@ -30,7 +30,9 @@ dependencies:
   # State management
   provider: ^4.3.2+2
   # handling rest api
-  http: ^0.12.2
+  # http: ^0.12.2
+  # better use dio?
+  dio: ^3.0.10
 
   intl: ^0.16.1 # provides internationalization and localization facilities, including message translation, plurals and genders, date/number formatting and parsing, and bidirectional text.
   flutter_svg: ^0.18.0 # help us to use SVG in our app

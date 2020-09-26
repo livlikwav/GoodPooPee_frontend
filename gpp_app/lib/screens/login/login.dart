@@ -13,6 +13,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +38,23 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Expanded(flex: 5, child: buildUpSide()),
-        Expanded(flex: 3, child: buildCenterSide(loginTapped)),
+        Expanded(
+            flex: 3,
+            child: buildCenterSide(
+              loginTapped,
+              emailController,
+              passwordController,
+            )),
         Expanded(flex: 2, child: buildDownSide(context, registerTapped)),
       ],
     ));
   }
 
   void loginTapped() {
-    developer.log('login.dart: login button tapped',
-        name: 'MY.DEBUG', level: 10);
+    developer.log(
+        'login.dart>login.tapped\n${emailController.text}\n${passwordController.text}',
+        name: 'MY.DEBUG',
+        level: 10);
     Navigator.of(context).pushNamed(Routes.report);
   }
 

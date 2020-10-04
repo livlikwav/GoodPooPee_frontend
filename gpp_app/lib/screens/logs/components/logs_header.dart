@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/text_style.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'dart:developer' as developer;
 import 'package:intl/intl.dart';

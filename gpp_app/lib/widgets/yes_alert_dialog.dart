@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 
-import '../routes.dart';
-
 void showYesAlertDialog(
     BuildContext context, String route, String title) async {
   return showDialog<void>(
@@ -24,8 +22,8 @@ void showYesAlertDialog(
                 text: '확인',
                 press: () {
                   developer.log(
-                    'register_form.dart: route to login',
-                    name: 'MY.DEBUG',
+                    'YesAlertDialog ok button tapped',
+                    name: 'DEBUG',
                     level: 10,
                   );
                   Navigator.of(context).pushNamed(route);

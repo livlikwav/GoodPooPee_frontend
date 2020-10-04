@@ -1,6 +1,8 @@
 import 'dart:developer' as developer;
+import 'package:dio/dio.dart' hide Options;
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/constants.dart';
+import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_surfix_icon.dart';
 import 'package:gpp_app/widgets/default_button.dart';
@@ -15,15 +17,17 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  final DioClient dioClient = DioClient(Dio());
   final _formKey = GlobalKey<FormState>();
   String email;
-  String nickname;
+  String firstName;
+  String lastName;
   String password;
-  String conform_password;
+  String conformPassword;
   // bool remember = false;
   final List<String> errors = [];
 
-  double widget_spacer = getBlockSizeVertical(2);
+  double widgetSpacer = getBlockSizeVertical(2);
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -46,15 +50,17 @@ class _RegisterFormState extends State<RegisterForm> {
         child: Column(
           children: <Widget>[
             buildEmailFormField(),
-            SizedBox(height: widget_spacer),
-            buildNicknameFormField(),
-            SizedBox(height: widget_spacer),
+            SizedBox(height: widgetSpacer),
+            buildLastNameFormField(),
+            SizedBox(height: widgetSpacer),
+            buildFirstNameFormField(),
+            SizedBox(height: widgetSpacer),
             buildPasswordFormField(),
-            SizedBox(height: widget_spacer),
+            SizedBox(height: widgetSpacer),
             buildConformPassFormField(),
-            SizedBox(height: widget_spacer),
+            SizedBox(height: widgetSpacer),
             FormError(errors: errors),
-            SizedBox(height: widget_spacer),
+            SizedBox(height: widgetSpacer),
             DefaultButton(
               text: '확인',
               press: onPressed,
@@ -98,17 +104,17 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  TextFormField buildNicknameFormField() {
+  TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => nickname = newValue,
+      onSaved: (newValue) => firstName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: Strings.kNicknameNullError);
+          removeError(error: Strings.kFirstNameNullError);
         }
       },
       validator: (value) {
         if (value.isEmpty) {
-          addError(error: Strings.kNicknameNullError);
+          addError(error: Strings.kFirstNameNullError);
           return '';
         }
         return null;
@@ -119,8 +125,36 @@ class _RegisterFormState extends State<RegisterForm> {
         contentPadding: EdgeInsets.symmetric(horizontal: 20),
         enabledBorder: OutlineInputBorder(),
         border: OutlineInputBorder(),
-        labelText: "닉네임",
-        hintText: "당신의 닉네임을 입력하세요",
+        labelText: "이름",
+        hintText: "당신의 이름을 입력하세요",
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User_Icon.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildLastNameFormField() {
+    return TextFormField(
+      onSaved: (newValue) => lastName = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: Strings.kLastNameNullError);
+        }
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: Strings.kLastNameNullError);
+          return '';
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        errorStyle:
+            TextStyle(height: 0), // no error message under the textformfield
+        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+        enabledBorder: OutlineInputBorder(),
+        border: OutlineInputBorder(),
+        labelText: "성",
+        hintText: "당신의 성을 입력하세요",
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User_Icon.svg"),
       ),
     );
@@ -166,15 +200,15 @@ class _RegisterFormState extends State<RegisterForm> {
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
+      onSaved: (newValue) => conformPassword = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: Strings.kPassNullError);
         }
-        if (value.isNotEmpty && password == conform_password) {
+        if (value.isNotEmpty && password == conformPassword) {
           removeError(error: Strings.kMatchPassError);
         }
-        conform_password = value;
+        conformPassword = value;
       },
       validator: (value) {
         if (value.isEmpty) {
@@ -200,17 +234,51 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  void onPressed() {
-    developer.log(
-      'register_form.dart: butten tapped',
-      name: 'MY.DEBUG',
-      level: 10,
-    );
+  void onPressed() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      // if all are valid then go to success screen
-      // *****Fail to use named parameter*****
-      showYesAlertDialog(context, Routes.login, '회원가입이 완료되었습니다.');
+      developer.log(
+        // =============== MUST BE DELETED AFTER FINISH LINKING REST API ===========================
+        'Register successed\nEmail: $email\nPassword: $password',
+        name: 'DEBUG',
+        level: 10,
+      );
+      Response response;
+      try {
+        response = await dioClient.post(
+          'http://3.34.105.15:5000/user/register',
+          // fake data == first_name, last_name
+          data: {
+            'email': email,
+            'password': password,
+            'first_name': firstName,
+            'last_name': lastName,
+          },
+        );
+      } on DioError catch (e) {
+        if (e.response != null) {
+          developer.log(
+            'Register failed. Status code is ${e.response.statusCode}',
+            name: 'ERROR',
+            level: 10,
+          );
+          return;
+        }
+      }
+      // if valid, show success dialog
+      if (response != null && response.statusCode == 200) {
+        showYesAlertDialog(
+          context,
+          Routes.login,
+          '회원가입이 완료되었습니다.',
+        );
+      }
+    } else {
+      developer.log(
+        'Register failed(form validation failed)',
+        name: 'DEBUG',
+        level: 10,
+      );
     }
   }
 }

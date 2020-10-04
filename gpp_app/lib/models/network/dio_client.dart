@@ -25,9 +25,8 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
-      return response.data;
-    } catch (e) {
-      print(e.toString());
+      return response;
+    } on DioError catch (e) {
       throw e;
     }
   }
@@ -53,8 +52,8 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      return response.data;
-    } catch (e) {
+      return response;
+    } on DioError catch (e) {
       throw e;
     }
   }

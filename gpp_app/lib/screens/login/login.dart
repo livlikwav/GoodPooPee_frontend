@@ -54,24 +54,58 @@ class _LoginScreenState extends State<LoginScreen> {
     ));
   }
 
-  void loginTapped() {
+  void loginTapped() async {
     developer.log(
-        'login.dart>login.tapped\n${emailController.text}\n${passwordController.text}',
-        name: 'MY.DEBUG',
-        level: 10);
-
-    dioClient.post(
-      'http://localhost:5000/user/login',
-      data: {
-        'email': emailController.text,
-        'password': passwordController.text
-      },
-    ).then((value) => (print(value.toString())));
+      // =============== MUST BE DELETED AFTER FINISH LINKING REST API ===========================
+      'Login button tapped\nID: ${emailController.text}\nPW: ${passwordController.text}',
+      name: 'DEBUG',
+      level: 10,
+    );
+    Response response;
+    // host/user/login POST
+    try {
+      response = await dioClient.post(
+        'http://3.34.105.15:5000/user/login',
+        data: {
+          'email': emailController.text,
+          'password': passwordController.text
+        },
+      );
+      // Handling exception
+    } on DioError catch (e) {
+      if (e.response != null) {
+        developer.log(
+          'Login failed. Status code is ${e.response.statusCode}',
+          name: 'ERROR',
+          level: 10,
+        );
+        return;
+      } else {
+        developer.log(
+          'Login failed. Error.response is null.\n${e.request}\n${e.message}',
+          name: 'ERROR',
+          level: 10,
+        );
+        return;
+      }
+    }
+    // Successed
+    if (response != null && response.statusCode == 200) {
+      developer.log(
+        'Login successed',
+        name: 'DEBUG',
+        level: 10,
+      );
+      Navigator.of(context).pushNamed(Routes.report);
+    }
   }
 
   void registerTapped() {
-    developer.log('login.dart: register link tapped',
-        name: 'MY.DEBUG', level: 10);
+    developer.log(
+      'Register link tapped',
+      name: 'DEBUG',
+      level: 10,
+    );
     Navigator.of(context).pushNamed(Routes.register);
   }
 }

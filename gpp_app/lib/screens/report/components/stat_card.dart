@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/constants/text_style.dart';
-import 'package:gpp_app/util/size_config.dart';
 
 Expanded statCard(String title, String content, Color color,
     {int flex = 1, bool titleLogo = false}) {

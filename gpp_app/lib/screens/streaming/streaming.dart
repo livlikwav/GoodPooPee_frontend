@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gpp_app/screens/streaming/components/custom_circular_menu.dart';
 import 'package:gpp_app/screens/streaming/components/live_video.dart';
-import 'package:gpp_app/widgets/drawer_menu.dart';
 
 class StreamingScreen extends StatefulWidget {
   @override

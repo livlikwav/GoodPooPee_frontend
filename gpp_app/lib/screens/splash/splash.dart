@@ -30,7 +30,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   startTimer() {
     var _duration = Duration(milliseconds: 2000);
-    developer.log('splash.dart: startTimer init', name: 'MY.DEBUG', level: 10);
+    developer.log(
+      'Splash timer initialized',
+      name: 'DEBUG',
+      level: 10,
+    );
     return Timer(_duration, navigate);
   }
 
@@ -45,8 +49,6 @@ class _SplashScreenState extends State<SplashScreen> {
     //   Navigator.of(context).pushNamed(Routes.login);
     // }
 
-    // ------For test---------
-    developer.log('splash.dart: route to login', name: 'MY.DEBUG', level: 10);
     Navigator.of(context).pushNamed(Routes.login);
   }
 }

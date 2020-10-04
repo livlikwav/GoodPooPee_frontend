@@ -4,8 +4,8 @@ import 'package:gpp_app/constants/text_style.dart';
 
 Expanded statCard(String title, String content, Color color,
     {int flex = 1, bool titleLogo = false}) {
-  final double shadow_width = 1.0;
-  final double shadow_height = 1.0;
+  final double shadowWidth = 1.0;
+  final double shaodwHeight = 1.0;
 
   return Expanded(
     flex: flex,
@@ -17,7 +17,7 @@ Expanded statCard(String title, String content, Color color,
         boxShadow: [
           new BoxShadow(
             color: Colors.grey,
-            offset: new Offset(shadow_width, shadow_height),
+            offset: new Offset(shadowWidth, shaodwHeight),
           ),
         ],
         borderRadius: BorderRadius.circular(10.0),

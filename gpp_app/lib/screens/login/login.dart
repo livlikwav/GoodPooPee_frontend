@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
+import 'package:gpp_app/models/json/user_auth.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 // link rest api
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // build screen
 import 'components/upside.dart';
 import 'components/center_side.dart';
@@ -91,12 +94,22 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     // Successed
     if (response != null && response.statusCode == 200) {
+      // print(response.data);
+      // print(response.data.runtimeType);
+      // Dio.post returns map, so just use it
+      var userAuth = UserAuth.fromJson(response.data);
+      print(userAuth.access_token);
+      // Save user auth token
+      // final prefs = await SharedPreferences.getInstance();
+      // prefs.setInt('userAuth', )
+
+      // Route to report(main) screen
       developer.log(
         'Login successed',
         name: 'DEBUG',
         level: 10,
       );
-      Navigator.of(context).pushNamed(Routes.report);
+      // Navigator.of(context).pushNamed(Routes.report);
     }
   }
 

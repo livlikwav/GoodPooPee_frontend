@@ -269,8 +269,8 @@ class _RegisterFormState extends State<RegisterForm> {
       if (response != null && response.statusCode == 200) {
         showYesAlertDialog(
           context,
-          Routes.login,
-          '회원가입이 완료되었습니다.',
+          '회원가입이 완료되었습니다',
+          () => Navigator.of(context).pushNamed(Routes.login),
         );
       }
     } else {

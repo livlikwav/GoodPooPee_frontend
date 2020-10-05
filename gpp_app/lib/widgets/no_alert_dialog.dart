@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 
-void showYesAlertDialog(
+void showNoAlertDialog(
     BuildContext context, String title, Function press) async {
   return showDialog<void>(
     // barrierDismissible: false, // user must tap button!
@@ -14,7 +14,7 @@ void showYesAlertDialog(
           textAlign: TextAlign.center,
         ),
         content: Icon(
-          Icons.check,
+          Icons.announcement,
           size: getBlockSizeHorizontal(20),
           color: Theme.of(context).accentColor,
         ),

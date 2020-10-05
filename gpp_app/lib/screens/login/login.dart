@@ -7,6 +7,8 @@ import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 // link rest api
 import 'package:dio/dio.dart';
+import 'package:gpp_app/widgets/no_alert_dialog.dart';
+import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // build screen
 import 'components/upside.dart';
@@ -82,6 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
           name: 'ERROR',
           level: 10,
         );
+        showNoAlertDialog(
+          context,
+          '아이디 또는 비밀번호를\n확인하세요',
+          () => Navigator.of(context).pop(),
+        );
         return;
       } else {
         developer.log(
@@ -94,30 +101,30 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     // Successed
     if (response != null && response.statusCode == 200) {
-      // DEBUG
+      developer.log(
+        'Login successed',
+        name: 'DEBUG',
+        level: 10,
+      );
+
+      // DEBUG==================
       print(response.data);
 
-      // Dio.post returns map, so just use it
-      var userAuth = UserAuth.fromJson(response.data);
+      var userAuth = UserAuth.fromJson(response.data); // Dio.post returns map
 
-      // DEBUG
+      // DEBUG==================
       print(userAuth.access_token);
 
       // Save user auth token
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userAuth', userAuth.access_token);
 
-      // DEBUG
+      // DEBUG==================
       String auth = prefs.getString('userAuth');
       print(auth);
 
       // Route to report(main) screen
-      developer.log(
-        'Login successed',
-        name: 'DEBUG',
-        level: 10,
-      );
-      // Navigator.of(context).pushNamed(Routes.report);
+      Navigator.of(context).pushNamed(Routes.report);
     }
   }
 

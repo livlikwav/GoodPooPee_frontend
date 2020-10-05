@@ -94,14 +94,22 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     // Successed
     if (response != null && response.statusCode == 200) {
-      // print(response.data);
-      // print(response.data.runtimeType);
+      // DEBUG
+      print(response.data);
+
       // Dio.post returns map, so just use it
       var userAuth = UserAuth.fromJson(response.data);
+
+      // DEBUG
       print(userAuth.access_token);
+
       // Save user auth token
-      // final prefs = await SharedPreferences.getInstance();
-      // prefs.setInt('userAuth', )
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('userAuth', userAuth.access_token);
+
+      // DEBUG
+      String auth = prefs.getString('userAuth');
+      print(auth);
 
       // Route to report(main) screen
       developer.log(

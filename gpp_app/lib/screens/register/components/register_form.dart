@@ -246,8 +246,7 @@ class _RegisterFormState extends State<RegisterForm> {
       Response response;
       try {
         response = await dioClient.post(
-          'http://3.34.105.15:5000/user/register',
-          // fake data == first_name, last_name
+          DioClient.server_url + 'user/register',
           data: {
             'email': email,
             'password': password,

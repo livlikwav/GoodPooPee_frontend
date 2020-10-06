@@ -1,6 +1,12 @@
 import 'package:dio/dio.dart';
 
 class DioClient {
+  // for url
+  static String server_url = 'http://localhost:5000/';
+  // String server = 'http://3.34.105.15:5000/';
+  // String server = 'https://3.34.105.15:5000/';
+  // String server = 'https://dev.goodpp.ai';
+
   // dio instance
   final Dio _dio;
 

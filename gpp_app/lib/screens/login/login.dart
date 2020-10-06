@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // host/user/login POST
     try {
       response = await dioClient.post(
-        'http://3.34.105.15:5000/user/login',
+        DioClient.server_url + 'user/login',
         data: {
           'email': emailController.text,
           'password': passwordController.text
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
     }
-    // Successed
+    // POST Successed
     if (response != null && response.statusCode == 200) {
       developer.log(
         'Login successed',
@@ -110,18 +110,31 @@ class _LoginScreenState extends State<LoginScreen> {
       // DEBUG==================
       print(response.data);
 
-      var userAuth = UserAuth.fromJson(response.data); // Dio.post returns map
+      UserAuth userAuth =
+          UserAuth.fromJson(response.data); // Dio.post returns map
 
       // DEBUG==================
       print(userAuth.access_token);
+      print(userAuth.user_id);
+      print(userAuth.pet_id);
+      print(userAuth.ppcam_id);
 
       // Save user auth token
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userAuth', userAuth.access_token);
+      prefs.setInt('userId', userAuth.user_id);
+      prefs.setInt('petId', userAuth.pet_id);
+      prefs.setInt('ppcamId', userAuth.ppcam_id);
 
       // DEBUG==================
       String auth = prefs.getString('userAuth');
+      int id = prefs.getInt('userId');
+      int petId = prefs.getInt('petId');
+      int ppcamId = prefs.getInt('ppcamId');
       print(auth);
+      print(id);
+      print(petId);
+      print(ppcamId);
 
       // Route to report(main) screen
       Navigator.of(context).pushNamed(Routes.report);

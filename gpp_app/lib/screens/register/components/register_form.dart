@@ -237,12 +237,6 @@ class _RegisterFormState extends State<RegisterForm> {
   void onPressed() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      developer.log(
-        // =============== MUST BE DELETED AFTER FINISH LINKING REST API ===========================
-        'Register successed\nEmail: $email\nPassword: $password',
-        name: 'DEBUG',
-        level: 10,
-      );
       Response response;
       try {
         response = await dioClient.post(
@@ -253,6 +247,12 @@ class _RegisterFormState extends State<RegisterForm> {
             'first_name': firstName,
             'last_name': lastName,
           },
+        );
+        developer.log(
+          // =============== MUST BE DELETED AFTER FINISH LINKING REST API ===========================
+          'Register successed\nEmail: $email\nPassword: $password',
+          name: 'DEBUG',
+          level: 10,
         );
       } on DioError catch (e) {
         if (e.response != null) {

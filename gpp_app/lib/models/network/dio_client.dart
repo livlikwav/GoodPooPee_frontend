@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
+import 'dart:developer' as developer;
 
 class DioClient {
   // for url
-  static String server_url = 'http://localhost:5000/';
-  // String server = 'http://3.34.105.15:5000/';
-  // String server = 'https://3.34.105.15:5000/';
-  // String server = 'https://dev.goodpp.ai';
+  static String server_url = 'https://dev.goodpoopee.com/';
+  // static String server_url = 'http://localhost/';
 
   // dio instance
   final Dio _dio;
@@ -23,6 +22,11 @@ class DioClient {
     CancelToken cancelToken,
     ProgressCallback onReceiveProgress,
   }) async {
+    developer.log(
+      'DioClient.get.uri: $uri',
+      name: 'DEBUG',
+      level: 10,
+    );
     try {
       final Response response = await _dio.get(
         uri,
@@ -49,6 +53,11 @@ class DioClient {
     ProgressCallback onReceiveProgress,
   }) async {
     try {
+      developer.log(
+        'DioClient.post.uri: $uri',
+        name: 'DEBUG',
+        level: 10,
+      );
       final Response response = await _dio.post(
         uri,
         data: data,

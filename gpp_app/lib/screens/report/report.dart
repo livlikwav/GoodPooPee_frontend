@@ -88,37 +88,39 @@ class _ReportScreenState extends State<ReportScreen> {
     return Container(
       color: Theme.of(context).backgroundColor,
       child: isReady
+          // Is ready
           ? isPetNull
+              // Pet doesnt exists
               ? EmptyCard(
                   text: '반려견 데이터가 존재하지 않습니다.',
                 )
-              : Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    getBlockSizeHorizontal(5),
-                    getBlockSizeHorizontal(5),
-                    getBlockSizeHorizontal(5),
-                    0,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        DailyReportCard(),
-                        WeeklyReportCard(),
-                        MonthlyReportCard(),
-                      ],
-                    ),
-                  ),
-                )
+              // Pet exists
+              : isReportNull
+                  ? EmptyCard(
+                      text: '훈련 데이터가 존재하지 않습니다.',
+                    )
+                  : Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        getBlockSizeHorizontal(5),
+                        getBlockSizeHorizontal(5),
+                        getBlockSizeHorizontal(5),
+                        0,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            DailyReportCard(),
+                            WeeklyReportCard(),
+                            MonthlyReportCard(),
+                          ],
+                        ),
+                      ),
+                    )
+          // Not ready
           : Center(
               child: CircularProgressIndicator(),
             ),
     );
-  }
-
-  Future<int> getPetId() async {
-    final prefs = await SharedPreferences.getInstance();
-    int id = prefs.getInt('petId');
-    return id;
   }
 
   Future<DailyReport> getDailyReport() async {

@@ -1,14 +1,12 @@
-import 'dart:convert';
-import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/user_auth.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/routes.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 // link rest api
 import 'package:dio/dio.dart';
 import 'package:gpp_app/widgets/no_alert_dialog.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // build screen
 import 'components/upside.dart';
@@ -60,12 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginTapped() async {
-    developer.log(
-      // =============== MUST BE DELETED AFTER FINISH LINKING REST API ===========================
-      'Login button tapped\nID: ${emailController.text}\nPW: ${passwordController.text}',
-      name: 'DEBUG',
-      level: 10,
-    );
+    MyLogger.info('Login button tapped');
+    // ========== MUST BE DELETED AFTER FINISH LINKING REST API ==============
+    MyLogger.debug(
+        'ID: ${emailController.text}, PW: ${passwordController.text}');
     Response response;
     // host/user/login POST
     try {
@@ -79,11 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Handling exception
     } on DioError catch (e) {
       if (e.response != null) {
-        developer.log(
-          'Login failed. Status code is ${e.response.statusCode}',
-          name: 'ERROR',
-          level: 10,
-        );
+        MyLogger.error('Login failed. Status code is ${e.response.statusCode}');
         showNoAlertDialog(
           context,
           '아이디 또는 비밀번호를\n확인하세요',
@@ -91,33 +83,22 @@ class _LoginScreenState extends State<LoginScreen> {
         );
         return;
       } else {
-        developer.log(
-          'Login failed. Error.response is null.\n${e.request}\n${e.message}',
-          name: 'ERROR',
-          level: 10,
-        );
+        MyLogger.error(
+            'Login failed. Error.response is null.\n${e.request}\n${e.message}');
         return;
       }
     }
     // POST Successed
     if (response != null && response.statusCode == 200) {
-      developer.log(
-        'Login successed',
-        name: 'DEBUG',
-        level: 10,
-      );
+      MyLogger.info('Login successed');
 
-      // DEBUG==================
-      print(response.data);
+      MyLogger.debug('${response.data}');
 
       UserAuth userAuth =
           UserAuth.fromJson(response.data); // Dio.post returns map
 
-      // DEBUG==================
-      print(userAuth.access_token);
-      print(userAuth.user_id);
-      print(userAuth.pet_id);
-      print(userAuth.ppcam_id);
+      MyLogger.debug(
+          'JSON token:${userAuth.access_token}, user_id:${userAuth.user_id}, pet_id:${userAuth.pet_id}, ppcam_id:${userAuth.ppcam_id}');
 
       // Save user auth token
       final prefs = await SharedPreferences.getInstance();
@@ -126,15 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
       prefs.setInt('petId', userAuth.pet_id);
       prefs.setInt('ppcamId', userAuth.ppcam_id);
 
-      // DEBUG==================
-      String auth = prefs.getString('userAuth');
-      int id = prefs.getInt('userId');
-      int petId = prefs.getInt('petId');
-      int ppcamId = prefs.getInt('ppcamId');
-      print(auth);
-      print(id);
-      print(petId);
-      print(ppcamId);
+      MyLogger.debug(
+          'Prefs token:${prefs.getString("userAuth")}, id:${prefs.getInt("userId")}, petId:${prefs.getInt("petId")}, ppcamId:${prefs.getInt("ppcamId")}');
 
       // Route to report(main) screen
       Navigator.of(context).pushNamed(Routes.report);
@@ -142,11 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void registerTapped() {
-    developer.log(
-      'Register link tapped',
-      name: 'DEBUG',
-      level: 10,
-    );
+    MyLogger.info('Register link tapped');
     Navigator.of(context).pushNamed(Routes.register);
   }
 }

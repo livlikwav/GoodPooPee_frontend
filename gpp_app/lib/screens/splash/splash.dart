@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/app_icon_widget.dart';
 import 'package:gpp_app/util/size_config.dart';
 
@@ -30,11 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   startTimer() {
     var _duration = Duration(milliseconds: 2000);
-    developer.log(
-      'Splash timer initialized',
-      name: 'DEBUG',
-      level: 10,
-    );
+    MyLogger.info('Splash timer initialized');
     return Timer(_duration, navigate);
   }
 

@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'dart:developer' as developer;
 
+import 'package:gpp_app/util/my_logger.dart';
+
 class DioClient {
   // for url
   static String server_url = 'https://dev.goodpoopee.com/';
@@ -22,11 +24,7 @@ class DioClient {
     CancelToken cancelToken,
     ProgressCallback onReceiveProgress,
   }) async {
-    developer.log(
-      'DioClient.get.uri: $uri',
-      name: 'DEBUG',
-      level: 10,
-    );
+    MyLogger.info('DioClient.get.uri: $uri');
     try {
       final Response response = await _dio.get(
         uri,
@@ -53,11 +51,7 @@ class DioClient {
     ProgressCallback onReceiveProgress,
   }) async {
     try {
-      developer.log(
-        'DioClient.post.uri: $uri',
-        name: 'DEBUG',
-        level: 10,
-      );
+      MyLogger.info('DioClient.post.uri: $uri');
       final Response response = await _dio.post(
         uri,
         data: data,

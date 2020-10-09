@@ -1,8 +1,8 @@
-import 'dart:developer' as developer;
 import 'package:dio/dio.dart' hide Options;
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/constants.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_surfix_icon.dart';
 import 'package:gpp_app/widgets/default_button.dart';
@@ -248,20 +248,13 @@ class _RegisterFormState extends State<RegisterForm> {
             'last_name': lastName,
           },
         );
-        developer.log(
-          // =============== MUST BE DELETED AFTER FINISH LINKING REST API ===========================
-          'Register successed\nEmail: $email\nPassword: $password',
-          name: 'DEBUG',
-          level: 10,
-        );
+        MyLogger.info('Register successed');
+        // =============== MUST BE DELETED AFTER FINISH LINKING REST API ===========================
+        MyLogger.debug('Email: $email, Password: $password');
       } on DioError catch (e) {
         if (e.response != null) {
-          developer.log(
-            'Register failed. Status code is ${e.response.statusCode}',
-            name: 'ERROR',
-            level: 10,
-          );
-          return;
+          MyLogger.error(
+              'Register failed. Status code is ${e.response.statusCode}');
         }
       }
       // if valid, show success dialog
@@ -273,11 +266,7 @@ class _RegisterFormState extends State<RegisterForm> {
         );
       }
     } else {
-      developer.log(
-        'Register failed(form validation failed)',
-        name: 'DEBUG',
-        level: 10,
-      );
+      MyLogger.info('Register failed(form validation failed)');
     }
   }
 }

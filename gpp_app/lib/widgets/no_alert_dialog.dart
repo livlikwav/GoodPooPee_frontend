@@ -1,7 +1,5 @@
-import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/widgets/default_button.dart';
 
 void showNoAlertDialog(
     BuildContext context, String title, Function press) async {
@@ -29,10 +27,3 @@ void showNoAlertDialog(
     context: context,
   );
 }
-
-// developer.log(
-//   'NoAlertDialog ok button tapped',
-//   name: 'DEBUG',
-//   level: 10,
-// );
-// Navigator.of(context).pushNamed(route);

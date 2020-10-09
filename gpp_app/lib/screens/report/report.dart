@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/screens/report/async/get_daily_report.dart';
 import 'package:gpp_app/screens/report/components/daily_report_card.dart';
 import 'package:gpp_app/screens/report/components/empty_card.dart';
 import 'package:gpp_app/screens/report/components/monthly_report_card.dart';
@@ -11,6 +12,8 @@ import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'async/get_monthly_report.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -21,12 +24,11 @@ class _ReportScreenState extends State<ReportScreen> {
   bool isReady = false;
   bool isPetNull = true;
   bool isReportNull = true;
-  final DioClient dioClient = DioClient(Dio());
   DateTime selectedDateTime;
   int petId;
   Future<DailyReport> dailyReport;
   // Future<WeeklyReport> weeklyReport;
-  // Future<MonthlyReport> monthlyReport;
+  Future<MonthlyReport> monthlyReport;
 
   @override
   void initState() {
@@ -43,18 +45,30 @@ class _ReportScreenState extends State<ReportScreen> {
     final prefs = await SharedPreferences.getInstance();
     this.petId = prefs.getInt('petId');
     this.isReady = true;
-    // Check existency
+    MyLogger.debug('isReady: ${this.isReady}');
+    // Check that pet exists
     if (petId != null) {
-      MyLogger.info('Pet id is $petId');
       isPetNull = false;
+      MyLogger.info('Pet id is $petId');
       // Get report models from server
-      dailyReport = getDailyReport();
+      dailyReport = getDailyReport(
+        DioClient.server_url + 'pet/' + petId.toString() + '/report/daily',
+        '2015-08-09',
+        // selectedDateTime.toString(),
+      );
+      monthlyReport = getMonthlyReport(
+        DioClient.server_url + 'pet/' + petId.toString() + '/report/monthly',
+        '2015-08-09',
+        // selectedDateTime.toString(),
+      );
     } else {
-      MyLogger.info('Pet id is empty');
       isPetNull = true;
+      MyLogger.info('Pet id is empty');
     }
     // Re-render
-    setState(() {});
+    setState(() {
+      MyLogger.debug('report screen setState()');
+    });
   }
 
   @override
@@ -104,56 +118,5 @@ class _ReportScreenState extends State<ReportScreen> {
               child: CircularProgressIndicator(),
             ),
     );
-  }
-
-  Future<DailyReport> getDailyReport() async {
-    Response response;
-    // server/pet/report/daily GET
-    // path: pet_id
-    // query: day_date
-    try {
-      response = await dioClient.get(
-        DioClient.server_url + 'pet/' + petId.toString() + '/report/daily',
-        queryParameters: {
-          'timestamp': selectedDateTime.toString(),
-        },
-      );
-      MyLogger.debug(
-          'GET daily report, request url : ${DioClient.server_url + 'pet/' + petId.toString() + '/report/daily'}');
-      // Handling exception
-    } on DioError catch (e) {
-      if (e.response != null) {
-        MyLogger.error(
-            'GET daily report failed. Status code is ${e.response.statusCode}');
-        return null;
-      } else {
-        MyLogger.error(
-            'GET daily report failed. Error.response is null.\n${e.request}\n${e.message}');
-        return null;
-      }
-    }
-    // GET Successed
-    if (response != null && response.statusCode == 200) {
-      MyLogger.debug('GET daily report successed');
-
-      // DEBUG==================
-      print(response.data);
-
-      // Parse json to return value
-      return DailyReport.fromJson(response.data);
-    } else {
-      // response == null (server response is invalid)
-      return null;
-    }
-  }
-
-  void getMonthlyReport() async {
-    Response response;
-    // server/pet/report/daily GET
-    // path: pet_id
-    // query: day_date
-    // try{
-    // response = await dioClient.get();
-    // }
   }
 }

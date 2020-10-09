@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
-import 'dart:developer' as developer;
 
 import 'package:gpp_app/util/my_logger.dart';
 
 class DioClient {
   // for url
-  static String server_url = 'https://dev.goodpoopee.com/';
-  // static String server_url = 'http://localhost/';
+  // static String server_url = 'https://dev.goodpoopee.com/';
+  static String server_url = 'http://localhost/';
 
   // dio instance
   final Dio _dio;
@@ -23,8 +22,13 @@ class DioClient {
     Options options,
     CancelToken cancelToken,
     ProgressCallback onReceiveProgress,
+    Interceptor interceptor,
   }) async {
     MyLogger.info('DioClient.get.uri: $uri');
+    // add interceptor
+    if (interceptor != null) {
+      _dio.interceptors.add(interceptor);
+    }
     try {
       final Response response = await _dio.get(
         uri,
@@ -49,9 +53,14 @@ class DioClient {
     CancelToken cancelToken,
     ProgressCallback onSendProgress,
     ProgressCallback onReceiveProgress,
+    Interceptor interceptor,
   }) async {
+    MyLogger.info('DioClient.post.uri: $uri');
+    // add interceptor
+    if (interceptor != null) {
+      _dio.interceptors.add(interceptor);
+    }
     try {
-      MyLogger.info('DioClient.post.uri: $uri');
       final Response response = await _dio.post(
         uri,
         data: data,

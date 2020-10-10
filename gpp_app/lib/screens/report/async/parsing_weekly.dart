@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:intl/intl.dart';
@@ -5,23 +7,27 @@ import 'package:intl/intl.dart';
 class WeeklyData {
   DateTime datetime;
   int length;
+  List<DateTime> datetimeList;
   Map<String, int> ratioList;
   int meanRatio;
   int meanSuccess;
-  int upRatio;
+  int maxRatio;
 
   WeeklyData(List<DailyReport> weeklyReport, String todaysDate) {
     this.datetime = DateTime.parse(todaysDate);
     this.length = weeklyReport.length;
+    // Init datetimeList
+    datetimeList = List(7);
     // Init ratioTmpList
     Map<DateTime, int> ratioTmpList = Map();
     for (int i = 0; i < 7; i++) {
-      // String dtString =
-      //     DateFormat('EEE').format(datetime.subtract(Duration(days: i)));
-      ratioTmpList[datetime.subtract(Duration(days: i))] = 0;
+      DateTime dt = datetime.subtract(Duration(days: i));
+      datetimeList[i] = dt;
+      ratioTmpList[dt] = 0;
     }
     // MyLogger.debug('parse weekly init ratioTmpList : $ratioTmpList');
     // Compute statistics
+    int tmpMaxRatio = 0;
     int sumCount = 0;
     int sumSuccess = 0;
     for (int i = 0; i < length; i++) {
@@ -34,23 +40,23 @@ class WeeklyData {
         MyLogger.error('dt is invalid : $dt');
       }
       // Compute mean values
+      tmpMaxRatio = max(tmpMaxRatio, ratio);
       sumCount += weeklyReport[i].count;
       sumSuccess += weeklyReport[i].success;
       // MyLogger.debug('sumCount = $sumCount');
       // MyLogger.debug('sumSuccess = $sumSuccess');
     }
-    this.upRatio =
-        (weeklyReport[0].ratio - weeklyReport[length - 1].ratio).toInt() *
-            100; // Not sorted
+    this.maxRatio = tmpMaxRatio;
     this.meanRatio = (sumSuccess * 100) ~/ sumCount;
     this.meanSuccess = sumSuccess ~/ length;
     // MyLogger.debug('last ratioTmpList : $ratioTmpList');
-    MyLogger.debug('last meanRatio : $meanRatio');
-    MyLogger.debug('last meanSuccess : $meanSuccess');
-    MyLogger.debug('last upRatio : $upRatio');
     ratioList = ratioTmpList.map((key, value) {
       return MapEntry(DateFormat('EEE').format(key), value);
     });
+    MyLogger.debug('last meanRatio : $meanRatio');
+    MyLogger.debug('last meanSuccess : $meanSuccess');
+    MyLogger.debug('last maxRatio : $maxRatio');
+    MyLogger.debug('last datetimeList : $datetimeList');
     MyLogger.debug('last ratioList : $ratioList');
   }
 }

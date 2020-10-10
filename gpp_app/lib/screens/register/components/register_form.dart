@@ -240,7 +240,7 @@ class _RegisterFormState extends State<RegisterForm> {
       Response response;
       try {
         response = await dioClient.post(
-          DioClient.server_url + 'user/register',
+          DioClient.serverUrl + 'user/register',
           data: {
             'email': email,
             'password': password,

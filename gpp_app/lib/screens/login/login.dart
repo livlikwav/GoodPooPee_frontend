@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // host/user/login POST
     try {
       response = await dioClient.post(
-        DioClient.server_url + 'user/login',
+        DioClient.serverUrl + 'user/login',
         data: {
           'email': emailController.text,
           'password': passwordController.text

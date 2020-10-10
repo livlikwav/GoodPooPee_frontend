@@ -8,9 +8,6 @@ Future<DailyReport> getDailyReport(String uri, String date) async {
   Dio _dio = Dio();
   final DioClient dioClient = DioClient(_dio);
   Response response;
-  // server/pet/report/daily GET
-  // path: pet_id
-  // query: day_date
   try {
     response = await dioClient.get(
       uri,
@@ -24,24 +21,24 @@ Future<DailyReport> getDailyReport(String uri, String date) async {
     if (e.response != null) {
       MyLogger.error(
           'GET daily report failed. Status code is ${e.response.statusCode}');
-      return null;
+      throw e;
     } else {
       MyLogger.error(
           'GET daily report failed. Error.response is null.\nrequest: ${e.request}\nmessage: ${e.message}');
-      return null;
+      throw e;
     }
   }
+
   // GET Successed
   if (response != null && response.statusCode == 200) {
     MyLogger.info('GET daily report successed');
 
-    MyLogger.debug('${response.data}');
+    MyLogger.debug('response.data : ${response.data}');
 
     // Parse json to return value
     return DailyReport.fromJson(response.data);
   } else {
     MyLogger.error('GET daily report response is invalid');
-    // response == null (server response is invalid)
-    return null;
+    throw DioError(type: DioErrorType.RESPONSE);
   }
 }

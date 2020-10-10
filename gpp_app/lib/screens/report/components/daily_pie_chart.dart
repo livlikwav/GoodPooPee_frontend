@@ -6,11 +6,17 @@ import 'package:gpp_app/util/size_config.dart';
 import 'chart_indicator.dart';
 
 class DailyPieChart extends StatefulWidget {
+  DailyPieChart(this.ratio);
+  final double ratio;
+
   @override
   State<StatefulWidget> createState() => _DailyPieChartState();
 }
 
 class _DailyPieChartState extends State<DailyPieChart> {
+  // model
+  double successRatio;
+  double failRatio;
   // to set touch interaction
   int touchedIndex;
   // chart settings >> fail to Indicator lint
@@ -19,6 +25,9 @@ class _DailyPieChartState extends State<DailyPieChart> {
 
   @override
   Widget build(BuildContext context) {
+    successRatio = widget.ratio * 100;
+    failRatio = 100 - successRatio;
+
     return AspectRatio(
       aspectRatio: 1.3,
       child: Card(
@@ -84,60 +93,62 @@ class _DailyPieChartState extends State<DailyPieChart> {
   }
 
   List<PieChartSectionData> showingSections() {
-    return List.generate(2, (i) {
-      final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 25 : 16;
-      final double radius = isTouched ? 60 : 50;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: Colors.orangeAccent,
-            value: 70,
-            title: 'XX%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: AppColors.orange[100],
-            value: 30,
-            title: 'XX%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          );
-        // case 2:
-        //   return PieChartSectionData(
-        //     color: const Color(0xff845bef),
-        //     value: 15,
-        //     title: '15%',
-        //     radius: radius,
-        //     titleStyle: TextStyle(
-        //         fontSize: fontSize,
-        //         fontWeight: FontWeight.bold,
-        //         color: const Color(0xffffffff)),
-        //   );
-        // case 3:
-        //   return PieChartSectionData(
-        //     color: const Color(0xff13d38e),
-        //     value: 15,
-        //     title: '15%',
-        //     radius: radius,
-        //     titleStyle: TextStyle(
-        //         fontSize: fontSize,
-        //         fontWeight: FontWeight.bold,
-        //         color: const Color(0xffffffff)),
-        //   );
-        default:
-          return null;
-      }
-    });
+    if (successRatio == 100.0) {
+      return List.generate(1, (i) {
+        final isTouched = i == touchedIndex;
+        final double fontSize = isTouched ? 25 : 16;
+        final double radius = isTouched ? 60 : 50;
+        switch (i) {
+          case 0:
+            return PieChartSectionData(
+              color: Colors.orange,
+              value: successRatio,
+              title: successRatio.toInt().toString() + '%',
+              radius: radius,
+              titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            );
+          default:
+            return null;
+        }
+      });
+    } else {
+      return List.generate(2, (i) {
+        final isTouched = i == touchedIndex;
+        final double fontSize = isTouched ? 25 : 16;
+        final double radius = isTouched ? 60 : 50;
+        switch (i) {
+          case 0:
+            return PieChartSectionData(
+              color: Colors.orangeAccent,
+              value: successRatio,
+              title: successRatio.toInt().toString() + '%',
+              radius: radius,
+              titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            );
+          case 1:
+            return PieChartSectionData(
+              color: AppColors.orange[100],
+              value: failRatio,
+              title: failRatio.toInt().toString() + '%',
+              radius: radius,
+              titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            );
+          default:
+            return null;
+        }
+      });
+    }
   }
 }

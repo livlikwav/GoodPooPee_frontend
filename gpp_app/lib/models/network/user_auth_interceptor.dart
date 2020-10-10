@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:gpp_app/util/my_logger.dart';
+// import 'package:gpp_app/util/my_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserAuthInterceptor extends Interceptor {
@@ -15,7 +15,7 @@ class UserAuthInterceptor extends Interceptor {
     userAuth = prefs.getString('userAuth');
     if (userAuth != null) {
       options.headers['Authorization'] = 'Bearer ' + userAuth;
-      MyLogger.debug('Authorization header: ${"Bearer " + userAuth}');
+      // MyLogger.debug('Authorization header: ${"Bearer " + userAuth}');
       // dio.unlock();
       return options;
     } else {

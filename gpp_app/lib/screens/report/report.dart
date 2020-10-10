@@ -109,7 +109,7 @@ class _ReportScreenState extends State<ReportScreen> {
                     child: Column(
                       children: <Widget>[
                         DailyReportCard(dailyReport),
-                        WeeklyReportCard(),
+                        WeeklyReportCard(weeklyReport, todaysDate),
                         MonthlyReportCard(),
                       ],
                     ),

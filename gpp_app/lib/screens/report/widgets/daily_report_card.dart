@@ -35,7 +35,6 @@ class _DailyReportCardState extends State<DailyReportCard> {
 
           // Future complete with data
           if (snapshot.hasData) {
-            MyLogger.info('Rendered daily report card');
             child = _getCardBody(snapshot.data);
             // Future complete with error
           } else if (snapshot.hasError) {

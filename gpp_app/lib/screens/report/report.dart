@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
-import 'package:gpp_app/screens/report/async/get_daily_report.dart';
+import 'package:gpp_app/screens/report/async/get_weekly_report.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
 import 'package:gpp_app/screens/report/components/empty_card.dart';
 import 'package:gpp_app/screens/report/widgets/monthly_report_card.dart';
@@ -13,6 +13,7 @@ import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'async/get_daily_report.dart';
 import 'async/get_monthly_report.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class _ReportScreenState extends State<ReportScreen> {
   String todaysDate;
   int petId;
   Future<DailyReport> dailyReport;
-  // Future<WeeklyReport> weeklyReport;
+  Future<List<DailyReport>> weeklyReport;
   Future<MonthlyReport> monthlyReport;
 
   @override
@@ -53,13 +54,18 @@ class _ReportScreenState extends State<ReportScreen> {
       // Get report models from server
       dailyReport = getDailyReport(
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/daily',
-        '2015-08-09',
-        // todaysDate,
+        // '2015-08-09',
+        todaysDate,
+      );
+      weeklyReport = getWeeklyReport(
+        DioClient.serverUrl + 'pet/' + petId.toString() + '/report/weekly',
+        // '2015-08-09',
+        todaysDate,
       );
       monthlyReport = getMonthlyReport(
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/monthly',
-        '2015-08-09',
-        // selectedDateTime.toString(),
+        // '2015-08-09',
+        todaysDate,
       );
     } else {
       isPetNull = true;

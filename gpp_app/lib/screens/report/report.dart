@@ -5,7 +5,7 @@ import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/screens/report/async/get_weekly_report.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
 import 'package:gpp_app/screens/report/components/empty_card.dart';
-import 'package:gpp_app/screens/report/widgets/monthly_report_card.dart';
+import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
 import 'package:gpp_app/screens/report/widgets/weekly_report_card.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
@@ -14,7 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'async/get_daily_report.dart';
-import 'async/get_monthly_report.dart';
+import 'async/get_total_report.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -62,11 +62,6 @@ class _ReportScreenState extends State<ReportScreen> {
         // '2015-08-09',
         todaysDate,
       );
-      // monthlyReport = getMonthlyReport(
-      //   DioClient.serverUrl + 'pet/' + petId.toString() + '/report/monthly',
-      //   // '2015-08-09',
-      //   todaysDate,
-      // );
       totalReport = getTotalReport(
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/total',
       );
@@ -113,7 +108,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       children: <Widget>[
                         DailyReportCard(dailyReport),
                         WeeklyReportCard(weeklyReport, todaysDate),
-                        MonthlyReportCard(),
+                        TotalReportCard(totalReport),
                       ],
                     ),
                   ),

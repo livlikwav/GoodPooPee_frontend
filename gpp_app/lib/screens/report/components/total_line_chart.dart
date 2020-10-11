@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
 
-class MonthlyLineChart extends StatefulWidget {
+class TotalLineChart extends StatefulWidget {
   @override
-  _MonthlyLineChartState createState() => _MonthlyLineChartState();
+  _TotalLineChartState createState() => _TotalLineChartState();
 }
 
-class _MonthlyLineChartState extends State<MonthlyLineChart> {
+class _TotalLineChartState extends State<TotalLineChart> {
   List<Color> gradientColors = [
     AppColors.orange[200],
     AppColors.orange[800],

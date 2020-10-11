@@ -100,7 +100,7 @@ Column _getCardBody(DailyReport dailyReport) {
           ),
           percentCard(
             Icons.arrow_upward,
-            (dailyReport.ratio * 100).toString() + '%',
+            (dailyReport.ratio * 100).toInt().toString() + '%',
             Colors.orange,
             Colors.white,
           ),

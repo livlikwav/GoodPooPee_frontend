@@ -29,7 +29,7 @@ class _ReportScreenState extends State<ReportScreen> {
   int petId;
   Future<DailyReport> dailyReport;
   Future<List<DailyReport>> weeklyReport;
-  Future<MonthlyReport> monthlyReport;
+  Future<List<MonthlyReport>> totalReport;
 
   @override
   void initState() {
@@ -62,10 +62,13 @@ class _ReportScreenState extends State<ReportScreen> {
         // '2015-08-09',
         todaysDate,
       );
-      monthlyReport = getMonthlyReport(
-        DioClient.serverUrl + 'pet/' + petId.toString() + '/report/monthly',
-        // '2015-08-09',
-        todaysDate,
+      // monthlyReport = getMonthlyReport(
+      //   DioClient.serverUrl + 'pet/' + petId.toString() + '/report/monthly',
+      //   // '2015-08-09',
+      //   todaysDate,
+      // );
+      totalReport = getTotalReport(
+        DioClient.serverUrl + 'pet/' + petId.toString() + '/report/total',
       );
     } else {
       isPetNull = true;

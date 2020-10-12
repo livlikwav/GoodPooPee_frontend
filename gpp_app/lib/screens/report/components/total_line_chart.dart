@@ -1,80 +1,32 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/screens/report/async/parsing_total.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:intl/intl.dart';
 
 class TotalLineChart extends StatefulWidget {
+  final TotalData totalData;
+  TotalLineChart(this.totalData);
   @override
   _TotalLineChartState createState() => _TotalLineChartState();
 }
 
 class _TotalLineChartState extends State<TotalLineChart> {
+  ChartModel model;
+
   List<Color> gradientColors = [
     AppColors.orange[200],
     AppColors.orange[800],
   ];
 
-  final List<double> axisMinMaxs = [0, 11, 0, 6]; //minX, maxX, minY, maxY
-
   bool showAvg = false;
-
-  final xSideTitles = SideTitles(
-    showTitles: true,
-    textStyle: const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.normal,
-      fontSize: 12,
-    ),
-    getTitles: (value) {
-      switch (value.toInt()) {
-        case 2:
-          return '7월';
-        case 5:
-          return '8월';
-        case 8:
-          return '9월';
-      }
-      return '';
-    },
-    margin: 8,
-  );
-
-  //Set false
-  final ySideTitles = SideTitles(
-    showTitles: false,
-  );
-
-  List<FlSpot> myChartDataSpots = [
-    FlSpot(0, 3),
-    FlSpot(1, 3),
-    FlSpot(2, 2),
-    FlSpot(3, 5),
-    FlSpot(4, 5),
-    FlSpot(5, 5),
-    FlSpot(6, 3.1),
-    FlSpot(7, 4),
-    FlSpot(9.5, 3),
-    FlSpot(11, 4),
-  ];
-
-  List<FlSpot> _getAvgDataSpots(List<FlSpot> myChartDataSpots) {
-    double meanY;
-    double sum = 0;
-    double count = 0;
-    myChartDataSpots.forEach((spot) {
-      count = count + 1.0;
-      sum = sum + spot.y;
-    });
-    meanY = sum / count;
-    List<FlSpot> avgSpots = [];
-    myChartDataSpots.forEach((spot) {
-      avgSpots.add(FlSpot(spot.x, meanY));
-    });
-    return avgSpots;
-  }
 
   @override
   Widget build(BuildContext context) {
+    // init model
+    model = ChartModel(widget.totalData);
     return Stack(
       children: <Widget>[
         AspectRatio(
@@ -126,27 +78,28 @@ class _TotalLineChartState extends State<TotalLineChart> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        bottomTitles: xSideTitles,
-        leftTitles: ySideTitles,
+        bottomTitles: model.xSideTitles,
+        leftTitles: model.ySideTitles,
       ),
       borderData: FlBorderData(
         show: false,
       ),
-      minX: axisMinMaxs[0],
-      maxX: axisMinMaxs[1],
-      minY: axisMinMaxs[2],
-      maxY: axisMinMaxs[3],
+      minX: model.axisConstraints['minX'],
+      maxX: model.axisConstraints['maxX'],
+      minY: model.axisConstraints['minY'],
+      maxY: model.axisConstraints['maxY'],
       lineBarsData: [
         LineChartBarData(
-          spots: myChartDataSpots,
+          spots: model.chartDataSpots,
           isCurved: true,
+          curveSmoothness: 0.1,
           colors: [
             Colors.orangeAccent,
           ],
-          barWidth: 5,
+          barWidth: 7,
           isStrokeCapRound: true,
           dotData: FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -160,7 +113,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
 
   LineChartData avgData() {
     return LineChartData(
-      lineTouchData: LineTouchData(enabled: false),
+      lineTouchData: LineTouchData(enabled: true),
       gridData: FlGridData(
         show: true,
         drawHorizontalLine: false,
@@ -168,26 +121,26 @@ class _TotalLineChartState extends State<TotalLineChart> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        bottomTitles: xSideTitles,
-        leftTitles: ySideTitles,
+        bottomTitles: model.xSideTitles,
+        leftTitles: model.ySideTitles,
       ),
       borderData: FlBorderData(
         show: false,
         border: Border.all(color: const Color(0xff37434d), width: 1),
       ),
-      minX: axisMinMaxs[0],
-      maxX: axisMinMaxs[1],
-      minY: axisMinMaxs[2],
-      maxY: axisMinMaxs[3],
+      minX: model.axisConstraints['minX'],
+      maxX: model.axisConstraints['maxX'],
+      minY: model.axisConstraints['minY'],
+      maxY: model.axisConstraints['maxY'],
       lineBarsData: [
         LineChartBarData(
-          spots: _getAvgDataSpots(myChartDataSpots),
+          spots: model.avgDataSpots,
           isCurved: true,
           colors: [Colors.orangeAccent],
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -197,5 +150,69 @@ class _TotalLineChartState extends State<TotalLineChart> {
         ),
       ],
     );
+  }
+}
+
+class ChartModel {
+  // Members
+  List reverseIndex;
+  List<FlSpot> chartDataSpots;
+  List<FlSpot> avgDataSpots;
+  SideTitles xSideTitles;
+
+  final Map<String, double> axisConstraints = {
+    'minX': 0.0,
+    // X: 0, 1, 2, 3, 4, 5
+    'maxX': 5.0,
+    'minY': 0.0,
+    'maxY': 100.0,
+  };
+  final ySideTitles = SideTitles(
+    showTitles: false,
+  );
+
+  ChartModel(TotalData data) {
+    // Set 6.0 to list up 0.0 ~ 5.0
+    int maxX = axisConstraints['maxX'].toInt() + 1;
+    // Init reverseIndex
+    reverseIndex = List.generate(maxX, (index) {
+      return maxX - index - 1;
+    });
+    // Init chartDataSpots
+    chartDataSpots = List.generate(data.length, (index) {
+      return FlSpot(
+        (reverseIndex[index]).toDouble(),
+        data.ratioMap[data.dtList[index]].toDouble(),
+      );
+    });
+    // Init avgDataSpots
+    avgDataSpots = _getAvgDataSpots(chartDataSpots);
+    // Init xSideTitles
+    xSideTitles = SideTitles(
+      showTitles: true,
+      textStyle: const TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.normal,
+        fontSize: 12,
+      ),
+      getTitles: (value) {
+        int val = value.toInt();
+        // last datetime is today's month
+        DateTime dt = data.dtList[data.length - 1];
+        DateTime targetDt =
+            new DateTime(dt.year, dt.month - reverseIndex[val], dt.day);
+        return DateFormat('yy-MM').format(targetDt);
+      },
+      margin: 15,
+    );
+  }
+
+  List<FlSpot> _getAvgDataSpots(List<FlSpot> myChartDataSpots) {
+    double sum = 0;
+    myChartDataSpots.forEach((spot) => sum = sum + spot.y);
+    double meanY = (sum ~/ myChartDataSpots.length).toDouble();
+    List<FlSpot> avgSpots = [];
+    myChartDataSpots.forEach((spot) => avgSpots.add(FlSpot(spot.x, meanY)));
+    return avgSpots;
   }
 }

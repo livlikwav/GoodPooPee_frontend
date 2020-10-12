@@ -11,23 +11,20 @@ class WeeklyData {
   Map<String, int> ratioList;
   int meanRatio;
   int meanSuccess;
-  int maxRatio;
+  int maxRatio = 0;
 
   WeeklyData(List<DailyReport> weeklyReport, String todaysDate) {
     this.datetime = DateTime.parse(todaysDate);
     this.length = weeklyReport.length;
-    // Init datetimeList
-    datetimeList = List(7);
-    // Init ratioTmpList
+    // Init lists
+    this.datetimeList = List(7);
     Map<DateTime, int> ratioTmpList = Map();
     for (int i = 0; i < 7; i++) {
       DateTime dt = datetime.subtract(Duration(days: i));
       datetimeList[i] = dt;
       ratioTmpList[dt] = 0;
     }
-    // MyLogger.debug('parse weekly init ratioTmpList : $ratioTmpList');
     // Compute statistics
-    int tmpMaxRatio = 0;
     int sumCount = 0;
     int sumSuccess = 0;
     for (int i = 0; i < length; i++) {
@@ -39,24 +36,20 @@ class WeeklyData {
       } else {
         MyLogger.error('dt is invalid : $dt');
       }
-      // Compute mean values
-      tmpMaxRatio = max(tmpMaxRatio, ratio);
+      // Compute values
+      this.maxRatio = max(maxRatio, ratio);
       sumCount += weeklyReport[i].count;
       sumSuccess += weeklyReport[i].success;
-      // MyLogger.debug('sumCount = $sumCount');
-      // MyLogger.debug('sumSuccess = $sumSuccess');
     }
-    this.maxRatio = tmpMaxRatio;
     this.meanRatio = (sumSuccess * 100) ~/ sumCount;
     this.meanSuccess = sumSuccess ~/ length;
-    // MyLogger.debug('last ratioTmpList : $ratioTmpList');
-    ratioList = ratioTmpList.map((key, value) {
+    this.ratioList = ratioTmpList.map((key, value) {
       return MapEntry(DateFormat('EEE').format(key), value);
     });
-    MyLogger.debug('last meanRatio : $meanRatio');
-    MyLogger.debug('last meanSuccess : $meanSuccess');
-    MyLogger.debug('last maxRatio : $maxRatio');
-    MyLogger.debug('last datetimeList : $datetimeList');
-    MyLogger.debug('last ratioList : $ratioList');
+    MyLogger.debug('WEEKLY: meanRatio : $meanRatio');
+    MyLogger.debug('WEEKLY: meanSuccess : $meanSuccess');
+    MyLogger.debug('WEEKLY: maxRatio : $maxRatio');
+    MyLogger.debug('WEEKLY: datetimeList : $datetimeList');
+    MyLogger.debug('WEEKLY: ratioList : $ratioList');
   }
 }

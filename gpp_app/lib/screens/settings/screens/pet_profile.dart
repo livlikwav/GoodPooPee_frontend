@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+enum Gender { male, female }
 
 class SettingPetProfileScreen extends StatefulWidget {
   @override
@@ -13,27 +17,40 @@ class SettingPetProfileScreen extends StatefulWidget {
 }
 
 class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
-  DateTime _birthDate = DateTime.now();
-  DateTime _adoptionDate = DateTime.now();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController breedController = TextEditingController();
-  Gender _gender = Gender.male;
-
+  // Unfixed
+  PetProfile _petProfile;
+  DateTime _birthDate;
+  DateTime _adoptionDate;
+  String _name;
+  String _breed;
+  Gender _gender;
   // Fixed strings
-  final String nameSubtitle = '이름';
-  final String nameEx = '예시: 포동이';
-  final String nameHint = '반려견의 이름을 입력하세요';
-  final String adoptionSubtitle = '입양 일자';
   final String birthSubtitle = '출생 일자';
+  final String adoptionSubtitle = '입양 일자';
+  final String nameSubtitle = '이름';
+  final String nameHint = '반려견의 이름을 입력하세요';
   final String breedSubtitle = '견종';
-  final String breedEx = '예시: 요크셔테리어';
   final String breedHint = '견종을 입력하세요';
   final String genderSubtitle = '성별';
-  final String genderEx = '수컷';
-  final String genderHint = '성별을 입력하세요';
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    breedController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    _petProfile = Provider.of<PetProfile>(context, listen: false);
+    _birthDate = _petProfile.birth ?? DateTime.now();
+    _adoptionDate = _petProfile.adoption ?? DateTime.now();
+    _name = _petProfile.name ?? '';
+    _breed = _petProfile.breed ?? '';
+    _gender = _petProfile.gender ?? Gender.male;
+
     return Scaffold(
       primary: true,
       appBar: AppBar(title: Text('반려견 정보 설정')),
@@ -64,11 +81,11 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    IconButton(
-                      iconSize: getBlockSizeHorizontal(20),
-                      icon: _userAvatar(),
-                      onPressed: _changeImage,
-                    ),
+                    // IconButton(
+                    //   iconSize: getBlockSizeHorizontal(20),
+                    //   icon: _userAvatar(),
+                    //   onPressed: _changeImage,
+                    // ),
                     SizedBox(
                       width: getBlockSizeHorizontal(80),
                       height: getBlockSizeVertical(1),
@@ -80,9 +97,10 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                       ],
                     ),
                     _subtitle(nameSubtitle),
-                    customTextField(nameEx, nameHint, nameController),
+                    customTextField(_name, nameHint, nameController),
                     _subtitle(breedSubtitle),
-                    customTextField(breedEx, breedHint, breedController),
+                    customTextField(_breed, breedHint, breedController),
+                    _subtitle(genderSubtitle),
                     Container(
                       margin: EdgeInsets.all(getBlockSizeHorizontal(1)),
                       child: Row(
@@ -212,8 +230,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
     return null;
   }
 }
-
-enum Gender { male, female }
 
 CircleAvatar _userAvatar() {
   return CircleAvatar(

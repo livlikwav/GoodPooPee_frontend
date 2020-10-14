@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/user_auth.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/my_logger.dart';
+import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 // link rest api
 import 'package:dio/dio.dart';
 import 'package:gpp_app/widgets/no_alert_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // build screen
 import 'components/upside.dart';
@@ -40,21 +43,26 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildBody() {
-    return Material(
+    return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
+      child: SizedBox(
+        height: getBlockSizeVertical(90),
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Expanded(flex: 5, child: buildUpSide()),
-        Expanded(
-            flex: 3,
-            child: buildCenterSide(
-              loginTapped,
-              emailController,
-              passwordController,
-            )),
-        Expanded(flex: 2, child: buildDownSide(context, registerTapped)),
-      ],
-    ));
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Expanded(flex: 5, child: buildUpSide()),
+            Expanded(
+                flex: 3,
+                child: buildCenterSide(
+                  loginTapped,
+                  emailController,
+                  passwordController,
+                )),
+            Expanded(flex: 2, child: buildDownSide(context, registerTapped)),
+          ],
+        ),
+      ),
+    );
   }
 
   void loginTapped() async {
@@ -92,23 +100,18 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response != null && response.statusCode == 200) {
       MyLogger.info('Login successed');
 
-      MyLogger.debug('${response.data}');
+      MyLogger.debug('response data : ${response.data}');
+      // Dio.post returns map
+      UserAuth userAuth = UserAuth.fromJson(response.data);
 
-      UserAuth userAuth =
-          UserAuth.fromJson(response.data); // Dio.post returns map
-
-      MyLogger.debug(
-          'JSON token:${userAuth.access_token}, user_id:${userAuth.user_id}, pet_id:${userAuth.pet_id}, ppcam_id:${userAuth.ppcam_id}');
-
-      // Save user auth token
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('userAuth', userAuth.access_token);
-      prefs.setInt('userId', userAuth.user_id);
-      prefs.setInt('petId', userAuth.pet_id);
-      prefs.setInt('ppcamId', userAuth.ppcam_id);
-
-      MyLogger.debug(
-          'Prefs token:${prefs.getString("userAuth")}, id:${prefs.getInt("userId")}, petId:${prefs.getInt("petId")}, ppcamId:${prefs.getInt("ppcamId")}');
+      UserProfile userProfile =
+          Provider.of<UserProfile>(context, listen: false);
+      userProfile.accessToken = userAuth.access_token;
+      userProfile.ids['userId'] = userAuth.user_id;
+      userProfile.ids['petId'] = userAuth.pet_id;
+      userProfile.ids['ppcamId'] = userAuth.ppcam_id;
+      // MyLogger.debug('${userProfile.ids}');
+      // MyLogger.debug('${userProfile.accessToken}');
 
       // Route to report(main) screen
       Navigator.of(context).pushNamed(Routes.report);

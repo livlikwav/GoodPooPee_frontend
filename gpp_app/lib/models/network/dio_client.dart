@@ -4,8 +4,8 @@ import 'package:gpp_app/util/my_logger.dart';
 
 class DioClient {
   // for url
-  // static String serverUrl = 'https://dev.goodpoopee.com/';
-  static String serverUrl = 'http://localhost/';
+  static String serverUrl = 'https://dev.goodpoopee.com/';
+  // static String serverUrl = 'http://localhost/';
 
   // dio instance
   final Dio _dio;

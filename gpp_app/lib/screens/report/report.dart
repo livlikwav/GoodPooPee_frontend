@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/report/async/get_weekly_report.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
 import 'package:gpp_app/screens/report/components/empty_card.dart';
@@ -11,7 +12,7 @@ import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import 'async/get_daily_report.dart';
 import 'async/get_total_report.dart';
@@ -36,15 +37,14 @@ class _ReportScreenState extends State<ReportScreen> {
     super.initState();
     // Get today's date (default)
     todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    MyLogger.debug('Present datetime is $todaysDate');
+    // MyLogger.debug('Present datetime is $todaysDate');
     getReports();
   }
 
   void getReports() async {
     MyLogger.info('Start getReports()');
     // Get pet id
-    final prefs = await SharedPreferences.getInstance();
-    this.petId = prefs.getInt('petId');
+    this.petId = Provider.of<UserProfile>(context, listen: false).ids['petId'];
     this.isReady = true;
     MyLogger.debug('isReady: ${this.isReady}');
     // Check that pet exists

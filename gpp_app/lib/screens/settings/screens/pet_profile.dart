@@ -5,10 +5,9 @@ import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';
+import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-enum Gender { male, female }
 
 class SettingPetProfileScreen extends StatefulWidget {
   @override
@@ -30,10 +29,10 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   final String birthSubtitle = '출생 일자';
   final String adoptionSubtitle = '입양 일자';
   final String nameSubtitle = '이름';
-  final String nameHint = '반려견의 이름을 입력하세요';
   final String breedSubtitle = '견종';
-  final String breedHint = '견종을 입력하세요';
   final String genderSubtitle = '성별';
+  final String nameHint = '반려견의 이름을 입력하세요';
+  final String breedHint = '견종을 입력하세요';
 
   @override
   void dispose() {
@@ -43,14 +42,17 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _petProfile = Provider.of<PetProfile>(context, listen: false);
     _birthDate = _petProfile.birth ?? DateTime.now();
     _adoptionDate = _petProfile.adoption ?? DateTime.now();
     _name = _petProfile.name ?? '';
     _breed = _petProfile.breed ?? '';
     _gender = _petProfile.gender ?? Gender.male;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       primary: true,
       appBar: AppBar(title: Text('반려견 정보 설정')),
@@ -152,16 +154,23 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
     );
   }
 
-  void _changeImage() {
-    print('change image tapped');
-  }
-
   void _changeProfile() {
     MyLogger.info('Change pet profile button tapped');
 
-    MyLogger.debug('${_formatDate(_birthDate)}, ${_formatDate(_adoptionDate)}');
-    MyLogger.debug('${nameController.text}, ${breedController.text}');
-    MyLogger.debug('$_gender');
+    _petProfile.birth = _birthDate;
+    _petProfile.adoption = _adoptionDate;
+    _petProfile.name =
+        nameController.text == '' ? _petProfile.name : nameController.text;
+    _petProfile.breed =
+        breedController.text == '' ? _petProfile.breed : breedController.text;
+    _petProfile.gender = _gender;
+    MyLogger.debug('petProfile : $_petProfile');
+
+    showYesAlertDialog(context, '', () {
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      // Navigator.of(context).pushNamed(Routes.login);
+    });
   }
 
   Flexible _birthPick(String subtitle) {
@@ -199,15 +208,15 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   void _selectBirth(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: this._birthDate, // Refer step 1
+      initialDate: _birthDate, // Refer step 1
       firstDate: DateTime(2005),
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',
       locale: Locale('ko', 'KO'),
     );
-    if (picked != null && picked != this._birthDate)
+    if (picked != null && picked != _birthDate)
       setState(() {
-        this._birthDate = picked;
+        _birthDate = picked;
       });
   }
 
@@ -224,10 +233,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
       setState(() {
         this._adoptionDate = picked;
       });
-  }
-
-  Widget _genderPick() {
-    return null;
   }
 }
 

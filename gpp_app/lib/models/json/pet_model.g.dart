@@ -11,6 +11,7 @@ PetModel _$PetModelFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['name'] as String,
     json['breed'] as String,
+    json['gender'] as String,
     json['birth'] == null ? null : DateTime.parse(json['birth'] as String),
     json['adoption'] == null
         ? null
@@ -22,6 +23,7 @@ Map<String, dynamic> _$PetModelToJson(PetModel instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'breed': instance.breed,
+      'gender': instance.gender,
       'birth': instance.birth?.toIso8601String(),
       'adoption': instance.adoption?.toIso8601String(),
     };

@@ -156,14 +156,13 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
 
   void _changeProfile() {
     MyLogger.info('Change pet profile button tapped');
-    _petProfile.put(
-      birth: _birthDate,
-      adoption: _adoptionDate,
-      name: nameController.text == '' ? _petProfile.name : nameController.text,
-      breed:
-          breedController.text == '' ? _petProfile.breed : breedController.text,
-      gender: _gender,
-    );
+    _petProfile.birth = _birthDate;
+    _petProfile.adoption = _adoptionDate;
+    _petProfile.name =
+        nameController.text == '' ? _petProfile.name : nameController.text;
+    _petProfile.breed =
+        breedController.text == '' ? _petProfile.breed : breedController.text;
+    _petProfile.genderEnum = _gender;
     MyLogger.debug('petProfile : $_petProfile');
 
     showYesAlertDialog(context, '', () {

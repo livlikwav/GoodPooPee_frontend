@@ -1,48 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/models/json/user_auth.dart';
 import 'package:gpp_app/util/my_logger.dart';
 
 enum Gender { male, female }
 
 class PetProfile with ChangeNotifier {
-  String _name;
-  String _breed;
+  int id;
+  String name;
+  String breed;
   Gender _gender;
-  DateTime _birth;
-  DateTime _adoption;
+  DateTime birth;
+  DateTime adoption;
 
-  String get name => _name;
-  String get breed => _breed;
   Gender get gender => _gender;
-  DateTime get birth => _birth;
-  DateTime get adoption => _adoption;
+
+  set genderStr(String gender) {
+    // String to Gender
+    if (gender == 'male') {
+      _gender = Gender.male;
+    } else if (gender == 'female') {
+      _gender = Gender.female;
+    }
+  }
+
+  set genderEnum(Gender gender) {
+    _gender = gender;
+  }
 
   @override
   String toString() {
-    return 'PetProfile: $_name, $_breed, $_gender, $_birth, $_adoption';
+    return 'PetProfile: $id, $name, $breed, $gender, $birth, $adoption';
   }
 
   void reset() {
-    _name = null;
-    _breed = null;
+    id = null;
+    name = null;
+    breed = null;
     _gender = null;
-    _birth = null;
-    _adoption = null;
+    birth = null;
+    adoption = null;
     MyLogger.info('PetProfile reseted : ${toString()}');
     notifyListeners();
   }
 
-  void put({
-    String name,
-    String breed,
-    Gender gender,
-    DateTime birth,
-    DateTime adoption,
-  }) {
-    _name = name;
-    _breed = breed;
-    _gender = gender;
-    _birth = birth;
-    _adoption = adoption;
-    notifyListeners();
+  void setUserAuth(UserAuth userAuth) {
+    id = userAuth.pet.id;
+    name = userAuth.pet.name;
+    breed = userAuth.pet.breed;
+    String genderString = userAuth.pet.gender;
+    // String to Gender
+    if (genderString == 'male') {
+      _gender = Gender.male;
+    } else if (genderString == 'female') {
+      _gender = Gender.female;
+    }
+    birth = userAuth.pet.birth;
+    adoption = userAuth.pet.adoption;
   }
 }

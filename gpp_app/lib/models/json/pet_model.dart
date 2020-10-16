@@ -13,6 +13,7 @@ class PetModel {
     this.id,
     this.name,
     this.breed,
+    this.gender,
     this.birth,
     this.adoption,
   );
@@ -20,12 +21,13 @@ class PetModel {
   int id;
   String name;
   String breed;
+  String gender;
   DateTime birth;
   DateTime adoption;
 
   @override
   String toString() {
-    return 'JSON-PetModel: $id, $name, $breed, $birth, $adoption';
+    return 'JSON-PetModel: $id, $name, $breed, $gender, $birth, $adoption';
   }
 
   /// A necessary factory constructor for creating a new User instance

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/user_auth.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/my_logger.dart';
@@ -42,15 +43,11 @@ void loginTapped(BuildContext context, String email, String pw) async {
     MyLogger.debug('$userAuth');
 
     UserProfile userProfile = Provider.of<UserProfile>(context, listen: false);
-    userProfile.put(
-      firstName: userAuth.user.firstName,
-      lastName: userAuth.user.lastName,
-      email: userAuth.user.email,
-      accessToken: userAuth.accessToken,
-      id: userAuth.user.id,
-      petId: userAuth.pet.id,
-    );
+    userProfile.setUserAuth(userAuth);
+    PetProfile petProfile = Provider.of<PetProfile>(context, listen: false);
+    petProfile.setUserAuth(userAuth);
     MyLogger.debug('$userProfile');
+    MyLogger.debug('$petProfile');
 
     // Route to report(main) screen
     Navigator.of(context).pushNamed(Routes.report);

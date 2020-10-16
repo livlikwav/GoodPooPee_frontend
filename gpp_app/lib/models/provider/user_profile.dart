@@ -1,61 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/models/json/user_auth.dart';
 import 'package:gpp_app/util/my_logger.dart';
 
 class UserProfile with ChangeNotifier {
-  String _accessToken;
-  String _firstName;
-  String _lastName;
-  String _email;
-  int _id;
-  int _petId;
-  int _ppcamId;
-  int _padId;
-
-  String get accessToken => _accessToken;
-  String get firstName => _firstName;
-  String get lastName => _lastName;
-  String get email => _email;
-  int get id => _id;
-  int get petId => _petId;
-  int get ppcamId => _ppcamId;
-  int get padId => _padId;
+  String accessToken;
+  String firstName;
+  String lastName;
+  String email;
+  int id;
+  int petId;
+  int ppcamId;
+  int padId;
 
   @override
   String toString() {
-    return 'UserProfile: $_firstName, $_lastName, $_email, user: $_id, pet: $_petId, ppcam: $_ppcamId, pad: $_padId, $_accessToken}';
+    return 'UserProfile: $firstName, $lastName, $email, user: $id, pet: $petId, ppcam: $ppcamId, pad: $padId, $accessToken}';
   }
 
   void reset() {
-    _accessToken = null;
-    _firstName = null;
-    _lastName = null;
-    _email = null;
-    _id = null;
-    _petId = null;
-    _ppcamId = null;
-    _padId = null;
+    accessToken = null;
+    firstName = null;
+    lastName = null;
+    email = null;
+    id = null;
+    petId = null;
+    ppcamId = null;
+    padId = null;
     MyLogger.info('UserProfile reseted: ${toString()}');
     notifyListeners();
   }
 
-  void put({
-    String accessToken,
-    String firstName,
-    String lastName,
-    String email,
-    int id,
-    int petId,
-    int ppcamId,
-    int padId,
-  }) {
-    _accessToken = accessToken;
-    _firstName = firstName;
-    _lastName = lastName;
-    _email = email;
-    _id = id;
-    _petId = petId;
-    _ppcamId = ppcamId;
-    _padId = padId;
-    notifyListeners();
+  void setUserAuth(UserAuth userAuth) {
+    accessToken = userAuth.accessToken;
+    firstName = userAuth.user.firstName;
+    lastName = userAuth.user.lastName;
+    email = userAuth.user.email;
+    id = userAuth.user.id;
+    petId = userAuth.pet.id;
+    // no ppcamId
+    // no padId
+    // init later
   }
 }

@@ -15,26 +15,24 @@ class _DrawerMenuState extends State<DrawerMenu> {
   UserProfile _userProfile;
   PetProfile _petProfile;
   String _userName;
-  bool isPetNull = true;
+  bool _isPetNull;
   String _petName;
   String _subTitle;
 
   @override
   void initState() {
+    _userProfile = Provider.of<UserProfile>(context, listen: false);
+    _petProfile = Provider.of<PetProfile>(context, listen: false);
+    _userName = _userProfile.lastName + ' ' + _userProfile.firstName + '님';
+    // check pet null
+    _userProfile.petId == null ? _isPetNull = true : _isPetNull = false;
+    _petName = _isPetNull ? null : _petProfile.name;
+    _subTitle = _isPetNull ? null : _petProfile.breed;
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    _userProfile = Provider.of<UserProfile>(context, listen: false);
-    _petProfile = Provider.of<PetProfile>(context, listen: false);
-    _userName = _userProfile.lastName + _userProfile.firstName + '님';
-    // check pet null
-    if (_userProfile.petId != null) {
-      isPetNull = false;
-      _petName = _petProfile.name;
-      _subTitle = _petProfile.breed;
-    }
     super.didChangeDependencies();
   }
 
@@ -49,9 +47,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 color: Theme.of(context).primaryColor,
               ),
               child: _dogInfo(
-                isPetNull,
-                name: _petName,
-                subtitle: _subTitle,
+                _isPetNull,
+                _petName,
+                _subTitle,
               )),
           Container(
             child: _userInfo(_userName),
@@ -119,57 +117,61 @@ Widget _userInfo(String name) {
   ));
 }
 
-Widget _dogInfo(bool isPetNull, {String name, String subtitle}) {
+Widget _dogInfo(bool isPetNull, String name, String subtitle) {
   return Container(
-      color: Colors.transparent,
-      child: SingleChildScrollView(
-        child: Column(
-            children: isPetNull
-                ? <Widget>[
-                    CircleAvatar(
-                      backgroundImage: new AssetImage(Assets.appLogo),
-                    ),
-                    SizedBox(height: getBlockSizeVertical(2)),
-                    Text('반려견 정보가 없습니다',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.normal,
-                        )),
-                    SizedBox(height: getBlockSizeVertical(2)),
-                    Text(
-                      '(기기 및 환경설정\n-> 반려견 정보 설정)',
-                      style: new TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w100,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ]
-                : <Widget>[
-                    Text('우리집 굿푸피',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.normal,
-                        )),
-                    SizedBox(height: getBlockSizeVertical(2)),
-                    CircleAvatar(
-                      backgroundImage: new AssetImage(Assets.appLogo),
-                    ),
-                    SizedBox(height: getBlockSizeVertical(2)),
-                    Text(
-                      name,
-                      style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: getBlockSizeVertical(1)),
-                    Text(
-                      subtitle,
-                      style: new TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ]),
-      ));
+    color: Colors.transparent,
+    child: SingleChildScrollView(
+      child: Column(
+        children: isPetNull
+            ? <Widget>[
+                CircleAvatar(
+                  backgroundImage: new AssetImage(Assets.appLogo),
+                ),
+                SizedBox(height: getBlockSizeVertical(2)),
+                Text('반려견 정보가 없습니다',
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                    )),
+                SizedBox(height: getBlockSizeVertical(2)),
+                Text(
+                  '(기기 및 환경설정\n-> 반려견 정보 설정)',
+                  style: new TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w100,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ]
+            : <Widget>[
+                Text(
+                  '우리집 굿푸피',
+                  style: new TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(height: getBlockSizeVertical(2)),
+                CircleAvatar(
+                  backgroundImage: new AssetImage(Assets.appLogo),
+                ),
+                SizedBox(height: getBlockSizeVertical(2)),
+                Text(
+                  name,
+                  style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: getBlockSizeVertical(1)),
+                Text(
+                  subtitle,
+                  style: new TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+      ),
+    ),
+  );
 }

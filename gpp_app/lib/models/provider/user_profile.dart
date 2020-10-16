@@ -22,7 +22,7 @@ class UserProfile with ChangeNotifier {
 
   @override
   String toString() {
-    return '$_firstName, $_lastName, $_email, user: $_id, pet: $_petId, ppcam: $_ppcamId, pad: $_padId, $_accessToken}';
+    return 'UserProfile: $_firstName, $_lastName, $_email, user: $_id, pet: $_petId, ppcam: $_ppcamId, pad: $_padId, $_accessToken}';
   }
 
   void reset() {

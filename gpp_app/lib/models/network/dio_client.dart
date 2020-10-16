@@ -39,7 +39,15 @@ class DioClient {
       );
       return response;
     } on DioError catch (e) {
-      throw e;
+      if (e.response != null) {
+        MyLogger.error(
+            'GET $uri failed\nStatus code is ${e.response.statusCode}\ndata: ${e.response.data}');
+        throw e;
+      } else {
+        MyLogger.error(
+            'GET $uri failed. Error.response is null.\nrequest: ${e.request}\nmessage: ${e.message}');
+        throw e;
+      }
     }
   }
 
@@ -72,7 +80,15 @@ class DioClient {
       );
       return response;
     } on DioError catch (e) {
-      throw e;
+      if (e.response != null) {
+        MyLogger.error(
+            'POST $uri failed.\nStatus code is ${e.response.statusCode}\ndata: ${e.response.data}');
+        throw e;
+      } else {
+        MyLogger.error(
+            'POST $uri failed. Error.response is null.\n${e.request}\n${e.message}');
+        throw e;
+      }
     }
   }
 }

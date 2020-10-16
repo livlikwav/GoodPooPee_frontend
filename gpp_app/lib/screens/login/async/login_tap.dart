@@ -25,19 +25,12 @@ void loginTapped(BuildContext context, String email, String pw) async {
     );
     // Handling exception
   } on DioError catch (e) {
-    if (e.response != null) {
-      MyLogger.error('Login failed. Status code is ${e.response.statusCode}');
-      showNoAlertDialog(
-        context,
-        '아이디 또는 비밀번호를\n확인하세요',
-        () => Navigator.of(context).pop(),
-      );
-      return;
-    } else {
-      MyLogger.error(
-          'Login failed. Error.response is null.\n${e.request}\n${e.message}');
-      return;
-    }
+    showNoAlertDialog(
+      context,
+      '아이디 또는 비밀번호를\n확인하세요',
+      () => Navigator.of(context).pop(),
+    );
+    return;
   }
   // POST Successed
   if (response != null && response.statusCode == 200) {

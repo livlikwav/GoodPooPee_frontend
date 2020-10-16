@@ -23,15 +23,7 @@ Future<DailyReport> getDailyReport(
     );
     // Handling exception
   } on DioError catch (e) {
-    if (e.response != null) {
-      MyLogger.error(
-          'GET daily report failed. Status code is ${e.response.statusCode}, data: ${e.response.data}');
-      throw e;
-    } else {
-      MyLogger.error(
-          'GET daily report failed. Error.response is null.\nrequest: ${e.request}\nmessage: ${e.message}');
-      throw e;
-    }
+    throw e;
   }
 
   // GET Successed

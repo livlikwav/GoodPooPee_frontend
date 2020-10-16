@@ -18,7 +18,7 @@ class PetProfile with ChangeNotifier {
 
   @override
   String toString() {
-    return '$_name, $_breed, $_gender, $_birth, $_adoption';
+    return 'PetProfile: $_name, $_breed, $_gender, $_birth, $_adoption';
   }
 
   void reset() {

@@ -23,15 +23,7 @@ Future<List<DailyReport>> getWeeklyReport(
     );
     // Handling exception
   } on DioError catch (e) {
-    if (e.response != null) {
-      MyLogger.error(
-          'GET weekly report failed. Status code is ${e.response.statusCode}, data: ${e.response.data}');
-      throw e;
-    } else {
-      MyLogger.error(
-          'GET weekly report failed. Error.response is null.\nrequest: ${e.request}\nmessage: ${e.message}');
-      throw e;
-    }
+    throw e;
   }
 
   // GET Successed

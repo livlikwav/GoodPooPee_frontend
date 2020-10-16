@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/models/provider/pet_profile.dart';
+import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:provider/provider.dart';
 
 class DrawerMenu extends StatelessWidget {
   @override
@@ -18,29 +21,42 @@ class DrawerMenu extends StatelessWidget {
           Container(
             child: _userProfile(),
           ),
-          _menuTile(context, '내 푸피캠 확인하기', Routes.streaming),
+          _menuTile(context, '내 푸피캠 확인하기', route: Routes.streaming),
           _divider(),
-          _menuTile(context, '배변 기록 확인하기', Routes.logs),
-          _menuTile(context, '배변훈련 리포트', Routes.report),
+          _menuTile(context, '배변 기록 확인하기', route: Routes.logs),
+          _menuTile(context, '배변훈련 리포트', route: Routes.report),
           _divider(),
-          _menuTile(context, '기기 및 환경설정', Routes.settings),
-          _menuTile(context, '로그아웃', Routes.login),
+          _menuTile(context, '기기 및 환경설정', route: Routes.settings),
+          _menuTile(
+            context,
+            '로그아웃',
+            onTap: () {
+              // Init multi providers
+              Provider.of<UserProfile>(context, listen: false).reset();
+              Provider.of<PetProfile>(context, listen: false).reset();
+              // Routing
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.login);
+            },
+          ),
         ],
       ),
     );
   }
 }
 
-ListTile _menuTile(BuildContext context, String label, String route) {
+ListTile _menuTile(BuildContext context, String label,
+    {String route, Function onTap}) {
   return ListTile(
     title: Text(
       label,
       textAlign: TextAlign.center,
     ),
-    onTap: () {
-      Navigator.pop(context);
-      Navigator.of(context).pushNamed(route);
-    },
+    onTap: onTap ??
+        () {
+          Navigator.pop(context);
+          Navigator.of(context).pushNamed(route);
+        },
   );
 }
 

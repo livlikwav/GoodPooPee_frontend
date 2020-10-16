@@ -27,7 +27,7 @@ class PetProfile with ChangeNotifier {
     _gender = null;
     _birth = null;
     _adoption = null;
-    MyLogger.info('PetProfile reseted');
+    MyLogger.info('PetProfile reseted : ${toString()}');
     notifyListeners();
   }
 

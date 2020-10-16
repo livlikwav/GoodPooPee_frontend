@@ -34,7 +34,7 @@ class UserProfile with ChangeNotifier {
     _petId = null;
     _ppcamId = null;
     _padId = null;
-    MyLogger.info('UserProfile reseted');
+    MyLogger.info('UserProfile reseted: ${toString()}');
     notifyListeners();
   }
 

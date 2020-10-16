@@ -28,6 +28,8 @@ class PetModel {
   DateTime birth;
   DateTime adoption;
 
+  String get genderStr => gender.toString().split('.')[1];
+
   PetModel.petProfile(PetProfile petProfile) {
     id = petProfile.id;
     userId = petProfile.userId;

@@ -21,7 +21,7 @@ void putPetProfile(
         'user_id': petModel.userId,
         'name': petModel.name,
         'breed': petModel.breed,
-        'gender': petModel.gender.toString(),
+        'gender': petModel.genderStr,
         'birth': petModel.birth.toString(),
         'adoption': petModel.adoption.toString(),
       },

@@ -14,6 +14,8 @@ class PetProfile with ChangeNotifier {
   DateTime birth;
   DateTime adoption;
 
+  String get genderStr => gender.toString().split('.')[1];
+
   @override
   String toString() {
     return 'PetProfile: pet: $id, user: $userId, $name, $breed, $gender, $birth, $adoption';

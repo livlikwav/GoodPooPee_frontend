@@ -1,10 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/network/user_auth_interceptor.dart';
 import 'package:gpp_app/util/my_logger.dart';
 
-Future<DailyReport> getDailyReport(String uri, String date) async {
+Future<DailyReport> getDailyReport(
+  BuildContext context,
+  String uri,
+  String date,
+) async {
   Dio _dio = Dio();
   final DioClient dioClient = DioClient(_dio);
   Response response;
@@ -14,7 +19,7 @@ Future<DailyReport> getDailyReport(String uri, String date) async {
       queryParameters: {
         'date': date,
       },
-      interceptor: UserAuthInterceptor(_dio),
+      interceptor: UserAuthInterceptor(context, _dio),
     );
     // Handling exception
   } on DioError catch (e) {

@@ -38,10 +38,10 @@ class _ReportScreenState extends State<ReportScreen> {
     // Get today's date (default)
     todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     // MyLogger.debug('Present datetime is $todaysDate');
-    getReports();
+    getReports(context);
   }
 
-  void getReports() async {
+  void getReports(BuildContext context) async {
     MyLogger.info('Start getReports()');
     // Get pet id
     this.petId = Provider.of<UserProfile>(context, listen: false).petId;
@@ -53,16 +53,17 @@ class _ReportScreenState extends State<ReportScreen> {
       MyLogger.info('Pet id is $petId');
       // Get report models from server
       dailyReport = getDailyReport(
+        context,
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/daily',
-        // '2015-08-09',
         todaysDate,
       );
       weeklyReport = getWeeklyReport(
+        context,
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/weekly',
-        // '2015-08-09',
         todaysDate,
       );
       totalReport = getTotalReport(
+        context,
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/total',
       );
     } else {

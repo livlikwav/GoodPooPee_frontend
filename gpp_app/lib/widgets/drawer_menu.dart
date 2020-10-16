@@ -7,8 +7,25 @@ import 'package:gpp_app/util/size_config.dart';
 import 'package:provider/provider.dart';
 
 class DrawerMenu extends StatelessWidget {
+  UserProfile _userProfile;
+  PetProfile _petProfile;
+  String _userName;
+  bool isPetNull = true;
+  String _petName;
+  String _subTitle;
+
   @override
   Widget build(BuildContext context) {
+    _userProfile = Provider.of<UserProfile>(context);
+    _petProfile = Provider.of<PetProfile>(context);
+    _userName = _userProfile.lastName + _userProfile.firstName + '님';
+    // check pet null
+    if (_userProfile.petId != null) {
+      isPetNull = false;
+      _petName = _petProfile.name;
+      _subTitle = _petProfile.breed;
+    }
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -17,9 +34,13 @@ class DrawerMenu extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
               ),
-              child: _dogProfile()),
+              child: _dogInfo(
+                isPetNull,
+                name: _petName,
+                subtitle: _subTitle,
+              )),
           Container(
-            child: _userProfile(),
+            child: _userInfo(_userName),
           ),
           _menuTile(context, '내 푸피캠 확인하기', route: Routes.streaming),
           _divider(),
@@ -68,48 +89,73 @@ Divider _divider() {
   );
 }
 
-Widget _userProfile() {
+Widget _userInfo(String name) {
   return Material(
       child: Column(
     children: <Widget>[
       SizedBox(height: getBlockSizeVertical(3)),
-      CircleAvatar(
-        backgroundImage: new AssetImage(Assets.appLogo),
-      ),
+      Icon(Icons.portrait),
       SizedBox(height: getBlockSizeVertical(2)),
-      Text('User Nickname', style: new TextStyle(fontWeight: FontWeight.bold)),
+      Text(
+        name,
+        style: new TextStyle(fontWeight: FontWeight.bold),
+      ),
       SizedBox(height: getBlockSizeVertical(3)),
     ],
   ));
 }
 
-Widget _dogProfile() {
-  return Material(
+Widget _dogInfo(bool isPetNull, {String name, String subtitle}) {
+  return Container(
       color: Colors.transparent,
       child: SingleChildScrollView(
         child: Column(
-          children: <Widget>[
-            Text('우리집 굿푸피',
-                style: new TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                )),
-            SizedBox(height: getBlockSizeVertical(2)),
-            CircleAvatar(
-              backgroundImage: new AssetImage(Assets.dogProfile),
-            ),
-            SizedBox(height: getBlockSizeVertical(2)),
-            Text('포동이',
-                style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                )),
-            SizedBox(height: getBlockSizeVertical(1)),
-            Text('요크셔테리어, 수컷, 7살',
-                style: new TextStyle(
-                  color: Colors.white,
-                )),
-          ],
-        ),
+            children: isPetNull
+                ? <Widget>[
+                    CircleAvatar(
+                      backgroundImage: new AssetImage(Assets.appLogo),
+                    ),
+                    SizedBox(height: getBlockSizeVertical(2)),
+                    Text('반려견 정보가 없습니다',
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                        )),
+                    SizedBox(height: getBlockSizeVertical(2)),
+                    Text(
+                      '(기기 및 환경설정\n-> 반려견 정보 설정)',
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w100,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ]
+                : <Widget>[
+                    Text('우리집 굿푸피',
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                        )),
+                    SizedBox(height: getBlockSizeVertical(2)),
+                    CircleAvatar(
+                      backgroundImage: new AssetImage(Assets.appLogo),
+                    ),
+                    SizedBox(height: getBlockSizeVertical(2)),
+                    Text(
+                      name,
+                      style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: getBlockSizeVertical(1)),
+                    Text(
+                      subtitle,
+                      style: new TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ]),
       ));
 }

@@ -1,3 +1,4 @@
+import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 /// This allows the `User` class to access private members in
@@ -7,10 +8,11 @@ part 'pet_model.g.dart';
 
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class PetModel {
   PetModel(
     this.id,
+    this.userId,
     this.name,
     this.breed,
     this.gender,
@@ -19,15 +21,26 @@ class PetModel {
   );
 
   int id;
+  int userId;
   String name;
   String breed;
-  String gender;
+  Gender gender;
   DateTime birth;
   DateTime adoption;
 
+  PetModel.petProfile(PetProfile petProfile) {
+    id = petProfile.id;
+    userId = petProfile.userId;
+    name = petProfile.name;
+    breed = petProfile.breed;
+    gender = petProfile.gender;
+    birth = petProfile.birth;
+    adoption = petProfile.adoption;
+  }
+
   @override
   String toString() {
-    return 'JSON-PetModel: $id, $name, $breed, $gender, $birth, $adoption';
+    return 'JSON-PetModel: pet: $id, user: $userId, $name, $breed, $gender, $birth, $adoption';
   }
 
   /// A necessary factory constructor for creating a new User instance

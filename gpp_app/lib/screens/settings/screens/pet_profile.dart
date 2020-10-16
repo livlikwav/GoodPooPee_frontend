@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
@@ -19,11 +20,12 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   final TextEditingController breedController = TextEditingController();
   // Unfixed
   PetProfile _petProfile;
-  DateTime _birthDate;
-  DateTime _adoptionDate;
-  String _name;
-  String _breed;
-  Gender _gender;
+  PetModel _petModel;
+  // DateTime _birthDate;
+  // DateTime _adoptionDate;
+  // String _name;
+  // String _breed;
+  // Gender _gender;
   // Fixed strings
   final String birthSubtitle = '출생 일자';
   final String adoptionSubtitle = '입양 일자';
@@ -43,11 +45,9 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   @override
   void initState() {
     _petProfile = Provider.of<PetProfile>(context, listen: false);
-    _birthDate = _petProfile.birth ?? DateTime.now();
-    _adoptionDate = _petProfile.adoption ?? DateTime.now();
-    _name = _petProfile.name ?? '';
-    _breed = _petProfile.breed ?? '';
-    _gender = _petProfile.gender ?? Gender.male;
+    _petModel = PetModel.petProfile(_petProfile);
+    MyLogger.debug('$_petProfile');
+    MyLogger.debug('$_petModel');
     super.initState();
   }
 
@@ -99,9 +99,10 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                       ],
                     ),
                     _subtitle(nameSubtitle),
-                    customTextField(_name, nameHint, nameController),
+                    customTextField(_petModel.name, nameHint, nameController),
                     _subtitle(breedSubtitle),
-                    customTextField(_breed, breedHint, breedController),
+                    customTextField(
+                        _petModel.breed, breedHint, breedController),
                     _subtitle(genderSubtitle),
                     Container(
                       margin: EdgeInsets.all(getBlockSizeHorizontal(1)),
@@ -115,10 +116,10 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                               title: Text('♂️'),
                               leading: Radio(
                                 value: Gender.male,
-                                groupValue: _gender,
+                                groupValue: _petModel.gender,
                                 onChanged: (Gender value) {
                                   setState(() {
-                                    _gender = value;
+                                    _petModel.gender = value;
                                   });
                                 },
                               ),
@@ -129,10 +130,10 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                               title: const Text('♀️'),
                               leading: Radio(
                                 value: Gender.female,
-                                groupValue: _gender,
+                                groupValue: _petModel.gender,
                                 onChanged: (Gender value) {
                                   setState(() {
-                                    _gender = value;
+                                    _petModel.gender = value;
                                   });
                                 },
                               ),
@@ -141,8 +142,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                         ],
                       ),
                     ),
-                    // _subtitle(genderSubtitle),
-                    // customTextField(genderEx, genderHint, null),
                     SizedBox(height: getBlockSizeVertical(5)),
                     DefaultButton(text: '확인', press: _changeProfile),
                     SizedBox(height: getBlockSizeVertical(1)),
@@ -156,14 +155,17 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
 
   void _changeProfile() {
     MyLogger.info('Change pet profile button tapped');
-    _petProfile.birth = _birthDate;
-    _petProfile.adoption = _adoptionDate;
-    _petProfile.name =
+    // Update by textfield values
+    _petModel.name =
         nameController.text == '' ? _petProfile.name : nameController.text;
-    _petProfile.breed =
+    _petModel.breed =
         breedController.text == '' ? _petProfile.breed : breedController.text;
-    _petProfile.genderEnum = _gender;
-    MyLogger.debug('petProfile : $_petProfile');
+    // PUT pet profile
+
+    // update PetProfile provider
+    _petProfile.setPetModel(_petModel);
+
+    MyLogger.debug('$_petProfile');
 
     showYesAlertDialog(context, '', () {
       Navigator.of(context).pop();
@@ -178,7 +180,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         children: [
           _subtitle(subtitle),
           FlatButton(
-            child: Text(_formatDate(this._birthDate)),
+            child: Text(_formatDate(_petModel.birth)),
             onPressed: () {
               _selectBirth(context);
             },
@@ -194,7 +196,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         children: [
           _subtitle(subtitle),
           FlatButton(
-            child: Text(_formatDate(this._adoptionDate)),
+            child: Text(_formatDate(_petModel.adoption)),
             onPressed: () {
               _selectAdoption(context);
             },
@@ -207,30 +209,30 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   void _selectBirth(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: _birthDate, // Refer step 1
+      initialDate: _petModel.birth, // Refer step 1
       firstDate: DateTime(2005),
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',
       locale: Locale('ko', 'KO'),
     );
-    if (picked != null && picked != _birthDate)
+    if (picked != null && picked != _petModel.birth)
       setState(() {
-        _birthDate = picked;
+        _petModel.birth = picked;
       });
   }
 
   void _selectAdoption(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: this._adoptionDate, // Refer step 1
+      initialDate: _petModel.adoption, // Refer step 1
       firstDate: DateTime(2005),
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',
       locale: Locale('ko', 'KO'),
     );
-    if (picked != null && picked != this._adoptionDate)
+    if (picked != null && picked != _petModel.adoption)
       setState(() {
-        this._adoptionDate = picked;
+        _petModel.adoption = picked;
       });
   }
 }

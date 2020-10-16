@@ -46,13 +46,16 @@ void loginTapped(BuildContext context, String email, String pw) async {
     MyLogger.debug('response data : ${response.data}');
     // Dio.post returns map
     UserAuth userAuth = UserAuth.fromJson(response.data);
+    MyLogger.debug('$userAuth');
 
     UserProfile userProfile = Provider.of<UserProfile>(context, listen: false);
     userProfile.put(
-      accessToken: userAuth.access_token,
-      id: userAuth.user_id,
-      petId: userAuth.pet_id,
-      ppcamId: userAuth.ppcam_id,
+      firstName: userAuth.user.firstName,
+      lastName: userAuth.user.lastName,
+      email: userAuth.user.email,
+      accessToken: userAuth.accessToken,
+      id: userAuth.user.id,
+      petId: userAuth.pet.id,
     );
     MyLogger.debug('$userProfile');
 

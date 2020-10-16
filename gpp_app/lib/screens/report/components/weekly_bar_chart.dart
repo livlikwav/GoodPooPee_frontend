@@ -176,7 +176,6 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
           margin: 16,
           getTitles: (double value) {
-            DateFormat formatter = DateFormat('EEE');
             switch (value.toInt()) {
               case 0:
                 return getKstWeekday(widget.weeklyData.datetimeList[6]);

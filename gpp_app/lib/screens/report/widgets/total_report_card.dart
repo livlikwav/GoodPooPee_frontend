@@ -8,7 +8,6 @@ import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/total_line_chart.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:intl/intl.dart';
 
 class TotalReportCard extends StatefulWidget {
   final Future<List<MonthlyReport>> totalReport;

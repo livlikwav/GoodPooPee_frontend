@@ -7,27 +7,32 @@ part 'monthly_report.g.dart';
 
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class MonthlyReport {
   MonthlyReport(
     this.date,
-    this.pet_id,
-    this.user_id,
+    this.petId,
+    this.userId,
     this.count,
     this.success,
     this.ratio,
-    this.created_date,
-    this.last_modified_date,
+    this.createdDate,
+    this.lastModifiedDate,
   );
 
   String date;
-  int pet_id;
-  int user_id;
+  int petId;
+  int userId;
   int count;
   int success;
   double ratio;
-  String created_date;
-  String last_modified_date;
+  String createdDate;
+  String lastModifiedDate;
+
+  @override
+  String toString() {
+    return 'JSON-MonthlyReport: $date, $petId, $userId, $count, $success, $ratio, $createdDate, $lastModifiedDate';
+  }
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

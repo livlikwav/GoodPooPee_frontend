@@ -1,3 +1,5 @@
+import 'package:gpp_app/models/json/pet_model.dart';
+import 'package:gpp_app/models/json/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 /// This allows the `User` class to access private members in
@@ -7,19 +9,21 @@ part 'user_auth.g.dart';
 
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class UserAuth {
   UserAuth(
-    this.access_token,
-    this.user_id,
-    this.pet_id,
-    this.ppcam_id,
+    this.accessToken,
+    this.user,
+    this.pet,
   );
+  String accessToken;
+  UserModel user;
+  PetModel pet;
 
-  String access_token;
-  int user_id;
-  int pet_id;
-  int ppcam_id;
+  @override
+  String toString() {
+    return 'JSON-UserAuth: $accessToken, $user, $pet';
+  }
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

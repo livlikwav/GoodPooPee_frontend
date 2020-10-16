@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
@@ -237,12 +236,12 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   }
 }
 
-CircleAvatar _userAvatar() {
-  return CircleAvatar(
-    radius: getBlockSizeHorizontal(20),
-    backgroundImage: new AssetImage(Assets.appLogo),
-  );
-}
+// CircleAvatar _userAvatar() {
+//   return CircleAvatar(
+//     radius: getBlockSizeHorizontal(20),
+//     backgroundImage: new AssetImage(Assets.appLogo),
+//   );
+// }
 
 String _formatDate(DateTime datetime) {
   DateFormat formatter = DateFormat('yyyy-MM-dd');

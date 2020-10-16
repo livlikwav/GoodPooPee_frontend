@@ -20,7 +20,7 @@ Future<DailyReport> getDailyReport(String uri, String date) async {
   } on DioError catch (e) {
     if (e.response != null) {
       MyLogger.error(
-          'GET daily report failed. Status code is ${e.response.statusCode}');
+          'GET daily report failed. Status code is ${e.response.statusCode}, data: ${e.response.data}');
       throw e;
     } else {
       MyLogger.error(

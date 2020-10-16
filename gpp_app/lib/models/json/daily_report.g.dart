@@ -22,11 +22,11 @@ DailyReport _$DailyReportFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$DailyReportToJson(DailyReport instance) =>
     <String, dynamic>{
       'date': instance.date,
-      'pet_id': instance.pet_id,
-      'user_id': instance.user_id,
+      'pet_id': instance.petId,
+      'user_id': instance.userId,
       'count': instance.count,
       'success': instance.success,
       'ratio': instance.ratio,
-      'created_date': instance.created_date,
-      'last_modified_date': instance.last_modified_date,
+      'created_date': instance.createdDate,
+      'last_modified_date': instance.lastModifiedDate,
     };

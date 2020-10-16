@@ -18,7 +18,7 @@ Future<List<MonthlyReport>> getTotalReport(String uri) async {
   } on DioError catch (e) {
     if (e.response != null) {
       MyLogger.error(
-          'GET total report failed. Status code is ${e.response.statusCode}');
+          'GET total report failed. Status code is ${e.response.statusCode}, data: ${e.response.data}');
       throw e;
     } else {
       MyLogger.error(

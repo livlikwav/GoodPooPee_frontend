@@ -44,7 +44,7 @@ class _ReportScreenState extends State<ReportScreen> {
   void getReports() async {
     MyLogger.info('Start getReports()');
     // Get pet id
-    this.petId = Provider.of<UserProfile>(context, listen: false).ids['petId'];
+    this.petId = Provider.of<UserProfile>(context, listen: false).petId;
     this.isReady = true;
     MyLogger.debug('isReady: ${this.isReady}');
     // Check that pet exists

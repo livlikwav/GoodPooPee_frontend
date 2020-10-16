@@ -10,7 +10,6 @@ import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:gpp_app/widgets/no_alert_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 // build screen
 import 'components/upside.dart';
 import 'components/center_side.dart';
@@ -106,10 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
       UserProfile userProfile =
           Provider.of<UserProfile>(context, listen: false);
-      userProfile.accessToken = userAuth.access_token;
-      userProfile.ids['userId'] = userAuth.user_id;
-      userProfile.ids['petId'] = userAuth.pet_id;
-      userProfile.ids['ppcamId'] = userAuth.ppcam_id;
+      userProfile.put(
+        accessToken: userAuth.access_token,
+        id: userAuth.user_id,
+        petId: userAuth.pet_id,
+        ppcamId: userAuth.ppcam_id,
+      );
       // MyLogger.debug('${userProfile.ids}');
       // MyLogger.debug('${userProfile.accessToken}');
 

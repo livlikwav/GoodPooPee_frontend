@@ -2,35 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/util/my_logger.dart';
 
 class UserProfile with ChangeNotifier {
-  String accessToken;
+  String _accessToken;
+  String _firstName;
+  String _lastName;
+  String _email;
+  int _id;
+  int _petId;
+  int _ppcamId;
+  int _padId;
 
-  final Map<String, int> ids = {
-    'userId': null,
-    'petId': null,
-    'ppcamId': null,
-    'padId': null,
-  };
-  final Map<String, String> names = {
-    'userFirstName': null,
-    'userLastName': null,
-    'userEmail': null,
-  };
+  String get accessToken => _accessToken;
+  String get firstName => _firstName;
+  String get lastName => _lastName;
+  String get email => _email;
+  int get id => _id;
+  int get petId => _petId;
+  int get ppcamId => _ppcamId;
+  int get padId => _padId;
 
   @override
   String toString() {
-    return '$ids, $names, $accessToken}';
+    return '$_firstName, $_lastName, $_email, $_id, $_petId, $_ppcamId, $_padId, $_accessToken}';
   }
 
   void reset() {
-    accessToken = null;
-    ids['userId'] = null;
-    ids['petId'] = null;
-    ids['ppcamId'] = null;
-    ids['padId'] = null;
-    names['userFirstName'] = null;
-    names['userLastName'] = null;
-    names['userEmail'] = null;
+    _accessToken = null;
+    _firstName = null;
+    _lastName = null;
+    _email = null;
+    _id = null;
+    _petId = null;
+    _ppcamId = null;
+    _padId = null;
     MyLogger.info('UserProfile reseted');
+    notifyListeners();
+  }
+
+  void put({
+    String accessToken,
+    String firstName,
+    String lastName,
+    String email,
+    int id,
+    int petId,
+    int ppcamId,
+    int padId,
+  }) {
+    _accessToken = accessToken;
+    _firstName = firstName;
+    _lastName = lastName;
+    _email = email;
+    _id = id;
+    _petId = petId;
+    _ppcamId = ppcamId;
+    _padId = padId;
     notifyListeners();
   }
 }

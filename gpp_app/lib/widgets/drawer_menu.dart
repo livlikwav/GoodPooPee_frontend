@@ -18,78 +18,38 @@ class DrawerMenu extends StatelessWidget {
           Container(
             child: _userProfile(),
           ),
-          ListTile(
-            title: Text(
-              '내 푸피캠 확인하기',
-              textAlign: TextAlign.center,
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.streaming);
-            },
-          ),
-          Divider(
-            color: Colors.black,
-            indent: getBlockSizeHorizontal(10),
-            endIndent: getBlockSizeHorizontal(10),
-          ),
-          ListTile(
-            title: Text(
-              '배변 기록 확인하기',
-              textAlign: TextAlign.center,
-            ),
-            onTap: () {
-              // Enhancement
-              // When now on report screen, there is overhead
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.logs);
-            },
-          ),
-          // ListTile(
-          //   title: Text(
-          //     '클리커 훈련하기',
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
-          ListTile(
-            title: Text(
-              '배변훈련 리포트',
-              textAlign: TextAlign.center,
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.report);
-            },
-          ),
-          Divider(
-            color: Colors.black,
-            indent: getBlockSizeHorizontal(10),
-            endIndent: getBlockSizeHorizontal(10),
-          ),
-          ListTile(
-            title: Text(
-              '기기 및 환경설정',
-              textAlign: TextAlign.center,
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.settings);
-            },
-          ),
-          ListTile(
-            title: Text(
-              '로그아웃',
-              textAlign: TextAlign.center,
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.login);
-            },
-          ),
+          _menuTile(context, '내 푸피캠 확인하기', Routes.streaming),
+          _divider(),
+          _menuTile(context, '배변 기록 확인하기', Routes.logs),
+          _menuTile(context, '배변훈련 리포트', Routes.report),
+          _divider(),
+          _menuTile(context, '기기 및 환경설정', Routes.settings),
+          _menuTile(context, '로그아웃', Routes.login),
         ],
       ),
     );
   }
+}
+
+ListTile _menuTile(BuildContext context, String label, String route) {
+  return ListTile(
+    title: Text(
+      label,
+      textAlign: TextAlign.center,
+    ),
+    onTap: () {
+      Navigator.pop(context);
+      Navigator.of(context).pushNamed(route);
+    },
+  );
+}
+
+Divider _divider() {
+  return Divider(
+    color: Colors.black,
+    indent: getBlockSizeHorizontal(10),
+    endIndent: getBlockSizeHorizontal(10),
+  );
 }
 
 Widget _userProfile() {

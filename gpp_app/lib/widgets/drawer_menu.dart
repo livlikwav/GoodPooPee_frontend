@@ -6,7 +6,12 @@ import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:provider/provider.dart';
 
-class DrawerMenu extends StatelessWidget {
+class DrawerMenu extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _DrawerMenuState();
+}
+
+class _DrawerMenuState extends State<DrawerMenu> {
   UserProfile _userProfile;
   PetProfile _petProfile;
   String _userName;
@@ -15,9 +20,14 @@ class DrawerMenu extends StatelessWidget {
   String _subTitle;
 
   @override
-  Widget build(BuildContext context) {
-    _userProfile = Provider.of<UserProfile>(context);
-    _petProfile = Provider.of<PetProfile>(context);
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _userProfile = Provider.of<UserProfile>(context, listen: false);
+    _petProfile = Provider.of<PetProfile>(context, listen: false);
     _userName = _userProfile.lastName + _userProfile.firstName + '님';
     // check pet null
     if (_userProfile.petId != null) {
@@ -25,7 +35,11 @@ class DrawerMenu extends StatelessWidget {
       _petName = _petProfile.name;
       _subTitle = _petProfile.breed;
     }
+    super.didChangeDependencies();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,

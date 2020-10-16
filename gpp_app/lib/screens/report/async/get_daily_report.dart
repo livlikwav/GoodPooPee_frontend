@@ -10,7 +10,7 @@ Future<DailyReport> getDailyReport(
   String uri,
   String date,
 ) async {
-  Dio _dio = Dio();
+  final Dio _dio = Dio();
   final DioClient dioClient = DioClient(_dio);
   Response response;
   try {
@@ -28,7 +28,7 @@ Future<DailyReport> getDailyReport(
 
   // GET Successed
   if (response != null && response.statusCode == 200) {
-    MyLogger.info('GET daily report successed');
+    MyLogger.info('GET daily report succeed');
 
     MyLogger.debug('dailyReport response.data : ${response.data}');
 

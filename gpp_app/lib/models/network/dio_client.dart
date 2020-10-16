@@ -91,4 +91,45 @@ class DioClient {
       }
     }
   }
+
+  // Put
+  // :Return: Future<dynamic>, so in use then() to print return value
+  Future<dynamic> put(
+    String uri, {
+    data,
+    Map<String, dynamic> queryParameters,
+    Options options,
+    CancelToken cancelToken,
+    ProgressCallback onSendProgress,
+    ProgressCallback onReceiveProgress,
+    Interceptor interceptor,
+  }) async {
+    MyLogger.info('DioClient.put.uri: $uri');
+    // add interceptor
+    if (interceptor != null) {
+      _dio.interceptors.add(interceptor);
+    }
+    try {
+      final Response response = await _dio.put(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        MyLogger.error(
+            'PUT $uri failed.\nStatus code is ${e.response.statusCode}\ndata: ${e.response.data}');
+        throw e;
+      } else {
+        MyLogger.error(
+            'PUT $uri failed. Error.response is null.\n${e.request}\n${e.message}');
+        throw e;
+      }
+    }
+  }
 }

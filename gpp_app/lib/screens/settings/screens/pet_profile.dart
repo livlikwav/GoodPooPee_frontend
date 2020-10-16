@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
+import 'package:gpp_app/screens/settings/async/put_pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +21,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   // Unfixed
   PetProfile _petProfile;
   PetModel _petModel;
-  // DateTime _birthDate;
-  // DateTime _adoptionDate;
-  // String _name;
-  // String _breed;
-  // Gender _gender;
-  // Fixed strings
   final String birthSubtitle = '출생 일자';
   final String adoptionSubtitle = '입양 일자';
   final String nameSubtitle = '이름';
@@ -108,9 +102,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                       margin: EdgeInsets.all(getBlockSizeHorizontal(1)),
                       child: Row(
                         children: [
-                          // Flexible(
-                          //   child: _subtitle(genderSubtitle),
-                          // ),
                           Flexible(
                             child: ListTile(
                               title: Text('♂️'),
@@ -160,18 +151,11 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         nameController.text == '' ? _petProfile.name : nameController.text;
     _petModel.breed =
         breedController.text == '' ? _petProfile.breed : breedController.text;
-    // PUT pet profile
-
     // update PetProfile provider
     _petProfile.setPetModel(_petModel);
-
     MyLogger.debug('$_petProfile');
-
-    showYesAlertDialog(context, '', () {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-      // Navigator.of(context).pushNamed(Routes.login);
-    });
+    // PUT pet profile
+    putPetProfile(context, _petModel);
   }
 
   Flexible _birthPick(String subtitle) {

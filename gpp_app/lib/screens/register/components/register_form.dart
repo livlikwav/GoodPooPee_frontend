@@ -256,6 +256,7 @@ class _RegisterFormState extends State<RegisterForm> {
           MyLogger.error(
               'Register failed. Status code is ${e.response.statusCode}');
         }
+        return;
       }
       // if valid, show success dialog
       if (response != null && response.statusCode == 200) {

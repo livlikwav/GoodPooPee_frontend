@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/constants/colors.dart';
-import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 

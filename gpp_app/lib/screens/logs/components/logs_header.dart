@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/text_style.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
@@ -67,7 +66,7 @@ class _LogsHeaderState extends State<LogsHeader> {
     );
   }
 
-  _selectDate(BuildContext context) async {
+  void _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate, // Refer step 1

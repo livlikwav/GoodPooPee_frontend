@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/models/json/pet_model.dart';
+import 'package:gpp_app/models/provider/pet_profile.dart';
+import 'package:gpp_app/screens/settings/async/put_pet_profile.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SettingPetProfileScreen extends StatefulWidget {
   @override
@@ -11,14 +16,34 @@ class SettingPetProfileScreen extends StatefulWidget {
 }
 
 class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
-  String birth = 'YYYY-MM-DD';
-  String birthHint = '출생일자를 입력하세요';
-  String adoption = 'YYYY-MM-DD';
-  String adoptionHint = '입양일자를 입력하세요';
-  String breed = '요크셔테리어';
-  String breedHint = '견종을 입력하세요';
-  String gender = '수컷';
-  String genderHint = '성별을 입력하세요';
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController breedController = TextEditingController();
+  // Unfixed
+  PetProfile _petProfile;
+  PetModel _petModel;
+  final String birthSubtitle = '출생 일자';
+  final String adoptionSubtitle = '입양 일자';
+  final String nameSubtitle = '이름';
+  final String breedSubtitle = '견종';
+  final String genderSubtitle = '성별';
+  final String nameHint = '반려견의 이름을 입력하세요';
+  final String breedHint = '견종을 입력하세요';
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    breedController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _petProfile = Provider.of<PetProfile>(context, listen: false);
+    _petModel = PetModel.petProfile(_petProfile);
+    MyLogger.debug('$_petProfile');
+    MyLogger.debug('$_petModel');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,22 +77,62 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    IconButton(
-                      iconSize: getBlockSizeHorizontal(20),
-                      icon: _userAvatar(),
-                      onPressed: _changeImage,
-                    ),
+                    // IconButton(
+                    //   iconSize: getBlockSizeHorizontal(20),
+                    //   icon: _userAvatar(),
+                    //   onPressed: _changeImage,
+                    // ),
                     SizedBox(
-                        width: getBlockSizeHorizontal(80),
-                        height: getBlockSizeVertical(1)),
-                    _subtitle('출생'),
-                    customTextField(birth, birthHint),
-                    _subtitle('입양'),
-                    customTextField(adoption, adoptionHint),
-                    _subtitle('견종'),
-                    customTextField(breed, breedHint),
-                    _subtitle('성별'),
-                    customTextField(gender, genderHint),
+                      width: getBlockSizeHorizontal(80),
+                      height: getBlockSizeVertical(1),
+                    ),
+                    Row(
+                      children: [
+                        _birthPick(birthSubtitle),
+                        _adoptionPick(adoptionSubtitle),
+                      ],
+                    ),
+                    _subtitle(nameSubtitle),
+                    customTextField(_petModel.name, nameHint, nameController),
+                    _subtitle(breedSubtitle),
+                    customTextField(
+                        _petModel.breed, breedHint, breedController),
+                    _subtitle(genderSubtitle),
+                    Container(
+                      margin: EdgeInsets.all(getBlockSizeHorizontal(1)),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: ListTile(
+                              title: Text('♂️'),
+                              leading: Radio(
+                                value: Gender.male,
+                                groupValue: _petModel.gender,
+                                onChanged: (Gender value) {
+                                  setState(() {
+                                    _petModel.gender = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            child: ListTile(
+                              title: const Text('♀️'),
+                              leading: Radio(
+                                value: Gender.female,
+                                groupValue: _petModel.gender,
+                                onChanged: (Gender value) {
+                                  setState(() {
+                                    _petModel.gender = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: getBlockSizeVertical(5)),
                     DefaultButton(text: '확인', press: _changeProfile),
                     SizedBox(height: getBlockSizeVertical(1)),
@@ -79,29 +144,102 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
     );
   }
 
-  CircleAvatar _userAvatar() {
-    return CircleAvatar(
-      radius: getBlockSizeHorizontal(20),
-      backgroundImage: new AssetImage(Assets.appLogo),
-    );
-  }
-
-  Align _subtitle(String text) {
-    return Align(
-      child: Padding(
-          padding: EdgeInsets.all(
-            getBlockSizeHorizontal(2),
-          ),
-          child: Text(text)),
-      alignment: Alignment.centerLeft,
-    );
-  }
-
-  void _changeImage() {
-    print('change image tapped');
-  }
-
   void _changeProfile() {
-    print('change profile tapped');
+    MyLogger.info('Change pet profile button tapped');
+    // Update by textfield values
+    _petModel.name =
+        nameController.text == '' ? _petProfile.name : nameController.text;
+    _petModel.breed =
+        breedController.text == '' ? _petProfile.breed : breedController.text;
+    // update PetProfile provider
+    _petProfile.setPetModel(_petModel);
+    MyLogger.debug('$_petProfile');
+    // PUT pet profile
+    putPetProfile(context, _petModel);
   }
+
+  Flexible _birthPick(String subtitle) {
+    return Flexible(
+      child: Column(
+        children: [
+          _subtitle(subtitle),
+          FlatButton(
+            child: Text(_formatDate(_petModel.birth)),
+            onPressed: () {
+              _selectBirth(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Flexible _adoptionPick(String subtitle) {
+    return Flexible(
+      child: Column(
+        children: [
+          _subtitle(subtitle),
+          FlatButton(
+            child: Text(_formatDate(_petModel.adoption)),
+            onPressed: () {
+              _selectAdoption(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _selectBirth(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: _petModel.birth, // Refer step 1
+      firstDate: DateTime(2005),
+      lastDate: DateTime.now(),
+      helpText: '기록을 확인할 날짜를 선택하세요.',
+      locale: Locale('ko', 'KO'),
+    );
+    if (picked != null && picked != _petModel.birth)
+      setState(() {
+        _petModel.birth = picked;
+      });
+  }
+
+  void _selectAdoption(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: _petModel.adoption, // Refer step 1
+      firstDate: DateTime(2005),
+      lastDate: DateTime.now(),
+      helpText: '기록을 확인할 날짜를 선택하세요.',
+      locale: Locale('ko', 'KO'),
+    );
+    if (picked != null && picked != _petModel.adoption)
+      setState(() {
+        _petModel.adoption = picked;
+      });
+  }
+}
+
+// CircleAvatar _userAvatar() {
+//   return CircleAvatar(
+//     radius: getBlockSizeHorizontal(20),
+//     backgroundImage: new AssetImage(Assets.appLogo),
+//   );
+// }
+
+String _formatDate(DateTime datetime) {
+  DateFormat formatter = DateFormat('yyyy-MM-dd');
+  return formatter.format(datetime);
+}
+
+Align _subtitle(String text) {
+  return Align(
+    child: Padding(
+        padding: EdgeInsets.all(
+          getBlockSizeHorizontal(2),
+        ),
+        child: Text(text)),
+    alignment: Alignment.centerLeft,
+  );
 }

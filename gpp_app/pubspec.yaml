@@ -27,6 +27,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   
+  # State management
+  provider: ^4.3.2+2
+  # handling rest api
+  dio: ^3.0.10
+  # platform-specific persistent storage for simple data
+  shared_preferences: '>=0.5.12 <2.0.0'
+  # serialization JSON
+  json_annotation: ^3.0.0
+
   intl: ^0.16.1 # provides internationalization and localization facilities, including message translation, plurals and genders, date/number formatting and parsing, and bidirectional text.
   flutter_svg: ^0.18.0 # help us to use SVG in our app
   fab_circular_menu: ^1.0.0 # create a nice circular menu using a Floating Action Button.
@@ -40,6 +49,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # serialization JSON
+  build_runner: ^1.0.0
+  json_serializable: ^3.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

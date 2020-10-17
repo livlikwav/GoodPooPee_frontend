@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/text_style.dart';
 import 'package:gpp_app/screens/register/components/register_form.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'dart:developer' as developer;
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -12,7 +11,6 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
-    developer.log('register.dart: register build', name: 'MY.DEBUG', level: 10);
     return Scaffold(
       primary: true,
       appBar: AppBar(),

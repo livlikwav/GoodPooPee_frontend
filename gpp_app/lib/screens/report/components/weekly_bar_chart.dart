@@ -4,8 +4,14 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/screens/report/async/parsing_weekly.dart';
+import 'package:gpp_app/util/kst_weekday.dart';
+import 'package:intl/intl.dart';
 
 class WeeklyBarChart extends StatefulWidget {
+  final WeeklyData weeklyData;
+  WeeklyBarChart(this.weeklyData);
+
   final List<Color> availableColors = [
     AppColors.orange[50],
     AppColors.orange[100],
@@ -96,7 +102,7 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 10,
+            y: 100,
             color: barBackgroundColor,
           ),
         ),
@@ -105,26 +111,17 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
     );
   }
 
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, 3, isTouched: i == touchedIndex);
-          case 1:
-            return makeGroupData(1, 5, isTouched: i == touchedIndex);
-          case 2:
-            return makeGroupData(2, 4, isTouched: i == touchedIndex);
-          case 3:
-            return makeGroupData(3, 5, isTouched: i == touchedIndex);
-          case 4:
-            return makeGroupData(4, 7, isTouched: i == touchedIndex);
-          case 5:
-            return makeGroupData(5, 7, isTouched: i == touchedIndex);
-          case 6:
-            return makeGroupData(6, 8, isTouched: i == touchedIndex);
-          default:
-            return null;
-        }
-      });
+  List<BarChartGroupData> showingGroups() {
+    return List.generate(7, (i) {
+      String dtString =
+          DateFormat('EEE').format(widget.weeklyData.datetimeList[6 - i]);
+      return makeGroupData(
+        i,
+        widget.weeklyData.ratioList[dtString].toDouble(),
+        isTouched: i == touchedIndex,
+      );
+    });
+  }
 
   BarChartData mainBarData() {
     return BarChartData(
@@ -135,25 +132,25 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
               String weekDay;
               switch (group.x.toInt()) {
                 case 0:
-                  weekDay = '월요일';
+                  weekDay = getKstWeekday(widget.weeklyData.datetimeList[6]);
                   break;
                 case 1:
-                  weekDay = '화요일';
+                  weekDay = getKstWeekday(widget.weeklyData.datetimeList[5]);
                   break;
                 case 2:
-                  weekDay = '수요일';
+                  weekDay = getKstWeekday(widget.weeklyData.datetimeList[4]);
                   break;
                 case 3:
-                  weekDay = '목요일';
+                  weekDay = getKstWeekday(widget.weeklyData.datetimeList[3]);
                   break;
                 case 4:
-                  weekDay = '금요일';
+                  weekDay = getKstWeekday(widget.weeklyData.datetimeList[2]);
                   break;
                 case 5:
-                  weekDay = '토요일';
+                  weekDay = getKstWeekday(widget.weeklyData.datetimeList[1]);
                   break;
                 case 6:
-                  weekDay = '일요일';
+                  weekDay = getKstWeekday(widget.weeklyData.datetimeList[0]);
                   break;
               }
               return BarTooltipItem(weekDay + '\n' + (rod.y - 1).toString(),
@@ -181,19 +178,19 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
           getTitles: (double value) {
             switch (value.toInt()) {
               case 0:
-                return '월';
+                return getKstWeekday(widget.weeklyData.datetimeList[6]);
               case 1:
-                return '화';
+                return getKstWeekday(widget.weeklyData.datetimeList[5]);
               case 2:
-                return '수';
+                return getKstWeekday(widget.weeklyData.datetimeList[4]);
               case 3:
-                return '목';
+                return getKstWeekday(widget.weeklyData.datetimeList[3]);
               case 4:
-                return '금';
+                return getKstWeekday(widget.weeklyData.datetimeList[2]);
               case 5:
-                return '토';
+                return getKstWeekday(widget.weeklyData.datetimeList[1]);
               case 6:
-                return '일';
+                return getKstWeekday(widget.weeklyData.datetimeList[0]);
               default:
                 return '';
             }
@@ -254,31 +251,31 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
       barGroups: List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, Random().nextInt(15).toDouble() + 6,
+            return makeGroupData(0, Random().nextInt(70).toDouble() + 30,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 1:
-            return makeGroupData(1, Random().nextInt(15).toDouble() + 6,
+            return makeGroupData(1, Random().nextInt(70).toDouble() + 30,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 2:
-            return makeGroupData(2, Random().nextInt(15).toDouble() + 6,
+            return makeGroupData(2, Random().nextInt(70).toDouble() + 30,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 3:
-            return makeGroupData(3, Random().nextInt(15).toDouble() + 6,
+            return makeGroupData(3, Random().nextInt(70).toDouble() + 30,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 4:
-            return makeGroupData(4, Random().nextInt(15).toDouble() + 6,
+            return makeGroupData(4, Random().nextInt(70).toDouble() + 30,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 5:
-            return makeGroupData(5, Random().nextInt(15).toDouble() + 6,
+            return makeGroupData(5, Random().nextInt(70).toDouble() + 30,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           case 6:
-            return makeGroupData(6, Random().nextInt(15).toDouble() + 6,
+            return makeGroupData(6, Random().nextInt(70).toDouble() + 30,
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           default:

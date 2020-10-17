@@ -27,21 +27,12 @@ Future<List<DailyReport>> getWeeklyReport(
   }
 
   // GET Successed
-  if (response != null && response.statusCode == 200) {
-    MyLogger.info('GET weekly report successed');
-
-    MyLogger.debug('weeklyReport response.data : ${response.data}');
-
-    // Parse json to return value
-    List<DailyReport> weeklyReport = [];
-    for (int i = 0; i < response.data.length; i++) {
-      weeklyReport.add(DailyReport.fromJson(response.data[i]));
-    }
-    MyLogger.debug('weeklyReport return value : ${weeklyReport.runtimeType}');
-    return weeklyReport;
-    // Invalid response
-  } else {
-    MyLogger.error('GET weekly report response is invalid');
-    throw DioError(type: DioErrorType.RESPONSE);
+  MyLogger.debug('weeklyReport response.data : ${response.data}');
+  // Parse json to return value
+  List<DailyReport> weeklyReport = [];
+  for (int i = 0; i < response.data.length; i++) {
+    weeklyReport.add(DailyReport.fromJson(response.data[i]));
   }
+  MyLogger.debug('weeklyReport return value : ${weeklyReport.runtimeType}');
+  return weeklyReport;
 }

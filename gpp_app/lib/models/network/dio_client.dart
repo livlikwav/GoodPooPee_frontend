@@ -37,7 +37,15 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
-      return response;
+
+      // GET Successed
+      if (response != null) {
+        MyLogger.info('GET $uri succeed. Status code: ${response.statusCode}');
+        return response;
+      } else {
+        MyLogger.error('GET $uri response is invalid');
+        throw DioError(type: DioErrorType.RESPONSE);
+      }
     } on DioError catch (e) {
       if (e.response != null) {
         MyLogger.error(
@@ -78,7 +86,16 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      return response;
+
+      // POST Successed
+      if (response != null) {
+        MyLogger.info(
+            'POST $uri successed. Status code: ${response.statusCode}');
+        return response;
+      } else {
+        MyLogger.error('POST $uri response is invalid');
+        throw DioError(type: DioErrorType.RESPONSE);
+      }
     } on DioError catch (e) {
       if (e.response != null) {
         MyLogger.error(
@@ -119,7 +136,14 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      return response;
+      // PUT Successed
+      if (response != null) {
+        MyLogger.info('PUT $uri succeed. Status code: ${response.statusCode}');
+        return response;
+      } else {
+        MyLogger.error('PUT $uri response is invalid');
+        throw DioError(type: DioErrorType.RESPONSE);
+      }
     } on DioError catch (e) {
       if (e.response != null) {
         MyLogger.error(

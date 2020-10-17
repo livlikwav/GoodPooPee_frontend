@@ -41,6 +41,7 @@ class PetProfile with ChangeNotifier {
     gender = userAuth.pet.gender;
     birth = userAuth.pet.birth;
     adoption = userAuth.pet.adoption;
+    MyLogger.debug('${toString()}');
   }
 
   void setPetModel(PetModel petModel) {

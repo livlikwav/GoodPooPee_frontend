@@ -34,22 +34,14 @@ void loginTapped(BuildContext context, String email, String pw) async {
     return;
   }
   // POST Successed
-  if (response != null && response.statusCode == 200) {
-    MyLogger.info('Login successed');
-
-    MyLogger.debug('response data : ${response.data}');
-    // Dio.post returns map
-    UserAuth userAuth = UserAuth.fromJson(response.data);
-    MyLogger.debug('$userAuth');
-
-    UserProfile userProfile = Provider.of<UserProfile>(context, listen: false);
-    userProfile.setUserAuth(userAuth);
-    PetProfile petProfile = Provider.of<PetProfile>(context, listen: false);
-    petProfile.setUserAuth(userAuth);
-    MyLogger.debug('$userProfile');
-    MyLogger.debug('$petProfile');
-
-    // Route to report(main) screen
-    Navigator.of(context).pushNamed(Routes.report);
-  }
+  MyLogger.info('Login successed');
+  MyLogger.debug('response data : ${response.data}');
+  // Dio.post returns map
+  UserAuth userAuth = UserAuth.fromJson(response.data);
+  MyLogger.debug('$userAuth');
+  // Update providers
+  Provider.of<UserProfile>(context, listen: false).setUserAuth(userAuth);
+  Provider.of<PetProfile>(context, listen: false).setUserAuth(userAuth);
+  // Route to report(main) screen
+  Navigator.of(context).pushNamed(Routes.report);
 }

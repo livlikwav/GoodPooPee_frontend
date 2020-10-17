@@ -40,5 +40,6 @@ class UserProfile with ChangeNotifier {
     // no ppcamId
     // no padId
     // init later
+    MyLogger.debug('${toString()}');
   }
 }

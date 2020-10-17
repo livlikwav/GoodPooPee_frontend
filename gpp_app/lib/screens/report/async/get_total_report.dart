@@ -24,21 +24,12 @@ Future<List<MonthlyReport>> getTotalReport(
   }
 
   // GET Successed
-  if (response != null && response.statusCode == 200) {
-    MyLogger.info('GET total report successed');
-
-    MyLogger.debug('TotalReport response.data : ${response.data}');
-
-    // Parse json to return value
-    List<MonthlyReport> totalReport = [];
-    for (int i = 0; i < response.data.length; i++) {
-      totalReport.add(MonthlyReport.fromJson(response.data[i]));
-    }
-    MyLogger.debug('TotalReport return value : ${totalReport.runtimeType}');
-    return totalReport;
-    // Invalid response
-  } else {
-    MyLogger.error('GET total report response is invalid');
-    throw DioError(type: DioErrorType.RESPONSE);
+  MyLogger.debug('TotalReport response.data : ${response.data}');
+  // Parse json to return value
+  List<MonthlyReport> totalReport = [];
+  for (int i = 0; i < response.data.length; i++) {
+    totalReport.add(MonthlyReport.fromJson(response.data[i]));
   }
+  MyLogger.debug('TotalReport return value : ${totalReport.runtimeType}');
+  return totalReport;
 }

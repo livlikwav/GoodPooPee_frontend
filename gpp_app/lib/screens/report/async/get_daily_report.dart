@@ -27,15 +27,6 @@ Future<DailyReport> getDailyReport(
   }
 
   // GET Successed
-  if (response != null && response.statusCode == 200) {
-    MyLogger.info('GET daily report succeed');
-
-    MyLogger.debug('dailyReport response.data : ${response.data}');
-
-    // Parse json to return value
-    return DailyReport.fromJson(response.data);
-  } else {
-    MyLogger.error('GET daily report response is invalid');
-    throw DioError(type: DioErrorType.RESPONSE);
-  }
+  MyLogger.debug('dailyReport response.data : ${response.data}');
+  return DailyReport.fromJson(response.data);
 }

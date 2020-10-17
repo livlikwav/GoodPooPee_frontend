@@ -28,23 +28,14 @@ void putPetProfile(
       interceptor: UserAuthInterceptor(context, _dio),
     );
     // Handling exception
-  } on DioError catch (e) {
+  } on DioError {
     MyLogger.error('PUT pet profile failed by error');
     return;
   }
   // PUT Successed
-  if (response != null && response.statusCode == 200) {
-    MyLogger.info('PUT pet profile succeed');
-
-    MyLogger.debug('response data : ${response.data}');
-
-    showYesAlertDialog(context, '', () {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-      // Navigator.of(context).pushNamed(Routes.login);
-    });
-  } else {
-    MyLogger.error('PUT pet profile response is invalid');
-    throw DioError(type: DioErrorType.RESPONSE);
-  }
+  MyLogger.debug('response data : ${response.data}');
+  showYesAlertDialog(context, '', () {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+  });
 }

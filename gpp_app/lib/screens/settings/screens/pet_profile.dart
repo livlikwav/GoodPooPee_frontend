@@ -151,13 +151,14 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
     );
   }
 
-  void _changeProfile() async {
+  void _changeProfile() {
     MyLogger.info('Change pet profile button tapped');
     // Update by textfield values
     _petModel.name =
         nameController.text == '' ? _petProfile.name : nameController.text;
     _petModel.breed =
         breedController.text == '' ? _petProfile.breed : breedController.text;
+    // Avoid to null error in _petProfile.setPetModel
     _petModel.birth ??= DateTime.now();
     _petModel.adoption ??= DateTime.now();
     // update PetProfile provider
@@ -167,15 +168,8 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
     if (_petProfile.id != null) {
       putPetProfile(context, _petModel);
     } else {
-      // If null
-      int newPetId;
-      newPetId = await postPetProfile(context, _petModel);
-      _petProfile.id = newPetId;
-      _userProfile.id = newPetId;
-      showYesAlertDialog(context, '', () {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-      });
+      // If null, POST new pet profile
+      postPetProfile(context, _petModel);
     }
   }
 

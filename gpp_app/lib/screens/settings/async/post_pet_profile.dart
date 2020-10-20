@@ -3,10 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/network/user_auth_interceptor.dart';
+import 'package:gpp_app/models/provider/pet_profile.dart';
+import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/yes_alert_dialog.dart';
+import 'package:provider/provider.dart';
 
-Future<int> postPetProfile(
+void postPetProfile(
   BuildContext context,
   PetModel petModel,
 ) async {
@@ -34,5 +37,15 @@ Future<int> postPetProfile(
   }
   // PUT Successed
   MyLogger.debug('response data : ${response.data}');
-  return PetModel.fromJson(response.data).id;
+  int newPetId = PetModel.fromJson(response.data).id;
+  // Update provider related to new pet data
+  UserProfile _userProfile = Provider.of<UserProfile>(context, listen: false);
+  PetProfile _petProfile = Provider.of<PetProfile>(context, listen: false);
+  _userProfile.id = newPetId;
+  _petProfile.id = newPetId;
+  // Navigate
+  showYesAlertDialog(context, '', () {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+  });
 }

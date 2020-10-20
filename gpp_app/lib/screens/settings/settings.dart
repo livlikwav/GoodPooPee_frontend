@@ -7,11 +7,13 @@ import '../../routes.dart';
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('기기 및 환경설정')),
-      drawer: DrawerMenu(),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('기기 및 환경설정')),
+        drawer: DrawerMenu(),
+        body: _buildBody(context),
+      ),
     );
   }
 

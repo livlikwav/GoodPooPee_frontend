@@ -15,10 +15,12 @@ class _SettingDeviceScreenState extends State<SettingDeviceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('푸피캠/푸피스낵바 연결')),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('푸피캠/푸피스낵바 연결')),
+        body: _buildBody(context),
+      ),
     );
   }
 

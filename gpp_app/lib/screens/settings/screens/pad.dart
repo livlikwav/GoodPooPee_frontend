@@ -9,10 +9,12 @@ class SettingPadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(backgroundColor: backgroundColor, title: Text('')),
-      body: _buildBody(),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(backgroundColor: backgroundColor, title: Text('')),
+        body: _buildBody(),
+      ),
     );
   }
 

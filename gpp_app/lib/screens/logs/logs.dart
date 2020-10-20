@@ -8,13 +8,15 @@ import 'components/photo_list.dart';
 class LogsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(
-        title: Text('배변 기록 확인하기'),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(
+          title: Text('배변 기록 확인하기'),
+        ),
+        drawer: DrawerMenu(),
+        body: _buildBody(context),
       ),
-      drawer: DrawerMenu(),
-      body: _buildBody(context),
     );
   }
 

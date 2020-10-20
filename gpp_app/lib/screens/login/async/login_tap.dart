@@ -25,7 +25,7 @@ void loginTapped(BuildContext context, String email, String pw) async {
       },
     );
     // Handling exception
-  } on DioError catch (e) {
+  } on DioError {
     showNoAlertDialog(
       context,
       '아이디 또는 비밀번호를\n확인하세요',

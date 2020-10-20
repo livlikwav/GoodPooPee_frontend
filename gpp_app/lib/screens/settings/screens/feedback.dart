@@ -16,10 +16,12 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('간식 급여 설정')),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('간식 급여 설정')),
+        body: _buildBody(context),
+      ),
     );
   }
 

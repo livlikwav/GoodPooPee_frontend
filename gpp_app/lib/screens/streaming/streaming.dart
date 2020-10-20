@@ -21,15 +21,17 @@ class _StreamingScreenState extends State<StreamingScreen> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    return Scaffold(
-      primary: true,
-      body: _buildBody(context),
-      floatingActionButton: CustomCircularMenu(),
-      // DEBUG
-      // appBar: AppBar(
-      //   title: Text('DEBUG : 내 푸피캠 확인하기'),
-      //   // leading: _backButton(),
-      // ),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        body: _buildBody(context),
+        floatingActionButton: CustomCircularMenu(),
+        // DEBUG
+        // appBar: AppBar(
+        //   title: Text('DEBUG : 내 푸피캠 확인하기'),
+        //   // leading: _backButton(),
+        // ),
+      ),
     );
   }
 

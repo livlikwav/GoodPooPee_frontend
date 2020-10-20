@@ -47,10 +47,12 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('반려견 정보 설정')),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('반려견 정보 설정')),
+        body: _buildBody(context),
+      ),
     );
   }
 
@@ -164,7 +166,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         children: [
           _subtitle(subtitle),
           FlatButton(
-            child: Text(_formatDate(_petModel.birth)),
+            child: Text(_formatDate(_petModel.birth ?? DateTime.now())),
             onPressed: () {
               _selectBirth(context);
             },
@@ -180,7 +182,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         children: [
           _subtitle(subtitle),
           FlatButton(
-            child: Text(_formatDate(_petModel.adoption)),
+            child: Text(_formatDate(_petModel.adoption ?? DateTime.now())),
             onPressed: () {
               _selectAdoption(context);
             },

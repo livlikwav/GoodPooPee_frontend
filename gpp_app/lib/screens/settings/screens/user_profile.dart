@@ -18,10 +18,12 @@ class _SettingUserProfileScreenState extends State<SettingUserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('회원 정보 설정')),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('회원 정보 설정')),
+        body: _buildBody(context),
+      ),
     );
   }
 

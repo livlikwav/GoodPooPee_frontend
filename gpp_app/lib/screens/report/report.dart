@@ -78,11 +78,13 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('배변훈련 리포트')),
-      drawer: DrawerMenu(),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('배변훈련 리포트')),
+        drawer: DrawerMenu(),
+        body: _buildBody(context),
+      ),
     );
   }
 

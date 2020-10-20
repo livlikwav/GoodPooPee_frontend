@@ -11,10 +11,12 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(),
-      body: _buildBody(),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(),
+        body: _buildBody(),
+      ),
     );
   }
 

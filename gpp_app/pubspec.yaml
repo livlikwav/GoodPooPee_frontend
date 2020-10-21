@@ -42,6 +42,9 @@ dependencies:
   fl_chart: ^0.11.1 # A library to draw fantastic charts in Flutter
   flutter_slidable: ^0.5.7 # A Flutter implementation of slidable list item with directional slide actions that can be dismissed.
 
+  # for streaming
+  flutter_vlc_player: ^4.0.2
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3

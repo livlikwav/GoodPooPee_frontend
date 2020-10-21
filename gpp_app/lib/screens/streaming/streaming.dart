@@ -26,11 +26,6 @@ class _StreamingScreenState extends State<StreamingScreen> {
         primary: true,
         body: _buildBody(context),
         floatingActionButton: CustomCircularMenu(),
-        // DEBUG
-        // appBar: AppBar(
-        //   title: Text('DEBUG : 내 푸피캠 확인하기'),
-        //   // leading: _backButton(),
-        // ),
       ),
     );
   }
@@ -38,6 +33,7 @@ class _StreamingScreenState extends State<StreamingScreen> {
   Widget _buildBody(context) {
     return SizedBox(
       width: double.infinity,
+      height: double.infinity,
       child: LiveVideo(),
     );
   }

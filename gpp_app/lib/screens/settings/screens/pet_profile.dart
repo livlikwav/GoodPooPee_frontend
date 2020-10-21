@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
-import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/settings/async/post_pet_profile.dart';
 import 'package:gpp_app/screens/settings/async/put_pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +21,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   final TextEditingController breedController = TextEditingController();
   // Unfixed
   PetProfile _petProfile;
-  UserProfile _userProfile;
   PetModel _petModel;
   final String birthSubtitle = '출생 일자';
   final String adoptionSubtitle = '입양 일자';
@@ -43,7 +40,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   @override
   void initState() {
     _petProfile = Provider.of<PetProfile>(context, listen: false);
-    _userProfile = Provider.of<UserProfile>(context, listen: false);
     _petModel = PetModel.petProfile(_petProfile);
     MyLogger.debug('$_petProfile');
     MyLogger.debug('$_petModel');

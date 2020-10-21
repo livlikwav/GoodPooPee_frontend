@@ -20,7 +20,7 @@ Future<List<MonthlyReport>> getTotalReport(
     );
     // Handling exception
   } on DioError catch (e) {
-    throw e;
+    throw e; // to return error on future
   }
 
   // GET Successed

@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
 
 class LiveVideo extends StatefulWidget {
+  LiveVideo(this.url);
+  final String url;
   @override
   State<StatefulWidget> createState() => _LiveVideoState();
 }
 
 class _LiveVideoState extends State<LiveVideo> {
-  final String urlToStreamVideo = 'http://beachreachpeach.iptime.org:9981';
-  VlcPlayerController controller;
-  final double playerWidth = 640;
-  final double playerHeight = 360;
+  final double playerWidth = double.infinity;
+  final double playerHeight = double.infinity;
+  CustomVlcPlayerController _controller;
+
+  @override
+  void initState() {
+    // init controller
+    _controller = CustomVlcPlayerController(
+      onInit: () {
+        _controller.play();
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // MUST init controller
-    controller = VlcPlayerController(
-      onInit: () {
-        controller.play();
-      },
-    );
-
     return Scaffold(
       body: SizedBox(
         height: playerHeight,
         width: playerWidth,
-        child: new VlcPlayer(
+        child: VlcPlayer(
           aspectRatio: 16 / 9,
-          url: urlToStreamVideo,
-          controller: controller,
+          url: widget.url,
+          controller: _controller,
           placeholder: Center(
             child: CircularProgressIndicator(),
           ),

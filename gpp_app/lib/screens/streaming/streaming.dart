@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gpp_app/models/json/ppcam_model.dart';
-import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/streaming/components/custom_circular_menu.dart';
 import 'package:gpp_app/services/get_ppcam.dart';
@@ -28,7 +27,7 @@ class _StreamingScreenState extends State<StreamingScreen> {
     this.userId = Provider.of<UserProfile>(context, listen: false).id;
     _ppcamModel = getPpcam(
       context,
-      DioClient.serverUrl + 'user/' + userId.toString() + '/ppcam',
+      userId,
     );
     // init controller
     _controller = CustomVlcPlayerController(
@@ -41,53 +40,77 @@ class _StreamingScreenState extends State<StreamingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // set Landscape orientation
+    // set Landscape orientation at every build time
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
     return SafeArea(
-      child: Scaffold(
-        primary: true,
-        floatingActionButton: CustomCircularMenu(_controller),
-        body: FutureBuilder(
-          future: _ppcamModel,
-          builder: (BuildContext context, AsyncSnapshot<PpcamModel> snapshot) {
-            Widget child;
-            // Future complete with data
-            if (snapshot.hasData) {
-              // child = _getCardBody(snapshot.data);
-              MyLogger.debug('${snapshot.data}');
-              // Set url in ppcam profile
-              ppcamUrl =
-                  'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
-              // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
-              // ppcamUrl = snapshot.data.ipAddress;
-              child = SizedBox(
+      child: FutureBuilder(
+        future: _ppcamModel,
+        builder: (BuildContext context, AsyncSnapshot<PpcamModel> snapshot) {
+          Widget child;
+          // Future complete with data
+          if (snapshot.hasData) {
+            // child = _getCardBody(snapshot.data);
+            MyLogger.debug('${snapshot.data}');
+            // Set url in ppcam profile
+            ppcamUrl = snapshot.data.ipAddress;
+            // ============ FOR TEST ===============
+            ppcamUrl =
+                'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
+            // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
+            // ===========================
+            child = Scaffold(
+              primary: true,
+              floatingActionButton:
+                  CustomCircularMenu(_controller, snapshot.data.id),
+              body: SizedBox(
                 width: double.infinity,
                 child: LiveVideo(ppcamUrl, _controller),
-              );
-              // Future complete with error
-            } else if (snapshot.hasError) {
-              DioError error = snapshot.error;
-              if (error.response != null && error.response.statusCode == 404) {
-                child = Center(
-                  child: Text('사용하는 푸피캠을 연결해주세요'),
-                );
-                // Unknown error
-              } else {
-                child = Center(
-                  child: Text('푸피캠 정보를 불러오는 중 오류가 발생했습니다'),
-                );
-              }
-              // Future incomplete
+              ),
+            );
+            // Future complete with error
+          } else if (snapshot.hasError) {
+            DioError error = snapshot.error;
+            if (error.response != null && error.response.statusCode == 404) {
+              child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
+              // Unknown error
             } else {
-              child = Center(child: CircularProgressIndicator());
+              child = _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
             }
-            return child;
-          },
-        ),
+            // Future incomplete
+          } else {
+            child = Center(child: CircularProgressIndicator());
+          }
+          return child;
+        },
       ),
     );
   }
+
+  @override
+  void dispose() {
+    // set Landscape orientation
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    super.dispose();
+  }
+}
+
+Widget _alertBody(BuildContext context, String text) {
+  return Scaffold(
+    floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      child: Icon(
+        Icons.exit_to_app,
+        color: Colors.white,
+      ),
+      backgroundColor: Colors.orange,
+    ),
+    body: Center(
+      child: Text(text),
+    ),
+  );
 }

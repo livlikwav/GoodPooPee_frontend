@@ -1,14 +1,15 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
-import 'package:flutter/services.dart';
+import 'package:gpp_app/services/post_ppsnack_feeding.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/image_alert_dialog.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
 
 class CustomCircularMenu extends StatelessWidget {
-  CustomCircularMenu(this.controller);
+  CustomCircularMenu(this.controller, this.ppcamId);
   final CustomVlcPlayerController controller;
+  final int ppcamId;
   // final double _ringDiameter = getBlockSizeVertical(50);
   // final double _ringWidth = getBlockSizeVertical(10);
   final double _ringDiameter = 250.0;
@@ -24,18 +25,18 @@ class CustomCircularMenu extends StatelessWidget {
       children: <Widget>[
         _backMenu(context),
         _captureMenu(context),
-        _feedMenu(),
+        _feedMenu(context, ppcamId),
       ],
     );
   }
 
-  IconButton _feedMenu() {
+  IconButton _feedMenu(BuildContext context, int ppcamId) {
     return IconButton(
       color: Colors.white,
       icon: Icon(Icons.fastfood),
       onPressed: () {
-        MyLogger.info(
-            'streaming.dart>customCircularMenu: feed menu item tapped');
+        MyLogger.info('Feeding button tapped');
+        postPpsnackFeeding(context, ppcamId);
       },
     );
   }
@@ -45,9 +46,9 @@ class CustomCircularMenu extends StatelessWidget {
       color: Colors.white,
       icon: Icon(Icons.camera_alt),
       onPressed: () async {
+        MyLogger.info('Capture button tapped');
         Uint8List image = await controller.takeSnapshot();
         showImageDialog(context, image);
-        MyLogger.info('Success to get a screenshot of ppcam streaming');
       },
     );
   }
@@ -57,8 +58,7 @@ class CustomCircularMenu extends StatelessWidget {
       color: Colors.white,
       icon: Icon(Icons.exit_to_app),
       onPressed: () {
-        // set portraitUp orientation
-        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+        MyLogger.info('Exit button tapped');
         Navigator.of(context).pop();
       },
     );

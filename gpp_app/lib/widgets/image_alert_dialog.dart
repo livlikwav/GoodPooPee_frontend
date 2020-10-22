@@ -1,7 +1,5 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:gpp_app/util/my_logger.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 void showImageDialog(BuildContext context, Uint8List image) async {
@@ -21,7 +19,6 @@ void showImageDialog(BuildContext context, Uint8List image) async {
               // final result = await ImageGallerySaver.saveImage(image);
               // print(result);
               ImageGallerySaver.saveImage(image);
-              MyLogger.info('Saving captured image succeed');
               Navigator.of(context).pop();
             },
           ),

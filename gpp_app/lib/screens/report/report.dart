@@ -13,9 +13,9 @@ import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'package:gpp_app/services/get_daily_report.dart';
-import 'package:gpp_app/services/get_weekly_report.dart';
-import 'package:gpp_app/services/get_total_report.dart';
+import 'package:gpp_app/services/report/get_daily_report.dart';
+import 'package:gpp_app/services/report/get_weekly_report.dart';
+import 'package:gpp_app/services/report/get_total_report.dart';
 
 class ReportScreen extends StatefulWidget {
   @override

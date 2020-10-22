@@ -17,16 +17,26 @@ class DailyReportCard extends StatefulWidget {
 }
 
 class _DailyReportCardState extends State<DailyReportCard> {
+  // Avoid crush of layout whenever screen re-build
+  double _boxRadius;
+  double _boxHeight;
+  @override
+  void initState() {
+    _boxRadius = getBlockSizeHorizontal(5);
+    _boxHeight = getBlockSizeVertical(70);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
+        borderRadius: BorderRadius.circular(_boxRadius),
         color: Colors.white,
       ),
       margin: const EdgeInsets.all(15.0),
       padding: const EdgeInsets.all(10.0),
-      height: getBlockSizeVertical(70),
+      height: _boxHeight,
       child: FutureBuilder(
         future: widget.dailyReport,
         builder: (BuildContext context, AsyncSnapshot<DailyReport> snapshot) {

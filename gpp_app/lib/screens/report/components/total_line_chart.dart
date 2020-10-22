@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
-import 'package:gpp_app/services/parsing_total.dart';
+import 'package:gpp_app/services/report/parsing_total.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:intl/intl.dart';
 

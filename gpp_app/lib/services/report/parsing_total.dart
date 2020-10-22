@@ -42,13 +42,11 @@ class TotalData {
         ? 999
         : ((totalReport[length - 1].ratio - totalReport[0].ratio) * 100)
             .toInt();
-    MyLogger.debug('TOTAL: dtList : $dtList');
-    MyLogger.debug('TOTAL: ratioMap : $ratioMap');
-    MyLogger.debug('TOTAL: firstDate : $firstDate');
-    MyLogger.debug('TOTAL: lastDate : $lastDate');
-    MyLogger.debug('TOTAL: periodMonth : $periodMonth');
-    MyLogger.debug('TOTAL: meanRatio : $meanRatio');
-    MyLogger.debug('TOTAL: meanSuccess : $meanSuccess');
-    MyLogger.debug('TOTAL: progressRatio : $progressRatio');
+    MyLogger.debug('${toString()}');
+  }
+
+  @override
+  String toString() {
+    return 'Parsed total report: dtList : $dtList, ratioMap : $ratioMap, firstDate : $firstDate, lastDate : $lastDate, periodMonth : $periodMonth, meanRatio : $meanRatio, meanSuccess : $meanSuccess, progressRatio : $progressRatio';
   }
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
-import 'package:gpp_app/services/parsing_total.dart';
+import 'package:gpp_app/services/report/parsing_total.dart';
 import 'package:gpp_app/screens/report/components/empty_card.dart';
 import 'package:gpp_app/screens/report/components/percent_card.dart';
 import 'package:gpp_app/screens/report/components/stat_card.dart';
@@ -17,17 +17,28 @@ class TotalReportCard extends StatefulWidget {
 }
 
 class _TotalReportCardState extends State<TotalReportCard> {
+// Avoid crush of layout whenever screen re-build
+  double _boxRadius;
+  double _boxHeight;
+
+  @override
+  void initState() {
+    _boxRadius = getBlockSizeHorizontal(5);
+    _boxHeight = getBlockSizeVertical(70);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
+        borderRadius: BorderRadius.circular(_boxRadius),
         color: Colors.white,
       ),
       margin: const EdgeInsets.all(15.0),
       padding: const EdgeInsets.all(10.0),
       // width: getBlockSizeHorizontal(100),
-      height: getBlockSizeVertical(70),
+      height: _boxHeight,
       // child: _getCardBody(),
       child: FutureBuilder(
         future: widget.totalReport,

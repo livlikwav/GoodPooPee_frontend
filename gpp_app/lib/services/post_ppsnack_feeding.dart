@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gpp_app/models/json/ppcam_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/network/user_auth_interceptor.dart';
 import 'package:gpp_app/util/my_logger.dart';

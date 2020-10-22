@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gpp_app/constants/constants.dart';
 import 'package:gpp_app/constants/theme.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
+import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/screens/splash/splash.dart';
@@ -18,6 +19,8 @@ class GppApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserProfile>(create: (context) => UserProfile()),
         ChangeNotifierProvider<PetProfile>(create: (context) => PetProfile()),
+        ChangeNotifierProvider<PpcamProfile>(
+            create: (context) => PpcamProfile()),
       ],
       child: MaterialApp(
         title: Strings.appName,

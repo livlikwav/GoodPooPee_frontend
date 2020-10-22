@@ -12,7 +12,7 @@ import 'screens/settings/settings.dart';
 import 'screens/settings/screens/user_profile.dart';
 import 'screens/settings/screens/pet_profile.dart';
 import 'screens/settings/screens/feedback.dart';
-import 'screens/settings/screens/pad.dart';
+import 'screens/settings/screens/pad/pad.dart';
 import 'screens/settings/screens/device.dart';
 
 class Routes {

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gpp_app/models/json/ppcam_model.dart';
+import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/streaming/components/custom_circular_menu.dart';
 import 'package:gpp_app/services/get_ppcam.dart';
@@ -16,19 +18,31 @@ class StreamingScreen extends StatefulWidget {
 }
 
 class _StreamingScreenState extends State<StreamingScreen> {
+  bool isPpcamProfileNull;
   Future<PpcamModel> _ppcamModel;
   CustomVlcPlayerController _controller;
-  int userId;
+  int ppcamId;
   String ppcamUrl;
 
   @override
   void initState() {
-    // GET ppcam profile
-    this.userId = Provider.of<UserProfile>(context, listen: false).id;
-    _ppcamModel = getPpcam(
-      context,
-      userId,
-    );
+    PpcamProfile _ppcamProfile =
+        Provider.of<PpcamProfile>(context, listen: false);
+    MyLogger.debug('$_ppcamProfile');
+    if (_ppcamProfile.id == null) {
+      isPpcamProfileNull = true;
+      // GET ppcam profile
+      int userId = Provider.of<UserProfile>(context, listen: false).id;
+      _ppcamModel = getPpcam(
+        context,
+        DioClient.serverUrl + 'user/' + userId.toString() + '/ppcam',
+      );
+    } else {
+      isPpcamProfileNull = false;
+      ppcamId = _ppcamProfile.id;
+      ppcamUrl = _ppcamProfile.ipAddress;
+    }
+
     // init controller
     _controller = CustomVlcPlayerController(
       onInit: () {
@@ -46,47 +60,36 @@ class _StreamingScreenState extends State<StreamingScreen> {
       DeviceOrientation.landscapeRight,
     ]);
     return SafeArea(
-      child: FutureBuilder(
-        future: _ppcamModel,
-        builder: (BuildContext context, AsyncSnapshot<PpcamModel> snapshot) {
-          Widget child;
-          // Future complete with data
-          if (snapshot.hasData) {
-            // child = _getCardBody(snapshot.data);
-            MyLogger.debug('${snapshot.data}');
-            // Set url in ppcam profile
-            ppcamUrl = snapshot.data.ipAddress;
-            // ============ FOR TEST ===============
-            ppcamUrl =
-                'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
-            // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
-            // ===========================
-            child = Scaffold(
-              primary: true,
-              floatingActionButton:
-                  CustomCircularMenu(_controller, snapshot.data.id),
-              body: SizedBox(
-                width: double.infinity,
-                child: LiveVideo(ppcamUrl, _controller),
-              ),
-            );
-            // Future complete with error
-          } else if (snapshot.hasError) {
-            DioError error = snapshot.error;
-            if (error.response != null && error.response.statusCode == 404) {
-              child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
-              // Unknown error
-            } else {
-              child = _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
-            }
-            // Future incomplete
-          } else {
-            child = Center(child: CircularProgressIndicator());
-          }
-          return child;
-        },
-      ),
-    );
+        child: isPpcamProfileNull
+            // Server request
+            ? FutureBuilder(
+                future: _ppcamModel,
+                builder:
+                    (BuildContext context, AsyncSnapshot<PpcamModel> snapshot) {
+                  Widget child;
+                  // Future complete with data
+                  if (snapshot.hasData) {
+                    child = _getBody(context, _controller,
+                        snapshot.data.ipAddress, snapshot.data.id);
+                    // Future complete with error
+                  } else if (snapshot.hasError) {
+                    DioError error = snapshot.error;
+                    if (error.response != null &&
+                        error.response.statusCode == 404) {
+                      child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
+                      // Unknown error
+                    } else {
+                      child = _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
+                    }
+                    // Future incomplete
+                  } else {
+                    child = Center(child: CircularProgressIndicator());
+                  }
+                  return child;
+                },
+              )
+            // Already have ppcam profile
+            : _getBody(context, _controller, ppcamUrl, ppcamId));
   }
 
   @override
@@ -111,6 +114,23 @@ Widget _alertBody(BuildContext context, String text) {
     ),
     body: Center(
       child: Text(text),
+    ),
+  );
+}
+
+Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
+    String ppcamUrl, int ppcamId) {
+  // ============ FOR TEST ===============
+  ppcamUrl =
+      'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
+  // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
+  // =====================================
+  return Scaffold(
+    primary: true,
+    floatingActionButton: CustomCircularMenu(controller, ppcamId),
+    body: SizedBox(
+      width: double.infinity,
+      child: LiveVideo(ppcamUrl, controller),
     ),
   );
 }

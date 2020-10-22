@@ -1,9 +1,14 @@
-import 'dart:developer' as developer;
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/services.dart';
+import 'package:gpp_app/util/my_logger.dart';
+import 'package:gpp_app/widgets/image_alert_dialog.dart';
+import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
 
 class CustomCircularMenu extends StatelessWidget {
+  CustomCircularMenu(this.controller);
+  final CustomVlcPlayerController controller;
   // final double _ringDiameter = getBlockSizeVertical(50);
   // final double _ringWidth = getBlockSizeVertical(10);
   final double _ringDiameter = 250.0;
@@ -18,7 +23,7 @@ class CustomCircularMenu extends StatelessWidget {
       fabOpenColor: Colors.white,
       children: <Widget>[
         _backMenu(context),
-        _captureMenu(),
+        _captureMenu(context),
         _feedMenu(),
       ],
     );
@@ -29,25 +34,20 @@ class CustomCircularMenu extends StatelessWidget {
       color: Colors.white,
       icon: Icon(Icons.fastfood),
       onPressed: () {
-        developer.log(
-          'streaming.dart>customCircularMenu: feed menu item tapped',
-          name: 'MY.DEBUG',
-          level: 10,
-        );
+        MyLogger.info(
+            'streaming.dart>customCircularMenu: feed menu item tapped');
       },
     );
   }
 
-  IconButton _captureMenu() {
+  IconButton _captureMenu(BuildContext context) {
     return IconButton(
       color: Colors.white,
       icon: Icon(Icons.camera_alt),
-      onPressed: () {
-        developer.log(
-          'streaming.dart>customCircularMenu: capture menu item tapped',
-          name: 'MY.DEBUG',
-          level: 10,
-        );
+      onPressed: () async {
+        Uint8List image = await controller.takeSnapshot();
+        showImageDialog(context, image);
+        MyLogger.info('Success to get a screenshot of ppcam streaming');
       },
     );
   }

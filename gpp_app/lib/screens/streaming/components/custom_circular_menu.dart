@@ -2,11 +2,12 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/services.dart';
-import 'package:gpp_app/util/size_config.dart';
 
 class CustomCircularMenu extends StatelessWidget {
-  final double _ringDiameter = getBlockSizeVertical(50);
-  final double _ringWidth = getBlockSizeVertical(10);
+  // final double _ringDiameter = getBlockSizeVertical(50);
+  // final double _ringWidth = getBlockSizeVertical(10);
+  final double _ringDiameter = 250.0;
+  final double _ringWidth = 50.0;
 
   @override
   Widget build(BuildContext context) {

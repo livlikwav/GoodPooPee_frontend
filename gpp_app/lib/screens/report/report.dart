@@ -3,7 +3,6 @@ import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
-import 'package:gpp_app/screens/report/async/get_weekly_report.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
 import 'package:gpp_app/screens/report/components/empty_card.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
@@ -14,8 +13,9 @@ import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'async/get_daily_report.dart';
-import 'async/get_total_report.dart';
+import 'package:gpp_app/services/get_daily_report.dart';
+import 'package:gpp_app/services/get_weekly_report.dart';
+import 'package:gpp_app/services/get_total_report.dart';
 
 class ReportScreen extends StatefulWidget {
   @override

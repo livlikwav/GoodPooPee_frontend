@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
-import 'package:gpp_app/screens/settings/async/post_pet_profile.dart';
-import 'package:gpp_app/screens/settings/async/put_pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:gpp_app/services/post_pet_profile.dart';
+import 'package:gpp_app/services/put_pet_profile.dart';
 
 class SettingPetProfileScreen extends StatefulWidget {
   @override

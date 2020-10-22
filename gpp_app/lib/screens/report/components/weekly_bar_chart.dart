@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
-import 'package:gpp_app/screens/report/async/parsing_weekly.dart';
+import 'package:gpp_app/services/parsing_weekly.dart';
 import 'package:gpp_app/util/kst_weekday.dart';
 import 'package:intl/intl.dart';
 

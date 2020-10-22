@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
-import 'package:gpp_app/screens/report/async/parsing_total.dart';
+import 'package:gpp_app/services/parsing_total.dart';
 import 'package:gpp_app/screens/report/components/empty_card.dart';
 import 'package:gpp_app/screens/report/components/percent_card.dart';
 import 'package:gpp_app/screens/report/components/stat_card.dart';

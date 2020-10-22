@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/screens/login/async/login_tap.dart';
+import 'package:gpp_app/services/login_tap.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/default_button.dart';

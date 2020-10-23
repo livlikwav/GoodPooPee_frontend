@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 // import 'screens/home/home.dart';
 import 'screens/splash/splash.dart';
 import 'screens/login/login.dart';
@@ -14,6 +13,8 @@ import 'screens/settings/screens/pet_profile.dart';
 import 'screens/settings/screens/feedback.dart';
 import 'screens/settings/screens/pad/pad.dart';
 import 'screens/settings/screens/device.dart';
+// Sub screen dart files
+import 'package:gpp_app/screens/settings/screens/pad/pad_checking.dart';
 
 class Routes {
   Routes._();
@@ -32,6 +33,8 @@ class Routes {
   static const String setting_feedback = '/setting_feedback';
   static const String setting_pad = '/setting_pad';
   static const String setting_device = '/setting_device';
+  // Sub screens
+  static const String setting_pad_1 = '/setting_pad_1';
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
@@ -47,5 +50,7 @@ class Routes {
     setting_feedback: (BuildContext context) => SettingFeedbackScreen(),
     setting_pad: (BuildContext context) => SettingPadScreen(),
     setting_device: (BuildContext context) => SettingDeviceScreen(),
+    // Sub screen routes
+    setting_pad_1: (BuildContext context) => PadCheckingScreen(),
   };
 }

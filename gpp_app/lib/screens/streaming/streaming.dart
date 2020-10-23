@@ -5,7 +5,7 @@ import 'package:gpp_app/models/json/ppcam_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
-import 'package:gpp_app/screens/streaming/components/custom_circular_menu.dart';
+import 'package:gpp_app/screens/streaming/components/custom_streaming_menu.dart';
 import 'package:gpp_app/services/get_ppcam.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
@@ -18,16 +18,14 @@ class StreamingScreen extends StatefulWidget {
 }
 
 class _StreamingScreenState extends State<StreamingScreen> {
+  PpcamProfile _ppcamProfile;
   bool isPpcamProfileNull;
   Future<PpcamModel> _ppcamModel;
   CustomVlcPlayerController _controller;
-  int ppcamId;
-  String ppcamUrl;
 
   @override
   void initState() {
-    PpcamProfile _ppcamProfile =
-        Provider.of<PpcamProfile>(context, listen: false);
+    _ppcamProfile = Provider.of<PpcamProfile>(context, listen: false);
     MyLogger.debug('$_ppcamProfile');
     if (_ppcamProfile.id == null) {
       isPpcamProfileNull = true;
@@ -39,8 +37,6 @@ class _StreamingScreenState extends State<StreamingScreen> {
       );
     } else {
       isPpcamProfileNull = false;
-      ppcamId = _ppcamProfile.id;
-      ppcamUrl = _ppcamProfile.ipAddress;
     }
 
     // init controller
@@ -89,7 +85,8 @@ class _StreamingScreenState extends State<StreamingScreen> {
                 },
               )
             // Already have ppcam profile
-            : _getBody(context, _controller, ppcamUrl, ppcamId));
+            : _getBody(context, _controller, _ppcamProfile.ipAddress,
+                _ppcamProfile.id));
   }
 
   @override
@@ -127,7 +124,7 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
   // =====================================
   return Scaffold(
     primary: true,
-    floatingActionButton: CustomCircularMenu(controller, ppcamId),
+    floatingActionButton: CustomStreamingMenu(controller, ppcamId),
     body: SizedBox(
       width: double.infinity,
       child: LiveVideo(ppcamUrl, controller),

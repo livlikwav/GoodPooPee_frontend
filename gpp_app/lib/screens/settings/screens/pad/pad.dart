@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 
 class SettingPadScreen extends StatelessWidget {
   final Color backgroundColor = AppColors.orange[100];
+  final double _imgSize = getBlockSizeHorizontal(50);
+  final double _paddingX = getBlockSizeHorizontal(10);
+  // final double _paddingY = getBlockSizeHorizontal(1);
+  final double _margin = getBlockSizeVertical(2);
+  final double _fontSize = getBlockSizeHorizontal(5);
 
   @override
   Widget build(BuildContext context) {
@@ -13,48 +19,43 @@ class SettingPadScreen extends StatelessWidget {
       child: Scaffold(
         primary: true,
         appBar: AppBar(backgroundColor: backgroundColor, title: Text('')),
-        body: _buildBody(),
+        body: Container(
+          width: double.infinity, // screen width
+          child: Stack(
+            children: [
+              _buildText(context),
+              _buildCenterImage(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildBody() {
-    return Stack(
-      children: [
-        _buildText(),
-        _buildCenterImage(),
-      ],
-    );
-  }
-
-  Widget _buildText() {
+  Widget _buildText(BuildContext context) {
     return Column(
       children: [
         Flexible(
           child: Container(
-            width: getBlockSizeHorizontal(100), // screen width
-            padding: EdgeInsets.symmetric(
-              horizontal: getBlockSizeHorizontal(10),
-              vertical: getBlockSizeVertical(1),
-            ),
+            width: double.infinity,
             color: backgroundColor,
             child: Column(
               children: [
                 Text(
                   '배변 패드 위치 설정',
                   style: new TextStyle(
-                    fontSize: getBlockSizeHorizontal(10),
+                    fontSize: _fontSize * 2,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
-                  height: getBlockSizeVertical(2),
+                  height: _margin * 2,
                 ),
                 Text(
-                  '푸피캠 화면에서\n 배변 패드의 위치를 설정해주세요!\n설정된 배변 패드의 위치로,\n푸피캠이 반려견의 배변 성공 여부를\n판단합니다.',
+                  '설정된 배변 패드의 위치로,\n푸피캠이 반려견의 배변 성공 여부를\n판단합니다.',
                   textAlign: TextAlign.center,
                   style: new TextStyle(
-                    fontSize: getBlockSizeHorizontal(4),
+                    fontSize: _fontSize,
                   ),
                 ),
               ],
@@ -63,8 +64,7 @@ class SettingPadScreen extends StatelessWidget {
         ),
         Flexible(
           child: Container(
-            padding:
-                EdgeInsets.symmetric(horizontal: getBlockSizeHorizontal(10)),
+            padding: EdgeInsets.symmetric(horizontal: _paddingX),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -72,17 +72,17 @@ class SettingPadScreen extends StatelessWidget {
                   '화면에서 보이는\n배변 패드의 4개의 모서리를\n순서대로 터치해주세요',
                   textAlign: TextAlign.center,
                   style: new TextStyle(
-                    fontSize: getBlockSizeHorizontal(5),
+                    fontSize: _fontSize,
                   ),
                 ),
-                SizedBox(height: getBlockSizeVertical(5)),
+                SizedBox(height: _margin * 2),
                 DefaultButton(
                   text: '다음으로',
                   press: () {
-                    print('next button tapped');
+                    Navigator.of(context).pushNamed(Routes.setting_pad_1);
                   },
                 ),
-                SizedBox(height: getBlockSizeVertical(7)),
+                SizedBox(height: _margin * 3),
               ],
             ),
           ),
@@ -94,7 +94,7 @@ class SettingPadScreen extends StatelessWidget {
   Widget _buildCenterImage() {
     return Center(
       child: Container(
-        width: getBlockSizeHorizontal(50),
+        width: _imgSize,
         child: Image(
           image: AssetImage(Assets.dogTrainingPad),
         ),

@@ -6,8 +6,8 @@ import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/image_alert_dialog.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
 
-class CustomCircularMenu extends StatelessWidget {
-  CustomCircularMenu(this.controller, this.ppcamId);
+class CustomStreamingMenu extends StatelessWidget {
+  CustomStreamingMenu(this.controller, this.ppcamId);
   final CustomVlcPlayerController controller;
   final int ppcamId;
   // final double _ringDiameter = getBlockSizeVertical(50);

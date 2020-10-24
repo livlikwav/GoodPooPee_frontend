@@ -127,7 +127,11 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
     floatingActionButton: CustomPadMenu(controller, ppcamId),
     body: SizedBox(
       width: double.infinity,
-      child: LiveVideo(ppcamUrl, controller),
+      child: Stack(
+        children: <Widget>[
+          LiveVideo(ppcamUrl, controller),
+        ],
+      ),
     ),
   );
 }

@@ -5,13 +5,17 @@ import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/default_button.dart';
 
-class SettingPadScreen extends StatelessWidget {
+class SettingPadScreen extends StatefulWidget {
+  @override
+  _SettingPadScreenState createState() => _SettingPadScreenState();
+}
+
+class _SettingPadScreenState extends State<SettingPadScreen> {
   final Color backgroundColor = AppColors.orange[100];
-  final double _imgSize = getBlockSizeHorizontal(50);
-  final double _paddingX = getBlockSizeHorizontal(10);
-  // final double _paddingY = getBlockSizeHorizontal(1);
-  final double _margin = getBlockSizeVertical(2);
-  final double _fontSize = getBlockSizeHorizontal(5);
+  double _imgSize;
+  double _paddingX;
+  double _margin;
+  double _fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,10 @@ class SettingPadScreen extends StatelessWidget {
               );
             } else {
               // Orientation.portrait
+              _imgSize = getBlockSizeHorizontal(50);
+              _paddingX = getBlockSizeHorizontal(10);
+              _margin = getBlockSizeVertical(2);
+              _fontSize = getBlockSizeHorizontal(5);
               return Container(
                 // width: double.infinity, // screen width
                 child: Stack(

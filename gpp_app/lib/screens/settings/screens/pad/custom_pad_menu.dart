@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
+import 'package:provider/provider.dart';
 
 class CustomPadMenu extends StatelessWidget {
   CustomPadMenu(this.controller, this.ppcamId);
@@ -36,8 +38,10 @@ class CustomPadMenu extends StatelessWidget {
   IconButton _resetMenu(BuildContext context) {
     return IconButton(
       color: Colors.white,
-      icon: Icon(Icons.clear),
-      onPressed: () async {},
+      icon: Icon(Icons.loop),
+      onPressed: () {
+        Provider.of<PadProvider>(context, listen: false).reset();
+      },
     );
   }
 

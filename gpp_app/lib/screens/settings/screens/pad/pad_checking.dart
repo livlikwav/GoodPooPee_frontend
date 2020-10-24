@@ -7,6 +7,8 @@ import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/settings/screens/pad/custom_pad_menu.dart';
+import 'package:gpp_app/screens/settings/screens/pad/custom_snackbar.dart';
+import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
 // import 'package:gpp_app/services/get_pad.dart';
 import 'package:gpp_app/services/get_ppcam.dart';
 import 'package:gpp_app/util/my_logger.dart';
@@ -156,7 +158,7 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
       width: double.infinity,
       child: GestureDetector(
         onTapDown: (TapDownDetails details) {
-          MyLogger.debug('${details.globalPosition}');
+          MyLogger.debug('Tapped ${details.globalPosition}');
           Provider.of<PadProvider>(context, listen: false).add(
             details.globalPosition.dx,
             details.globalPosition.dy,
@@ -167,50 +169,10 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
             LiveVideo(ppcamUrl, controller),
             Stack(
               children: Provider.of<PadProvider>(context).widgetList,
-            )
+            ),
+            CustomSnackbar(),
           ],
         ),
-      ),
-    ),
-  );
-}
-
-class PadProvider extends ChangeNotifier {
-  List<Widget> widgetList;
-  int count = 1;
-  PadProvider() {
-    widgetList = [];
-  }
-
-  void add(double posX, double posY) {
-    if (count <= 4) {
-      widgetList.add(_getCircle(
-        number: count,
-        posX: posX,
-        posY: posY,
-      ));
-      count = count + 1;
-      MyLogger.debug('$widgetList');
-    }
-    notifyListeners();
-  }
-}
-
-Widget _getCircle({
-  @required int number,
-  @required double posX,
-  @required double posY,
-}) {
-  // The default radius if nothing is specified.
-  // static const double _defaultRadius = 20.0;
-  return Positioned(
-    left: posX - 20.0,
-    top: posY - 20.0,
-    child: CircleAvatar(
-      backgroundColor: Colors.orange,
-      child: Text(
-        '$number',
-        style: TextStyle(color: Colors.white),
       ),
     ),
   );

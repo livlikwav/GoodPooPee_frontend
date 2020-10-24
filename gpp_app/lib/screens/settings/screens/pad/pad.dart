@@ -19,14 +19,25 @@ class SettingPadScreen extends StatelessWidget {
       child: Scaffold(
         primary: true,
         appBar: AppBar(backgroundColor: backgroundColor, title: Text('')),
-        body: Container(
-          width: double.infinity, // screen width
-          child: Stack(
-            children: [
-              _buildText(context),
-              _buildCenterImage(),
-            ],
-          ),
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            if (orientation == Orientation.landscape) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              // Orientation.portrait
+              return Container(
+                // width: double.infinity, // screen width
+                child: Stack(
+                  children: [
+                    _buildText(context),
+                    _buildCenterImage(),
+                  ],
+                ),
+              );
+            }
+          },
         ),
       ),
     );

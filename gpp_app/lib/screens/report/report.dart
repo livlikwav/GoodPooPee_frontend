@@ -106,15 +106,24 @@ class _ReportScreenState extends State<ReportScreen> {
                     getBlockSizeHorizontal(5),
                     0,
                   ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        DailyReportCard(dailyReport),
-                        WeeklyReportCard(weeklyReport, todaysDate),
-                        TotalReportCard(totalReport),
-                      ],
-                    ),
-                  ),
+                  child: OrientationBuilder(builder: (context, orientation) {
+                    if (orientation == Orientation.landscape) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      // Orientation.portrait
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            DailyReportCard(dailyReport),
+                            WeeklyReportCard(weeklyReport, todaysDate),
+                            TotalReportCard(totalReport),
+                          ],
+                        ),
+                      );
+                    }
+                  }),
                 )
           // Not ready
           : Center(

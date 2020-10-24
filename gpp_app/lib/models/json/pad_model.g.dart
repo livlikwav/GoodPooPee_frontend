@@ -16,8 +16,8 @@ PadModel _$PadModelFromJson(Map<String, dynamic> json) {
     json['rdx'] as int,
     json['rdy'] as int,
     json['rux'] as int,
-    json['rdy'],
-  )..ruy = json['ruy'] as int;
+    json['ruy'] as int,
+  );
 }
 
 Map<String, dynamic> _$PadModelToJson(PadModel instance) => <String, dynamic>{

@@ -19,7 +19,7 @@ class PadModel {
     this.rdx,
     this.rdy,
     this.rux,
-    this.rdy,
+    this.ruy,
   );
 
   // int userId;

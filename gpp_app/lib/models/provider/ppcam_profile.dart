@@ -10,7 +10,7 @@ class PpcamProfile with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PetProfile: pet: $id, user: $userId, $ipAddress, $serialNum';
+    return 'PpcamProfile: pet: $id, user: $userId, $ipAddress, $serialNum';
   }
 
   void reset() {
@@ -18,7 +18,7 @@ class PpcamProfile with ChangeNotifier {
     userId = null;
     ipAddress = null;
     serialNum = null;
-    MyLogger.info('PetProfile reseted : ${toString()}');
+    MyLogger.info('PpcamProfile reseted -> ${toString()}');
     notifyListeners();
   }
 
@@ -27,6 +27,6 @@ class PpcamProfile with ChangeNotifier {
     userId = ppcamModel.userId;
     ipAddress = ppcamModel.ipAddress;
     serialNum = ppcamModel.serialNum;
-    MyLogger.info('PetProfile set by model : ${toString()}');
+    MyLogger.info('PpcamProfile set by model -> ${toString()}');
   }
 }

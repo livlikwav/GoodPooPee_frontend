@@ -67,46 +67,52 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    return SafeArea(
-      child: isPpcamProfileNull
-          // Server request
-          ? FutureBuilder(
-              future: _ppcamModel,
-              builder:
-                  (BuildContext context, AsyncSnapshot<PpcamModel> snapshot) {
-                Widget child;
-                // Future complete with data
-                if (snapshot.hasData) {
-                  child = _getBody(
-                    context,
-                    _controller,
-                    snapshot.data.ipAddress,
-                    snapshot.data.id,
-                  );
-                  // Future complete with error
-                } else if (snapshot.hasError) {
-                  DioError error = snapshot.error;
-                  if (error.response != null &&
-                      error.response.statusCode == 404) {
-                    child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
-                    // Unknown error
-                  } else {
-                    child = _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
-                  }
-                  // Future incomplete
-                } else {
-                  child = Center(child: CircularProgressIndicator());
-                }
-                return child;
-              },
-            )
-          // Already have ppcam profile
-          : _getBody(
-              context,
-              _controller,
-              _ppcamProfile.ipAddress,
-              _ppcamProfile.id,
-            ),
+    return ChangeNotifierProvider(
+      create: (context) => PadProvider(),
+      child: SafeArea(
+        child: Builder(
+          builder: (context) => isPpcamProfileNull
+              // Server request
+              ? FutureBuilder(
+                  future: _ppcamModel,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<PpcamModel> snapshot) {
+                    Widget child;
+                    // Future complete with data
+                    if (snapshot.hasData) {
+                      child = _getBody(
+                        context,
+                        _controller,
+                        snapshot.data.ipAddress,
+                        snapshot.data.id,
+                      );
+                      // Future complete with error
+                    } else if (snapshot.hasError) {
+                      DioError error = snapshot.error;
+                      if (error.response != null &&
+                          error.response.statusCode == 404) {
+                        child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
+                        // Unknown error
+                      } else {
+                        child =
+                            _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
+                      }
+                      // Future incomplete
+                    } else {
+                      child = Center(child: CircularProgressIndicator());
+                    }
+                    return child;
+                  },
+                )
+              // Already have ppcam profile
+              : _getBody(
+                  context,
+                  _controller,
+                  _ppcamProfile.ipAddress,
+                  _ppcamProfile.id,
+                ),
+        ),
+      ),
     );
   }
 
@@ -151,10 +157,17 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
       child: GestureDetector(
         onTapDown: (TapDownDetails details) {
           MyLogger.debug('${details.globalPosition}');
+          Provider.of<PadProvider>(context, listen: false).add(
+            details.globalPosition.dx,
+            details.globalPosition.dy,
+          );
         },
         child: Stack(
-          children: <Widget>[
+          children: [
             LiveVideo(ppcamUrl, controller),
+            Stack(
+              children: Provider.of<PadProvider>(context).widgetList,
+            )
           ],
         ),
       ),
@@ -162,14 +175,43 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
   );
 }
 
+class PadProvider extends ChangeNotifier {
+  List<Widget> widgetList;
+  int count = 1;
+  PadProvider() {
+    widgetList = [];
+  }
+
+  void add(double posX, double posY) {
+    if (count <= 4) {
+      widgetList.add(_getCircle(
+        number: count,
+        posX: posX,
+        posY: posY,
+      ));
+      count = count + 1;
+      MyLogger.debug('$widgetList');
+    }
+    notifyListeners();
+  }
+}
+
 Widget _getCircle({
   @required int number,
+  @required double posX,
+  @required double posY,
 }) {
-  return CircleAvatar(
-    backgroundColor: Colors.orange,
-    child: Text(
-      '$number',
-      style: TextStyle(color: Colors.white),
+  // The default radius if nothing is specified.
+  // static const double _defaultRadius = 20.0;
+  return Positioned(
+    left: posX - 20.0,
+    top: posY - 20.0,
+    child: CircleAvatar(
+      backgroundColor: Colors.orange,
+      child: Text(
+        '$number',
+        style: TextStyle(color: Colors.white),
+      ),
     ),
   );
 }

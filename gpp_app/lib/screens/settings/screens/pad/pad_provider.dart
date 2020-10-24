@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/util/my_logger.dart';
 
 class PadProvider extends ChangeNotifier {
+  final double screenWidth;
+  final double screenHeight;
   List<Widget> widgetList;
-  PadProvider() {
+  PadProvider(this.screenWidth, this.screenHeight) {
+    MyLogger.debug(
+        'Init PadProvider, screen size ($screenWidth, $screenHeight)');
     widgetList = [];
   }
 

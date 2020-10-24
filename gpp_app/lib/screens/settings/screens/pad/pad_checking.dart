@@ -24,6 +24,7 @@ class PadCheckingScreen extends StatefulWidget {
 class _PadCheckingScreenState extends State<PadCheckingScreen> {
   // For pad setting
   // Future<PadModel> _padModel;
+
   // For streaming
   PpcamProfile _ppcamProfile;
   bool isPpcamProfileNull;
@@ -66,11 +67,13 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
   Widget build(BuildContext context) {
     // set Landscape orientation at every build time
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    // Get screenSize
+    double screenWidth = MediaQuery.of(context).size.width;
+    double sreeenHeight = MediaQuery.of(context).size.height;
     return ChangeNotifierProvider(
-      create: (context) => PadProvider(),
+      create: (context) => PadProvider(screenWidth, sreeenHeight),
       child: SafeArea(
         child: Builder(
           builder: (context) => isPpcamProfileNull

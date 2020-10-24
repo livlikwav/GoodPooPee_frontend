@@ -15,7 +15,15 @@ class LogsScreen extends StatelessWidget {
           title: Text('배변 기록 확인하기'),
         ),
         drawer: DrawerMenu(),
-        body: _buildBody(context),
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            if (orientation == Orientation.landscape) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return _buildBody(context);
+            }
+          },
+        ),
       ),
     );
   }

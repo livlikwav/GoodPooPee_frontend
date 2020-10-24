@@ -12,7 +12,15 @@ class SettingsScreen extends StatelessWidget {
         primary: true,
         appBar: AppBar(title: Text('기기 및 환경설정')),
         drawer: DrawerMenu(),
-        body: _buildBody(context),
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            if (orientation == Orientation.landscape) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return _buildBody(context);
+            }
+          },
+        ),
       ),
     );
   }

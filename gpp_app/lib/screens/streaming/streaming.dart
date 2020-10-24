@@ -52,7 +52,6 @@ class _StreamingScreenState extends State<StreamingScreen> {
   Widget build(BuildContext context) {
     // set Landscape orientation at every build time
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
     return SafeArea(

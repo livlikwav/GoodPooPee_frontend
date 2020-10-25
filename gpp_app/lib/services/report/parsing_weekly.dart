@@ -46,7 +46,7 @@ class WeeklyData {
     this.ratioList = ratioTmpList.map((key, value) {
       return MapEntry(DateFormat('EEE').format(key), value);
     });
-    MyLogger.debug('${toString()}');
+    // MyLogger.debug('${toString()}');
   }
 
   @override

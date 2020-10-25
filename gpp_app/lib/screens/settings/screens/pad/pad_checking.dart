@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:gpp_app/models/json/pad_model.dart';
 import 'package:gpp_app/models/json/ppcam_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/ppcam_profile.dart';
@@ -9,7 +8,6 @@ import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/settings/screens/pad/custom_pad_menu.dart';
 import 'package:gpp_app/screens/settings/screens/pad/custom_snackbar.dart';
 import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
-// import 'package:gpp_app/services/get_pad.dart';
 import 'package:gpp_app/services/get_ppcam.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
@@ -22,9 +20,6 @@ class PadCheckingScreen extends StatefulWidget {
 }
 
 class _PadCheckingScreenState extends State<PadCheckingScreen> {
-  // For pad setting
-  // Future<PadModel> _padModel;
-
   // For streaming
   PpcamProfile _ppcamProfile;
   bool isPpcamProfileNull;
@@ -49,11 +44,6 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
       MyLogger.debug('Ppcam profile is not null');
       isPpcamProfileNull = false;
     }
-    // Init Pad info
-    // _padModel = getPad(
-    //   context,
-    //   DioClient.serverUrl + 'user/' + userId.toString() + '/pad',
-    // );
     // Init VLC controller
     _controller = CustomVlcPlayerController(
       onInit: () {
@@ -70,8 +60,11 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
       DeviceOrientation.landscapeRight,
     ]);
     // Get screenSize
-    double screenWidth = MediaQuery.of(context).size.width;
-    double sreeenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context)
+        .size
+        .height; // MediaQuery orientation is portrait
+    double sreeenHeight =
+        MediaQuery.of(context).size.width; // MediaQuery orientation is portrait
     return ChangeNotifierProvider(
       create: (context) => PadProvider(screenWidth, sreeenHeight),
       child: SafeArea(

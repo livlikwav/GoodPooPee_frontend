@@ -42,7 +42,7 @@ class TotalData {
         ? 999
         : ((totalReport[length - 1].ratio - totalReport[0].ratio) * 100)
             .toInt();
-    MyLogger.debug('${toString()}');
+    // MyLogger.debug('${toString()}');
   }
 
   @override

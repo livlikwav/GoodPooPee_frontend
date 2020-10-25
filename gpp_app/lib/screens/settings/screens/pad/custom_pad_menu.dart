@@ -34,15 +34,11 @@ class CustomPadMenu extends StatelessWidget {
       color: Colors.white,
       icon: Icon(Icons.check),
       onPressed: () {
-        List<double> _padPosList =
-            Provider.of<PadProvider>(context, listen: false).padPosList;
-        if (_padPosList.length != 8) {
-          MyLogger.debug('PadPosList length is not 8. add more button');
-        } else {
-          // PUT PAD
-          PadModel _padModel = PadModel.byList(_padPosList);
-          putPad(context, _padModel);
-        }
+        // PUT PAD
+        List<double> _reqList = Provider.of<PadProvider>(context, listen: false)
+            .getPosListOfCamera();
+        PadModel _padModel = PadModel.byList(_reqList);
+        putPad(context, _padModel);
       },
     );
   }

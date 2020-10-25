@@ -4,27 +4,35 @@ import 'package:gpp_app/util/my_logger.dart';
 class PadProvider extends ChangeNotifier {
   final double screenWidth;
   final double screenHeight;
-  List<Widget> widgetList;
+  List<Widget> widgetList = [];
+  List<double> padPosList = [];
   PadProvider(this.screenWidth, this.screenHeight) {
     MyLogger.debug(
         'Init PadProvider, screen size ($screenWidth, $screenHeight)');
-    widgetList = [];
   }
 
   void add(double posX, double posY) {
-    if (widgetList.length < 4) {
+    int length = widgetList.length;
+    if (length < 4) {
+      // Set pos list
+      padPosList.add(posX);
+      padPosList.add(posY);
+      // Set circle widget
       widgetList.add(_getCircle(
-        number: widgetList.length + 1,
+        number: length + 1,
         posX: posX,
         posY: posY,
       ));
       MyLogger.debug('$widgetList');
+      MyLogger.debug('$padPosList');
     }
     notifyListeners();
   }
 
   void reset() {
+    padPosList.clear();
     widgetList.clear();
+    MyLogger.debug('$padPosList');
     MyLogger.debug('$widgetList');
     notifyListeners();
   }

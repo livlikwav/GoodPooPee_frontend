@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+import 'package:gpp_app/models/json/pad_model.dart';
 import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
+import 'package:gpp_app/services/put_pad.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +22,9 @@ class CustomPadMenu extends StatelessWidget {
       ringWidth: _ringWidth,
       fabOpenColor: Colors.white,
       children: <Widget>[
-        _checkMenu(context),
-        _resetMenu(context),
         _backMenu(context),
+        _resetMenu(context),
+        _checkMenu(context),
       ],
     );
   }
@@ -31,7 +33,17 @@ class CustomPadMenu extends StatelessWidget {
     return IconButton(
       color: Colors.white,
       icon: Icon(Icons.check),
-      onPressed: () {},
+      onPressed: () {
+        List<double> _padPosList =
+            Provider.of<PadProvider>(context, listen: false).padPosList;
+        if (_padPosList.length != 8) {
+          MyLogger.debug('PadPosList length is not 8. add more button');
+        } else {
+          // PUT PAD
+          PadModel _padModel = PadModel.byList(_padPosList);
+          putPad(context, _padModel);
+        }
+      },
     );
   }
 

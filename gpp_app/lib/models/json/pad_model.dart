@@ -1,3 +1,4 @@
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 /// This allows the `User` class to access private members in
@@ -12,30 +13,63 @@ class PadModel {
   PadModel(
     // this.userId,
     this.id,
-    this.ldx,
-    this.ldy,
     this.lux,
     this.luy,
+    this.ldx,
+    this.ldy,
     this.rdx,
     this.rdy,
     this.rux,
     this.ruy,
   );
 
+  PadModel.byList(List<double> posList) {
+    if (posList.length != 8) {
+      MyLogger.error('PadModel addList list param length is not 8');
+      throw Exception('PadModel addList list param length is not 8');
+    } else {
+      lux = posList[0];
+      luy = posList[1];
+      ldx = posList[2];
+      ldy = posList[3];
+      rdx = posList[4];
+      rdy = posList[5];
+      rux = posList[6];
+      ruy = posList[7];
+      MyLogger.debug('PadModel byList: ${toString()}');
+    }
+  }
+
   // int userId;
   int id;
-  int ldx;
-  int ldy;
-  int lux;
-  int luy;
-  int rdx;
-  int rdy;
-  int rux;
-  int ruy;
+  double lux;
+  double luy;
+  double ldx;
+  double ldy;
+  double rdx;
+  double rdy;
+  double rux;
+  double ruy;
+
+  void addList(List<double> list) {
+    if (list.length != 8) {
+      MyLogger.debug('PadModel addList list param length is not 8');
+    } else {
+      lux = list[0];
+      luy = list[1];
+      ldx = list[2];
+      ldy = list[3];
+      rdx = list[4];
+      rdy = list[5];
+      rux = list[6];
+      ruy = list[7];
+      MyLogger.debug('PadModel addList: ${toString()}');
+    }
+  }
 
   @override
   String toString() {
-    return 'JSON-PadModel: id: $id, [ldx, ldy, lux, luy, rdx, rdy, rux, ruy]: [$ldx, $ldy, $lux, $luy, $rdx, $rdy, $rux, $ruy]';
+    return 'JSON-PadModel: id: $id, [lux, luy, ldx, ldy, rdx, rdy, rux, ruy]: [$lux, $luy, $ldx, $ldy, $rdx, $rdy, $rux, $ruy]';
   }
 
   /// A necessary factory constructor for creating a new User instance

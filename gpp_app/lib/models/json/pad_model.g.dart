@@ -9,23 +9,23 @@ part of 'pad_model.dart';
 PadModel _$PadModelFromJson(Map<String, dynamic> json) {
   return PadModel(
     json['id'] as int,
-    json['ldx'] as int,
-    json['ldy'] as int,
-    json['lux'] as int,
-    json['luy'] as int,
-    json['rdx'] as int,
-    json['rdy'] as int,
-    json['rux'] as int,
-    json['ruy'] as int,
+    (json['lux'] as num)?.toDouble(),
+    (json['luy'] as num)?.toDouble(),
+    (json['ldx'] as num)?.toDouble(),
+    (json['ldy'] as num)?.toDouble(),
+    (json['rdx'] as num)?.toDouble(),
+    (json['rdy'] as num)?.toDouble(),
+    (json['rux'] as num)?.toDouble(),
+    (json['ruy'] as num)?.toDouble(),
   );
 }
 
 Map<String, dynamic> _$PadModelToJson(PadModel instance) => <String, dynamic>{
       'id': instance.id,
-      'ldx': instance.ldx,
-      'ldy': instance.ldy,
       'lux': instance.lux,
       'luy': instance.luy,
+      'ldx': instance.ldx,
+      'ldy': instance.ldy,
       'rdx': instance.rdx,
       'rdy': instance.rdy,
       'rux': instance.rux,

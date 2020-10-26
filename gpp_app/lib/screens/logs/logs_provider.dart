@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
+import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/services/get_pet_records.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:intl/intl.dart';
 
@@ -11,13 +13,22 @@ class LogsProvider extends ChangeNotifier {
   }
   int petId;
   bool isPetNull;
-  // DateTime datetime = DateTime.now(); // default
-  DateTime datetime = DateTime(2020, 10, 18); // default
+  DateTime datetime = DateTime.now(); // default
   Future<List<PetRecord>> petRecords;
 
   String get dateString {
     if (datetime == null) return null;
     DateFormat formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(datetime);
+  }
+
+  void updateRecords(BuildContext context, DateTime picked) {
+    datetime = picked;
+    petRecords = getPetRecords(
+      context,
+      DioClient.serverUrl + 'pet/' + petId.toString() + '/records',
+      dateString,
+    );
+    notifyListeners();
   }
 }

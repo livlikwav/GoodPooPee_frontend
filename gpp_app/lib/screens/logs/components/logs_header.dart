@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
-import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -60,8 +59,6 @@ class _LogsHeaderState extends State<LogsHeader> {
       locale: Locale('ko', 'KO'),
     );
     if (picked != null && picked != _logsProvider.datetime)
-      setState(() {
-        _logsProvider.datetime = picked;
-      });
+      _logsProvider.updateRecords(context, picked);
   }
 }

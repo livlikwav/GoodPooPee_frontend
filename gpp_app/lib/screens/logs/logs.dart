@@ -10,6 +10,7 @@ import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:provider/provider.dart';
 
+import 'components/alert_card.dart';
 import 'components/photo_list.dart';
 
 class LogsScreen extends StatefulWidget {
@@ -63,6 +64,8 @@ class _LogsScreenState extends State<LogsScreen> {
   }
 
   Widget _buildBody(context) {
+    // Get provider in context to listen change
+    LogsProvider updateProvider = Provider.of<LogsProvider>(context);
     return Container(
       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
       width: MediaQuery.of(context).size.width,
@@ -72,32 +75,32 @@ class _LogsScreenState extends State<LogsScreen> {
         mainAxisSize: MainAxisSize.max,
         children: [
           LogsHeader(),
-          _logsProvider.isPetNull
-              ? EmptyCard(
-                  text: '반려견 데이터가 존재하지 않습니다.',
+          updateProvider.isPetNull
+              ? AlertCard(
+                  '반려견 데이터가 존재하지 않습니다.',
                 )
               : FutureBuilder(
-                  future: _logsProvider.petRecords,
+                  future: updateProvider.petRecords,
                   builder: (BuildContext context,
                       AsyncSnapshot<List<PetRecord>> snapshot) {
                     Widget child;
                     // Future complete with data
                     if (snapshot.hasData) {
                       child = Expanded(
-                        child: PhotoList(),
+                        child: PhotoList(snapshot.data),
                       );
                       // Future complete with error
                     } else if (snapshot.hasError) {
                       DioError error = snapshot.error;
                       if (error.response != null &&
                           error.response.statusCode == 404) {
-                        child = EmptyCard(
-                          text: '오늘의 배변 기록이 존재하지 않습니다.',
+                        child = AlertCard(
+                          '오늘의 배변 기록이 존재하지 않습니다.',
                         );
                         // Unknown error
                       } else {
-                        child = EmptyCard(
-                          text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
+                        child = AlertCard(
+                          '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
                         );
                       }
                       // Future incomplete

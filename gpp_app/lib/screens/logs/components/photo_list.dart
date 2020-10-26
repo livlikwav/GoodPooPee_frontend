@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/screens/logs/components/photo_list_item.dart';
-import 'package:gpp_app/util/size_config.dart';
 import 'dart:developer' as developer;
 
 import 'package:gpp_app/widgets/empty_card.dart';
 
 class PhotoList extends StatefulWidget {
+  PhotoList(this.petRecords);
+  final List<PetRecord> petRecords;
   @override
   _PhotoListState createState() => _PhotoListState();
 }
@@ -38,7 +40,7 @@ class _PhotoListState extends State<PhotoList> {
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
         ),
-        width: getBlockSizeHorizontal(90),
+        width: double.infinity,
         margin: const EdgeInsets.all(20.0),
         padding: const EdgeInsets.all(15.0),
         child: EmptyCard(

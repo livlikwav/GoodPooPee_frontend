@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class LogsHeader extends StatefulWidget {
   @override
@@ -9,8 +10,7 @@ class LogsHeader extends StatefulWidget {
 }
 
 class _LogsHeaderState extends State<LogsHeader> {
-  // Default: today's date
-  DateTime _selectedDate = DateTime.now();
+  LogsProvider _logsProvider;
 
   String _formatDate(DateTime datetime) {
     DateFormat formatter = DateFormat('yyyy-MM-dd');
@@ -19,6 +19,9 @@ class _LogsHeaderState extends State<LogsHeader> {
 
   @override
   Widget build(BuildContext context) {
+    // Init provider
+    _logsProvider = Provider.of<LogsProvider>(context);
+
     return GestureDetector(
       onTap: () {
         // Logging
@@ -40,7 +43,7 @@ class _LogsHeaderState extends State<LogsHeader> {
           margin: const EdgeInsets.fromLTRB(0, 10.0, 20.0, 10.0),
           padding: const EdgeInsets.all(7.0),
           child: Text(
-            _formatDate(_selectedDate),
+            _formatDate(_logsProvider.datetime),
             textAlign: TextAlign.center,
             style: new TextStyle(
               color: Colors.white,
@@ -53,37 +56,18 @@ class _LogsHeaderState extends State<LogsHeader> {
     );
   }
 
-  IconButton _calendarIconButton() {
-    return IconButton(
-      icon: Icon(Icons.calendar_today),
-      tooltip: '배변 기록 확인할 일자를 선택하세요.',
-      color: Colors.black,
-      iconSize: getBlockSizeVertical(3),
-      onPressed: () {
-        // Logging
-        developer.log(
-          'Logs_header.dart: calendarIconButton tapped',
-          name: 'MY.DEBUG',
-          level: 10,
-        );
-        // ShowDatePicker
-        _selectDate(context);
-      },
-    );
-  }
-
   void _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate, // Refer step 1
+      initialDate: _logsProvider.datetime, // Refer step 1
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',
       locale: Locale('ko', 'KO'),
     );
-    if (picked != null && picked != _selectedDate)
+    if (picked != null && picked != _logsProvider.datetime)
       setState(() {
-        _selectedDate = picked;
+        _logsProvider.datetime = picked;
       });
   }
 }

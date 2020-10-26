@@ -1,5 +1,4 @@
 import 'package:gpp_app/models/json/monthly_report.dart';
-import 'package:gpp_app/util/my_logger.dart';
 import 'package:intl/intl.dart';
 
 class TotalData {

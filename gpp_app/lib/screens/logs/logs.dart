@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/screens/logs/components/logs_header.dart';
-import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 
 import 'components/photo_list.dart';
@@ -31,36 +30,18 @@ class LogsScreen extends StatelessWidget {
   Widget _buildBody(context) {
     return Container(
       width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height,
+      // padding: const EdgeInsets.all(5),
       color: Theme.of(context).backgroundColor,
-      child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            getBlockSizeHorizontal(5),
-            getBlockSizeHorizontal(5),
-            getBlockSizeHorizontal(5),
-            0,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          LogsHeader(),
+          Expanded(
+            child: PhotoList(),
           ),
-          child: Container(
-            padding: EdgeInsets.fromLTRB(
-              getBlockSizeHorizontal(3),
-              getBlockSizeHorizontal(3),
-              getBlockSizeHorizontal(3),
-              getBlockSizeHorizontal(3),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
-            ),
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                children: <Widget>[
-                  LogsHeader(),
-                  SizedBox(height: getBlockSizeVertical(2)),
-                  PhotoList(),
-                ],
-              ),
-            ),
-          )),
+        ],
+      ),
     );
   }
 }

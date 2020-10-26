@@ -4,7 +4,7 @@ import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
-import 'package:gpp_app/screens/report/components/empty_card.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
 import 'package:gpp_app/screens/report/widgets/weekly_report_card.dart';
 import 'package:gpp_app/util/my_logger.dart';

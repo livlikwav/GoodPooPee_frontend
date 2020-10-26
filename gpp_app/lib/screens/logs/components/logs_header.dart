@@ -19,30 +19,36 @@ class _LogsHeaderState extends State<LogsHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: getBlockSizeHorizontal(75),
-      height: getBlockSizeVertical(7),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context).backgroundColor,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Text(
-              _formatDate(_selectedDate),
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                color: Colors.black,
-              ),
+    return GestureDetector(
+      onTap: () {
+        // Logging
+        developer.log(
+          'Logs_header.dart: calendarIconButton tapped',
+          name: 'MY.DEBUG',
+          level: 10,
+        );
+        // ShowDatePicker
+        _selectDate(context);
+      },
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.orange,
+          ),
+          margin: const EdgeInsets.fromLTRB(0, 10.0, 20.0, 10.0),
+          padding: const EdgeInsets.all(7.0),
+          child: Text(
+            _formatDate(_selectedDate),
+            textAlign: TextAlign.center,
+            style: new TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              // fontSize: getBlockSizeHorizontal(5),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: _calendarIconButton(),
-          ),
-        ],
+        ),
       ),
     );
   }

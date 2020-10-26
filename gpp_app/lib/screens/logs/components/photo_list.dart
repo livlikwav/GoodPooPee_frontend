@@ -4,6 +4,8 @@ import 'package:gpp_app/screens/logs/components/photo_list_item.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'dart:developer' as developer;
 
+import 'package:gpp_app/widgets/empty_card.dart';
+
 class PhotoList extends StatefulWidget {
   @override
   _PhotoListState createState() => _PhotoListState();
@@ -15,7 +17,7 @@ class _PhotoListState extends State<PhotoList> {
   final List<bool> _listItemsVisible = [];
   final List<bool> _listItemsCorrect = [];
   // For DEV, later initialized by REST API
-  int itemCount = 5;
+  int itemCount = 7;
 
   void _initBoolLists() {
     for (int i = 0; i < itemCount; i++) {
@@ -31,14 +33,26 @@ class _PhotoListState extends State<PhotoList> {
       _initBoolLists();
       return _buildListView();
     } else {
-      return _buildEmptyList();
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+        ),
+        // height: getBlockSizeVertical(10),
+        width: getBlockSizeHorizontal(90),
+        margin: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(15.0),
+        child: EmptyCard(
+          text: '해당 일자의 배변 기록이 존재하지 않습니다.',
+        ),
+      );
     }
   }
 
   Widget _buildListView() {
     return ListView.builder(
-      physics: const ClampingScrollPhysics(),
-      shrinkWrap: true,
+      // physics: const ClampingScrollPhysics(),
+      // shrinkWrap: true,
       itemCount: itemCount,
       itemBuilder: (BuildContext context, int index) {
         return _buildSlidable(
@@ -84,22 +98,6 @@ class _PhotoListState extends State<PhotoList> {
         isVisible,
         isCorrect,
       ),
-    );
-  }
-
-  // When list of photos is empty
-  Widget _buildEmptyList() {
-    return Column(
-      children: [
-        Icon(
-          Icons.error_outline,
-          color: Colors.orangeAccent,
-          size: getBlockSizeHorizontal(20),
-        ),
-        Text(
-          'No items in list',
-        ),
-      ],
     );
   }
 

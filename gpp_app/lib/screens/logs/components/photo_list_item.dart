@@ -3,17 +3,25 @@ import 'package:gpp_app/util/size_config.dart';
 
 ListTile photoListItem(bool isVisible, bool isCorrect) {
   return ListTile(
-    title: Stack(
-      alignment: Alignment.bottomRight,
-      children: [
-        _buildImage(),
-        _buildStatus(isVisible, isCorrect),
-        Align(
-          // Align center based on bottomRight
-          alignment: Alignment.center,
-          child: _buildTime(),
-        ),
-      ],
+    title: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.white,
+      ),
+      margin: const EdgeInsets.all(3.0),
+      padding: const EdgeInsets.all(15.0),
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          _buildImage(),
+          _buildStatus(isVisible, isCorrect),
+          Align(
+            // Align center based on bottomRight
+            alignment: Alignment.center,
+            child: _buildTime(),
+          ),
+        ],
+      ),
     ),
   );
 }

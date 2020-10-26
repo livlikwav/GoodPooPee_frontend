@@ -20,9 +20,13 @@ class _LiveVideoState extends State<LiveVideo> {
 
   @override
   Widget build(BuildContext context) {
+    // double screenWidth = MediaQuery.of(context).size.height;
+    // double screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SizedBox(
         child: VlcPlayer(
+          // aspectRatio: screenWidth / screenHeight,
+          // aspectRatio: 4 / 3,
           aspectRatio: 16 / 9,
           url: widget.url,
           controller: widget.controller,

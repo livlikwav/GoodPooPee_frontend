@@ -8,7 +8,6 @@ import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:gpp_app/services/get_pet_records.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'components/photo_list.dart';
@@ -19,32 +18,23 @@ class LogsScreen extends StatefulWidget {
 }
 
 class _LogsScreenState extends State<LogsScreen> {
-  DateTime datetime = DateTime(2020, 10, 18);
-  // DateTime datetime = DateTime.now();
-  int petId;
-  bool isPetNull;
-  Future<List<PetRecord>> petRecords;
+  LogsProvider _logsProvider;
 
   @override
   void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    UserProfile _user = Provider.of<UserProfile>(context);
-    petId = _user.petId;
-    if (petId == null) {
-      isPetNull = true;
-    } else {
-      isPetNull = false;
-      petRecords = getPetRecords(
+    UserProfile _user = Provider.of<UserProfile>(context, listen: false);
+    _logsProvider = LogsProvider(_user.petId);
+    if (!_logsProvider.isPetNull) {
+      _logsProvider.petRecords = getPetRecords(
         context,
-        DioClient.serverUrl + 'pet/' + petId.toString() + '/records',
-        DateFormat('yyyy-MM-dd').format(datetime),
+        DioClient.serverUrl +
+            'pet/' +
+            _logsProvider.petId.toString() +
+            '/records',
+        _logsProvider.dateString,
       );
     }
+    super.initState();
   }
 
   @override
@@ -57,7 +47,7 @@ class _LogsScreenState extends State<LogsScreen> {
         ),
         drawer: DrawerMenu(),
         body: ChangeNotifierProvider(
-          create: (context) => LogsProvider(context),
+          create: (context) => _logsProvider,
           child: OrientationBuilder(
             builder: (context, orientation) {
               if (orientation == Orientation.landscape) {
@@ -73,25 +63,21 @@ class _LogsScreenState extends State<LogsScreen> {
   }
 
   Widget _buildBody(context) {
-    // init LogsProvider
-    LogsProvider _logsProvider = Provider.of<LogsProvider>(context);
-    _logsProvider.petId = petId;
-    _logsProvider.datetime = datetime;
     return Container(
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
       width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height,
-      // padding: const EdgeInsets.all(5),
       color: Theme.of(context).backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           LogsHeader(),
-          isPetNull
+          _logsProvider.isPetNull
               ? EmptyCard(
                   text: '반려견 데이터가 존재하지 않습니다.',
                 )
               : FutureBuilder(
-                  future: petRecords,
+                  future: _logsProvider.petRecords,
                   builder: (BuildContext context,
                       AsyncSnapshot<List<PetRecord>> snapshot) {
                     Widget child;

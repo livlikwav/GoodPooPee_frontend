@@ -4,13 +4,16 @@ import 'package:gpp_app/util/my_logger.dart';
 import 'package:intl/intl.dart';
 
 class LogsProvider extends ChangeNotifier {
-  BuildContext context;
-  int petId;
-  DateTime datetime = DateTime.now(); // default
-  List<PetRecord> petRecords;
-  LogsProvider(BuildContext context) {
-    MyLogger.debug('LogsProvider initialized');
+  LogsProvider(int petId) {
+    this.petId = petId;
+    petId == null ? isPetNull = true : isPetNull = false;
+    MyLogger.debug('LogsProvider initialized: petID $petId, $datetime');
   }
+  int petId;
+  bool isPetNull;
+  // DateTime datetime = DateTime.now(); // default
+  DateTime datetime = DateTime(2020, 10, 18); // default
+  Future<List<PetRecord>> petRecords;
 
   String get dateString {
     if (datetime == null) return null;

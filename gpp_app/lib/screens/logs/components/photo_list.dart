@@ -38,7 +38,6 @@ class _PhotoListState extends State<PhotoList> {
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
         ),
-        // height: getBlockSizeVertical(10),
         width: getBlockSizeHorizontal(90),
         margin: const EdgeInsets.all(20.0),
         padding: const EdgeInsets.all(15.0),

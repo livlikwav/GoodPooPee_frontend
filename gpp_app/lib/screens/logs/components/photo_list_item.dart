@@ -8,7 +8,7 @@ ListTile photoListItem(bool isVisible, bool isCorrect) {
         borderRadius: BorderRadius.circular(10.0),
         color: Colors.white,
       ),
-      margin: const EdgeInsets.all(3.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0),
       padding: const EdgeInsets.all(15.0),
       child: Stack(
         alignment: Alignment.bottomRight,
@@ -17,7 +17,7 @@ ListTile photoListItem(bool isVisible, bool isCorrect) {
           _buildStatus(isVisible, isCorrect),
           Align(
             // Align center based on bottomRight
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             child: _buildTime(),
           ),
         ],

@@ -7,7 +7,6 @@ import 'package:gpp_app/screens/logs/components/logs_header.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:gpp_app/services/get_pet_records.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
-import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:provider/provider.dart';
 
 import 'components/alert_card.dart';
@@ -25,16 +24,7 @@ class _LogsScreenState extends State<LogsScreen> {
   void initState() {
     UserProfile _user = Provider.of<UserProfile>(context, listen: false);
     _logsProvider = LogsProvider(_user.petId);
-    if (!_logsProvider.isPetNull) {
-      _logsProvider.petRecords = getPetRecords(
-        context,
-        DioClient.serverUrl +
-            'pet/' +
-            _logsProvider.petId.toString() +
-            '/records',
-        _logsProvider.dateString,
-      );
-    }
+    _logsProvider.initRecords(context);
     super.initState();
   }
 

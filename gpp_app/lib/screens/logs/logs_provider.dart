@@ -22,6 +22,18 @@ class LogsProvider extends ChangeNotifier {
     return formatter.format(datetime);
   }
 
+  void initRecords(BuildContext context) {
+    if (!isPetNull) {
+      petRecords = getPetRecords(
+        context,
+        DioClient.serverUrl + 'pet/' + petId.toString() + '/records',
+        dateString,
+      );
+    } else {
+      MyLogger.debug('LogsProvider initRecords: pet is null');
+    }
+  }
+
   void updateRecords(BuildContext context, DateTime picked) {
     datetime = picked;
     petRecords = getPetRecords(

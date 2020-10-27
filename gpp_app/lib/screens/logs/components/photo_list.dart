@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
+import 'package:gpp_app/screens/logs/components/alert_card.dart';
 import 'package:gpp_app/screens/logs/components/photo_list_item.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'dart:developer' as developer;
-
-import 'package:gpp_app/widgets/empty_card.dart';
 
 class PhotoList extends StatefulWidget {
   PhotoList(this.petRecords);
@@ -16,37 +16,31 @@ class PhotoList extends StatefulWidget {
 class _PhotoListState extends State<PhotoList> {
   // To change listitem dynamically
   final List<bool> _listItemsActive = [];
-  final List<bool> _listItemsVisible = [];
   final List<bool> _listItemsCorrect = [];
-  // For DEV, later initialized by REST API
-  int itemCount = 7;
+  int count;
+
+  @override
+  void didChangeDependencies() {
+    count = widget.petRecords.length;
+    MyLogger.debug('PhotoList count: $count');
+    super.didChangeDependencies();
+  }
 
   void _initBoolLists() {
-    for (int i = 0; i < itemCount; i++) {
+    for (int i = 0; i < count; i++) {
       _listItemsActive.add(true);
-      _listItemsVisible.add(false);
       _listItemsCorrect.add(true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (itemCount > 0) {
+    if (count > 0) {
       _initBoolLists();
       return _buildListView();
     } else {
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: Colors.white,
-        ),
-        width: double.infinity,
-        margin: const EdgeInsets.all(20.0),
-        padding: const EdgeInsets.all(15.0),
-        child: EmptyCard(
-          text: '해당 일자의 배변 기록이 존재하지 않습니다.',
-        ),
-      );
+      // There is response, but no data (error)
+      return AlertCard('기록을 불러오는 중 오류가 발생했습니다.');
     }
   }
 
@@ -54,13 +48,13 @@ class _PhotoListState extends State<PhotoList> {
     return ListView.builder(
       // physics: const ClampingScrollPhysics(),
       // shrinkWrap: true,
-      itemCount: itemCount,
+      itemCount: count,
       itemBuilder: (BuildContext context, int index) {
         return _buildSlidable(
           index,
           _listItemsActive[index],
-          _listItemsVisible[index],
           _listItemsCorrect[index],
+          widget.petRecords[index],
         );
       },
     );
@@ -69,9 +63,15 @@ class _PhotoListState extends State<PhotoList> {
   Widget _buildSlidable(
     int index,
     bool isActive,
-    bool isVisible,
     bool isCorrect,
+    PetRecord petRecord,
   ) {
+    // Check success or fail
+    if (petRecord.result == 'SUCCESS') {
+      isCorrect = true;
+    } else {
+      isCorrect = false;
+    }
     return Slidable(
       key: ValueKey(index),
       actionPane: SlidableDrawerActionPane(),
@@ -95,9 +95,9 @@ class _PhotoListState extends State<PhotoList> {
             ]
           // Inactive
           : null,
-      child: photoListItem(
-        isVisible,
+      child: PhotoListItem(
         isCorrect,
+        petRecord,
       ),
     );
   }
@@ -110,7 +110,6 @@ class _PhotoListState extends State<PhotoList> {
     );
     setState(() {
       _listItemsActive[index] = false;
-      _listItemsVisible[index] = true;
       _listItemsCorrect[index] = true;
     });
   }
@@ -123,7 +122,6 @@ class _PhotoListState extends State<PhotoList> {
     );
     setState(() {
       _listItemsActive[index] = false;
-      _listItemsVisible[index] = true;
       _listItemsCorrect[index] = false;
     });
   }

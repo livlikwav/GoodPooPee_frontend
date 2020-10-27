@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
-import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/logs/components/logs_header.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
-import 'package:gpp_app/services/get_pet_records.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:provider/provider.dart';
 
@@ -54,6 +53,7 @@ class _LogsScreenState extends State<LogsScreen> {
   }
 
   Widget _buildBody(context) {
+    MyLogger.debug('LogsScreen rebuild body');
     // Get provider in context to listen change
     LogsProvider updateProvider = Provider.of<LogsProvider>(context);
     return Container(

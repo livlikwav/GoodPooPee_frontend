@@ -4,7 +4,6 @@ import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/screens/logs/components/alert_card.dart';
 import 'package:gpp_app/screens/logs/components/photo_list_item.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'dart:developer' as developer;
 
 class PhotoList extends StatefulWidget {
   PhotoList(this.petRecords);
@@ -16,57 +15,46 @@ class PhotoList extends StatefulWidget {
 class _PhotoListState extends State<PhotoList> {
   // To change listitem dynamically
   final List<bool> _listItemsActive = [];
-  final List<bool> _listItemsCorrect = [];
   int count;
 
-  @override
-  void didChangeDependencies() {
-    count = widget.petRecords.length;
-    MyLogger.debug('PhotoList count: $count');
-    super.didChangeDependencies();
-  }
-
-  void _initBoolLists() {
+  void _initActiveLists() {
+    _listItemsActive.clear();
     for (int i = 0; i < count; i++) {
       _listItemsActive.add(true);
-      _listItemsCorrect.add(true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    count = widget.petRecords.length;
+    MyLogger.debug('PhotoList count: $count');
     if (count > 0) {
-      _initBoolLists();
-      return _buildListView();
+      _initActiveLists();
+      return ListView.builder(
+        itemCount: count,
+        itemBuilder: (BuildContext context, int index) {
+          return _buildSlidable(
+            index,
+            context,
+            _listItemsActive[index],
+            widget.petRecords[index],
+          );
+        },
+      );
     } else {
       // There is response, but no data (error)
       return AlertCard('기록을 불러오는 중 오류가 발생했습니다.');
     }
   }
 
-  Widget _buildListView() {
-    return ListView.builder(
-      // physics: const ClampingScrollPhysics(),
-      // shrinkWrap: true,
-      itemCount: count,
-      itemBuilder: (BuildContext context, int index) {
-        return _buildSlidable(
-          index,
-          _listItemsActive[index],
-          _listItemsCorrect[index],
-          widget.petRecords[index],
-        );
-      },
-    );
-  }
-
   Widget _buildSlidable(
     int index,
+    BuildContext context,
     bool isActive,
-    bool isCorrect,
     PetRecord petRecord,
   ) {
     // Check success or fail
+    bool isCorrect;
     if (petRecord.result == 'SUCCESS') {
       isCorrect = true;
     } else {
@@ -83,14 +71,26 @@ class _PhotoListState extends State<PhotoList> {
                 color: Colors.orangeAccent,
                 icon: Icons.check_circle,
                 foregroundColor: Colors.white,
-                onTap: () => _setCorrect(index),
+                onTap: () {
+                  MyLogger.debug('PhotoListItem: $index Correct tapped');
+                  setState(() {
+                    _listItemsActive[index] = false;
+                    petRecord.result = 'SUCCESS';
+                  });
+                },
               ),
               IconSlideAction(
                 caption: '틀렸어요',
                 color: Colors.grey,
                 icon: Icons.cancel,
                 foregroundColor: Colors.white,
-                onTap: () => _setIncorrect(index),
+                onTap: () {
+                  MyLogger.debug('PhotoListItem: $index Incorrect tapped');
+                  setState(() {
+                    _listItemsActive[index] = false;
+                    petRecord.result = 'FAIL';
+                  });
+                },
               ),
             ]
           // Inactive
@@ -100,29 +100,5 @@ class _PhotoListState extends State<PhotoList> {
         petRecord,
       ),
     );
-  }
-
-  void _setCorrect(int index) {
-    developer.log(
-      'PhotoListItem: $index Correct tapped',
-      name: 'MY.DEBUG',
-      level: 10,
-    );
-    setState(() {
-      _listItemsActive[index] = false;
-      _listItemsCorrect[index] = true;
-    });
-  }
-
-  void _setIncorrect(int index) {
-    developer.log(
-      'PhotoListItem: $index Incorrect tapped',
-      name: 'MY.DEBUG',
-      level: 10,
-    );
-    setState(() {
-      _listItemsActive[index] = false;
-      _listItemsCorrect[index] = false;
-    });
   }
 }

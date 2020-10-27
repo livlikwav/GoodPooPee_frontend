@@ -29,21 +29,25 @@ class _PhotoListItemState extends State<PhotoListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: EdgeInsets.all(0.0),
       title: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
         ),
-        margin: const EdgeInsets.symmetric(vertical: 5.0),
-        padding: const EdgeInsets.all(15.0),
+        margin: const EdgeInsets.symmetric(vertical: 3.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Stack(
           alignment: Alignment.bottomRight,
           children: [
-            _buildImage(imgUrl),
-            _buildStatus(widget.isCorrect),
+            Center(child: _buildImage(imgUrl)),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: _buildStatus(widget.isCorrect),
+            ),
             Align(
               // Align center based on bottomRight
-              alignment: Alignment.topLeft,
+              alignment: Alignment.bottomCenter,
               child: _buildText(dateString),
             ),
           ],
@@ -55,9 +59,8 @@ class _PhotoListItemState extends State<PhotoListItem> {
 
 Widget _buildImage(String imgUrl) {
   // DEBUG
-  imgUrl =
-      'https://cdn.pixabay.com/photo/2020/05/03/13/09/puppy-5124947_1280.jpg';
-  // DEBUG
+  // imgUrl =
+  //     'https://cdn.pixabay.com/photo/2020/05/03/13/09/puppy-5124947_1280.jpg';
   return FadeInImage.memoryNetwork(
     placeholder: kTransparentImage,
     image: imgUrl,
@@ -70,7 +73,6 @@ Widget _buildImage(String imgUrl) {
 
 Widget _buildStatus(bool isCorrect) {
   return isCorrect
-      // Correct
       ? Container(
           width: getBlockSizeHorizontal(12),
           height: getBlockSizeHorizontal(12),

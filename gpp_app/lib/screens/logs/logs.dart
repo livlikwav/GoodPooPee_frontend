@@ -57,7 +57,7 @@ class _LogsScreenState extends State<LogsScreen> {
     // Get provider in context to listen change
     LogsProvider updateProvider = Provider.of<LogsProvider>(context);
     return Container(
-      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
+      padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0),
       width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height,
       color: Theme.of(context).backgroundColor,

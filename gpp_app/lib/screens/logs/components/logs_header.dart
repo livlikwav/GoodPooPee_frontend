@@ -52,7 +52,7 @@ class _LogsHeaderState extends State<LogsHeader> {
   void _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: _logsProvider.datetime, // Refer step 1
+      initialDate: _logsProvider.datetime,
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',

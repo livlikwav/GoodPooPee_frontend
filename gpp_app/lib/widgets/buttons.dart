@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/constants/text_style.dart';
 import 'package:provider/provider.dart';
 
 class DefaultButton extends StatelessWidget {
@@ -23,7 +22,7 @@ class DefaultButton extends StatelessWidget {
         onPressed: press,
         child: Text(
           text,
-          style: defaultButtonStyle,
+          style: Theme.of(context).textTheme.button,
         ),
       ),
     );
@@ -59,7 +58,6 @@ class _DynamicButtonState extends State<DynamicButton> {
         disabledColor: disableColor,
         child: Text(
           widget.text,
-          style: defaultButtonStyle,
         ),
       ),
     );

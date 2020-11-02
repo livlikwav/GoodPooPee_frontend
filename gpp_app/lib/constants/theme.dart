@@ -2,15 +2,23 @@ import 'package:gpp_app/constants/colors.dart';
 
 import 'package:flutter/material.dart';
 
+const customTextTheme = const TextTheme(
+  headline1: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+  headline2: TextStyle(fontSize: 30.0, fontWeight: FontWeight.normal),
+  subtitle1: TextStyle(fontSize: 25.0, fontWeight: FontWeight.normal),
+  bodyText1: TextStyle(fontSize: 17.0, fontWeight: FontWeight.normal),
+  button: TextStyle(
+      fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.normal),
+);
+
 final ThemeData themeData = new ThemeData(
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: appBarTheme(),
-  // textTheme: textTheme(),
-  // Set scaled text size on runtime by text_style.dart
+  fontFamily: 'NotoSansKR',
+  textTheme: customTextTheme,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   // Details
   brightness: Brightness.light,
-  // primarySwatch: MaterialColor(AppColors.orange[500].value, AppColors.orange),
   primaryColor: AppColors.primaryColor,
   primaryColorBrightness: Brightness.light,
   accentColor: AppColors.secondaryColor,

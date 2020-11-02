@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/text_style.dart';
 import 'package:gpp_app/screens/register/components/register_form.dart';
 import 'package:gpp_app/util/size_config.dart';
 
@@ -34,7 +33,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Center(
                 child: Text(
                   '굿푸피 계정을 등록하세요',
-                  style: h2Style,
                 ),
               ),
               SizedBox(height: getBlockSizeVertical(3)),

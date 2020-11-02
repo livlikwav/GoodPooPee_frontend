@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: EmptyAppBar(), //empty_app_bar_widget
+        appBar: EmptyAppBar(),
         body: _buildBody(context),
       ),
     );
@@ -38,9 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Expanded(flex: 5, child: UpSide()),
               Expanded(
                 flex: 3,
-                child: buildCenterSide(context),
+                child: CenterSide(),
               ),
-              Expanded(flex: 2, child: buildDownSide(context, registerTapped)),
+              Expanded(flex: 2, child: DownSide(registerTapped)),
             ],
           ),
         ),

@@ -45,7 +45,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
         children: <Widget>[
           DrawerHeader(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: _isPetNull
                   ? <Widget>[
@@ -142,10 +142,12 @@ class _DrawerMenuState extends State<DrawerMenu> {
               Navigator.of(context).pushNamed(Routes.settings);
             },
           ),
+          SizedBox(
+            height: getBlockSizeVertical(35),
+          ),
           Divider(),
-          _menuTile(
+          _logoutTile(
             label: '로그아웃',
-            leading: Icons.exit_to_app,
             style: Theme.of(context).textTheme.bodyText2,
             onTap: () {
               // Init multi providers
@@ -170,6 +172,21 @@ ListTile _menuTile({
 }) {
   return ListTile(
     leading: Icon(leading),
+    title: Text(
+      label,
+      style: style,
+    ),
+    onTap: onTap,
+  );
+}
+
+ListTile _logoutTile({
+  @required String label,
+  @required Function onTap,
+  @required TextStyle style,
+}) {
+  return ListTile(
+    trailing: Icon(Icons.power_settings_new),
     title: Text(
       label,
       style: style,

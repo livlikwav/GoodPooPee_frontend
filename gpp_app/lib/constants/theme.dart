@@ -15,6 +15,7 @@ const customTextTheme = const TextTheme(
   ),
   subtitle1: TextStyle(fontSize: 25.0, fontWeight: FontWeight.normal),
   bodyText1: TextStyle(fontSize: 17.0, fontWeight: FontWeight.normal),
+  bodyText2: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal),
   button: TextStyle(
       fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.normal),
 );

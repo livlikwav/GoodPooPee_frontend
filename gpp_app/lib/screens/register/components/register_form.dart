@@ -19,6 +19,7 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  TextTheme _textTheme;
   final DioClient dioClient = DioClient(Dio());
   final _formKey = GlobalKey<FormState>();
   String email;
@@ -46,6 +47,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    _textTheme = Theme.of(context).textTheme;
     return ChangeNotifierProvider(
       create: (context) => ValueNotifier<bool>(false),
       child: Form(
@@ -78,6 +80,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      style: _textTheme.bodyText1,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
@@ -113,6 +116,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
+      style: _textTheme.bodyText1,
       onSaved: (newValue) => firstName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -141,6 +145,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
+      style: _textTheme.bodyText1,
       onSaved: (newValue) => lastName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -169,6 +174,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      style: _textTheme.bodyText1,
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
@@ -206,6 +212,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   TextFormField buildConformPassFormField() {
     return TextFormField(
+      style: _textTheme.bodyText1,
       obscureText: true,
       onSaved: (newValue) => conformPassword = newValue,
       onChanged: (value) {

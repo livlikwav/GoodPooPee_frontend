@@ -58,6 +58,7 @@ class _DynamicButtonState extends State<DynamicButton> {
         disabledColor: disableColor,
         child: Text(
           widget.text,
+          style: Theme.of(context).textTheme.button,
         ),
       ),
     );

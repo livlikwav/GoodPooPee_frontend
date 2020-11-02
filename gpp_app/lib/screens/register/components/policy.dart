@@ -9,6 +9,7 @@ class PrivacyPolicy extends StatefulWidget {
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
   @override
   Widget build(BuildContext context) {
+    TextTheme _textTheme = Theme.of(context).textTheme;
     ValueNotifier provider = Provider.of<ValueNotifier<bool>>(context);
     return Row(
       children: [
@@ -16,6 +17,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           child: Text(
             '이용약관 및 개인정보처리방침에 동의합니다.',
             textAlign: TextAlign.center,
+            style: _textTheme.bodyText2,
           ),
         ),
         Checkbox(

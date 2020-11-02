@@ -14,30 +14,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Scaffold(
         primary: true,
         appBar: AppBar(),
-        body: _buildBody(),
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    return SizedBox(
-      width: double.infinity,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: getBlockSizeHorizontal(10),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: getBlockSizeVertical(3)),
-              Center(
-                child: Text(
-                  '굿푸피 계정을 등록하세요',
-                ),
+        body: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: getBlockSizeHorizontal(10),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: getBlockSizeVertical(3)),
+                  Center(
+                    child: Text(
+                      '굿푸피 계정을 등록하세요',
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                  SizedBox(height: getBlockSizeVertical(3)),
+                  RegisterForm(),
+                ],
               ),
-              SizedBox(height: getBlockSizeVertical(3)),
-              RegisterForm(),
-            ],
+            ),
           ),
         ),
       ),

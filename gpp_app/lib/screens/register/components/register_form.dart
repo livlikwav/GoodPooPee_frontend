@@ -5,7 +5,6 @@ import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/screens/register/components/policy.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/widgets/custom_surfix_icon.dart';
 import 'package:gpp_app/widgets/buttons.dart';
 import 'package:gpp_app/widgets/form_error.dart';
 import 'package:gpp_app/widgets/yes_alert_dialog.dart';
@@ -80,7 +79,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      style: _textTheme.bodyText1,
+      style: _textTheme.bodyText2,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
@@ -103,20 +102,18 @@ class _RegisterFormState extends State<RegisterForm> {
         return null;
       },
       decoration: InputDecoration(
-          errorStyle:
-              TextStyle(height: 0), // no error message under the textformfield
-          contentPadding: EdgeInsets.symmetric(horizontal: 20),
-          enabledBorder: OutlineInputBorder(),
-          border: OutlineInputBorder(),
-          labelText: "이메일",
-          hintText: "당신의 이메일을 입력하세요",
-          suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg")),
+        errorStyle:
+            TextStyle(height: 0), // no error message under the textformfield
+        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+        labelText: "이메일",
+        suffixIcon: Icon(Icons.email),
+      ),
     );
   }
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      style: _textTheme.bodyText1,
+      style: _textTheme.bodyText2,
       onSaved: (newValue) => firstName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -134,18 +131,15 @@ class _RegisterFormState extends State<RegisterForm> {
         errorStyle:
             TextStyle(height: 0), // no error message under the textformfield
         contentPadding: EdgeInsets.symmetric(horizontal: 20),
-        enabledBorder: OutlineInputBorder(),
-        border: OutlineInputBorder(),
         labelText: "이름",
-        hintText: "당신의 이름을 입력하세요",
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User_Icon.svg"),
+        suffixIcon: Icon(Icons.person),
       ),
     );
   }
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      style: _textTheme.bodyText1,
+      style: _textTheme.bodyText2,
       onSaved: (newValue) => lastName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -163,18 +157,15 @@ class _RegisterFormState extends State<RegisterForm> {
         errorStyle:
             TextStyle(height: 0), // no error message under the textformfield
         contentPadding: EdgeInsets.symmetric(horizontal: 20),
-        enabledBorder: OutlineInputBorder(),
-        border: OutlineInputBorder(),
         labelText: "성",
-        hintText: "당신의 성을 입력하세요",
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User_Icon.svg"),
+        suffixIcon: Icon(Icons.person),
       ),
     );
   }
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
-      style: _textTheme.bodyText1,
+      style: _textTheme.bodyText2,
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
@@ -201,18 +192,15 @@ class _RegisterFormState extends State<RegisterForm> {
         errorStyle:
             TextStyle(height: 0), // no error message under the textformfield
         contentPadding: EdgeInsets.symmetric(horizontal: 20),
-        enabledBorder: OutlineInputBorder(),
-        border: OutlineInputBorder(),
         labelText: "비밀번호",
-        hintText: "계정 비밀번호를 입력하세요",
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: Icon(Icons.lock),
       ),
     );
   }
 
   TextFormField buildConformPassFormField() {
     return TextFormField(
-      style: _textTheme.bodyText1,
+      style: _textTheme.bodyText2,
       obscureText: true,
       onSaved: (newValue) => conformPassword = newValue,
       onChanged: (value) {
@@ -239,11 +227,8 @@ class _RegisterFormState extends State<RegisterForm> {
         errorStyle:
             TextStyle(height: 0), // no error message under the textformfield
         labelText: "비밀번호 확인",
-        hintText: "비밀번호를 다시 입력하세요",
         contentPadding: EdgeInsets.symmetric(horizontal: 20),
-        enabledBorder: OutlineInputBorder(),
-        border: OutlineInputBorder(),
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: Icon(Icons.lock),
       ),
     );
   }

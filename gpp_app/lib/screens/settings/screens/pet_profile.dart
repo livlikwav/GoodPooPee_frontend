@@ -4,7 +4,7 @@ import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
-import 'package:gpp_app/widgets/default_button.dart';
+import 'package:gpp_app/widgets/buttons.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:gpp_app/services/post_pet_profile.dart';

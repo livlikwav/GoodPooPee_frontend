@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
-import 'package:gpp_app/widgets/default_button.dart';
+import 'package:gpp_app/widgets/buttons.dart';
 
 class SettingUserProfileScreen extends StatefulWidget {
   @override
@@ -18,10 +18,12 @@ class _SettingUserProfileScreenState extends State<SettingUserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('회원 정보 설정')),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('회원 정보 설정')),
+        body: _buildBody(context),
+      ),
     );
   }
 

@@ -23,7 +23,7 @@ Future<DailyReport> getDailyReport(
     );
     // Handling exception
   } on DioError catch (e) {
-    throw e;
+    throw e; // to return error on future
   }
 
   // GET Successed

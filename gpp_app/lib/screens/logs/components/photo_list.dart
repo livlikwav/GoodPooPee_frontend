@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:gpp_app/models/json/pet_record.dart';
+import 'package:gpp_app/screens/logs/components/alert_card.dart';
 import 'package:gpp_app/screens/logs/components/photo_list_item.dart';
-import 'package:gpp_app/util/size_config.dart';
-import 'dart:developer' as developer;
+import 'package:gpp_app/util/my_logger.dart';
 
 class PhotoList extends StatefulWidget {
+  PhotoList(this.petRecords);
+  final List<PetRecord> petRecords;
   @override
   _PhotoListState createState() => _PhotoListState();
 }
@@ -12,51 +15,51 @@ class PhotoList extends StatefulWidget {
 class _PhotoListState extends State<PhotoList> {
   // To change listitem dynamically
   final List<bool> _listItemsActive = [];
-  final List<bool> _listItemsVisible = [];
-  final List<bool> _listItemsCorrect = [];
-  // For DEV, later initialized by REST API
-  int itemCount = 5;
+  int count;
 
-  void _initBoolLists() {
-    for (int i = 0; i < itemCount; i++) {
+  void _initActiveLists() {
+    _listItemsActive.clear();
+    for (int i = 0; i < count; i++) {
       _listItemsActive.add(true);
-      _listItemsVisible.add(false);
-      _listItemsCorrect.add(true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (itemCount > 0) {
-      _initBoolLists();
-      return _buildListView();
+    count = widget.petRecords.length;
+    MyLogger.debug('PhotoList count: $count');
+    if (count > 0) {
+      _initActiveLists();
+      return ListView.builder(
+        itemCount: count,
+        itemBuilder: (BuildContext context, int index) {
+          return _buildSlidable(
+            index,
+            context,
+            _listItemsActive[index],
+            widget.petRecords[index],
+          );
+        },
+      );
     } else {
-      return _buildEmptyList();
+      // There is response, but no data (error)
+      return AlertCard('기록을 불러오는 중 오류가 발생했습니다.');
     }
-  }
-
-  Widget _buildListView() {
-    return ListView.builder(
-      physics: const ClampingScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: itemCount,
-      itemBuilder: (BuildContext context, int index) {
-        return _buildSlidable(
-          index,
-          _listItemsActive[index],
-          _listItemsVisible[index],
-          _listItemsCorrect[index],
-        );
-      },
-    );
   }
 
   Widget _buildSlidable(
     int index,
+    BuildContext context,
     bool isActive,
-    bool isVisible,
-    bool isCorrect,
+    PetRecord petRecord,
   ) {
+    // Check success or fail
+    bool isCorrect;
+    if (petRecord.result == 'SUCCESS') {
+      isCorrect = true;
+    } else {
+      isCorrect = false;
+    }
     return Slidable(
       key: ValueKey(index),
       actionPane: SlidableDrawerActionPane(),
@@ -68,64 +71,34 @@ class _PhotoListState extends State<PhotoList> {
                 color: Colors.orangeAccent,
                 icon: Icons.check_circle,
                 foregroundColor: Colors.white,
-                onTap: () => _setCorrect(index),
+                onTap: () {
+                  MyLogger.debug('PhotoListItem: $index Correct tapped');
+                  setState(() {
+                    _listItemsActive[index] = false;
+                    petRecord.result = 'SUCCESS';
+                  });
+                },
               ),
               IconSlideAction(
                 caption: '틀렸어요',
                 color: Colors.grey,
                 icon: Icons.cancel,
                 foregroundColor: Colors.white,
-                onTap: () => _setIncorrect(index),
+                onTap: () {
+                  MyLogger.debug('PhotoListItem: $index Incorrect tapped');
+                  setState(() {
+                    _listItemsActive[index] = false;
+                    petRecord.result = 'FAIL';
+                  });
+                },
               ),
             ]
           // Inactive
           : null,
-      child: photoListItem(
-        isVisible,
+      child: PhotoListItem(
         isCorrect,
+        petRecord,
       ),
     );
-  }
-
-  // When list of photos is empty
-  Widget _buildEmptyList() {
-    return Column(
-      children: [
-        Icon(
-          Icons.error_outline,
-          color: Colors.orangeAccent,
-          size: getBlockSizeHorizontal(20),
-        ),
-        Text(
-          'No items in list',
-        ),
-      ],
-    );
-  }
-
-  void _setCorrect(int index) {
-    developer.log(
-      'PhotoListItem: $index Correct tapped',
-      name: 'MY.DEBUG',
-      level: 10,
-    );
-    setState(() {
-      _listItemsActive[index] = false;
-      _listItemsVisible[index] = true;
-      _listItemsCorrect[index] = true;
-    });
-  }
-
-  void _setIncorrect(int index) {
-    developer.log(
-      'PhotoListItem: $index Incorrect tapped',
-      name: 'MY.DEBUG',
-      level: 10,
-    );
-    setState(() {
-      _listItemsActive[index] = false;
-      _listItemsVisible[index] = true;
-      _listItemsCorrect[index] = false;
-    });
   }
 }

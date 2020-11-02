@@ -46,10 +46,11 @@ class WeeklyData {
     this.ratioList = ratioTmpList.map((key, value) {
       return MapEntry(DateFormat('EEE').format(key), value);
     });
-    MyLogger.debug('WEEKLY: meanRatio : $meanRatio');
-    MyLogger.debug('WEEKLY: meanSuccess : $meanSuccess');
-    MyLogger.debug('WEEKLY: maxRatio : $maxRatio');
-    MyLogger.debug('WEEKLY: datetimeList : $datetimeList');
-    MyLogger.debug('WEEKLY: ratioList : $ratioList');
+    // MyLogger.debug('${toString()}');
+  }
+
+  @override
+  String toString() {
+    return 'Parsed weekly report: meanRatio : $meanRatio, meanSuccess : $meanSuccess, maxRatio : $maxRatio, datetimeList : $datetimeList, ratioList : $ratioList';
   }
 }

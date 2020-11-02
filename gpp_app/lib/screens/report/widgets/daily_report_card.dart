@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/screens/report/components/daily_pie_chart.dart';
-import 'package:gpp_app/screens/report/components/empty_card.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:gpp_app/screens/report/components/percent_card.dart';
 import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
@@ -17,16 +17,26 @@ class DailyReportCard extends StatefulWidget {
 }
 
 class _DailyReportCardState extends State<DailyReportCard> {
+  // Avoid crush of layout whenever screen re-build
+  double _boxRadius;
+  double _boxHeight;
+  @override
+  void initState() {
+    _boxRadius = getBlockSizeHorizontal(5);
+    _boxHeight = getBlockSizeVertical(70);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
+        borderRadius: BorderRadius.circular(_boxRadius),
         color: Colors.white,
       ),
       margin: const EdgeInsets.all(15.0),
       padding: const EdgeInsets.all(10.0),
-      height: getBlockSizeVertical(70),
+      height: _boxHeight,
       child: FutureBuilder(
         future: widget.dailyReport,
         builder: (BuildContext context, AsyncSnapshot<DailyReport> snapshot) {

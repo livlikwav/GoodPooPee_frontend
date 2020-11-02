@@ -2,12 +2,14 @@ import 'package:dio/dio.dart' hide Options;
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/constants.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
+import 'package:gpp_app/screens/register/components/policy.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_surfix_icon.dart';
-import 'package:gpp_app/widgets/default_button.dart';
+import 'package:gpp_app/widgets/buttons.dart';
 import 'package:gpp_app/widgets/form_error.dart';
 import 'package:gpp_app/widgets/yes_alert_dialog.dart';
+import 'package:provider/provider.dart';
 
 import '../../../routes.dart';
 
@@ -24,7 +26,6 @@ class _RegisterFormState extends State<RegisterForm> {
   String lastName;
   String password;
   String conformPassword;
-  // bool remember = false;
   final List<String> errors = [];
 
   double widgetSpacer = getBlockSizeVertical(2);
@@ -45,7 +46,9 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return ChangeNotifierProvider(
+      create: (context) => ValueNotifier<bool>(false),
+      child: Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
@@ -59,14 +62,18 @@ class _RegisterFormState extends State<RegisterForm> {
             SizedBox(height: widgetSpacer),
             buildConformPassFormField(),
             SizedBox(height: widgetSpacer),
+            PrivacyPolicy(),
+            SizedBox(height: widgetSpacer),
             FormError(errors: errors),
             SizedBox(height: widgetSpacer),
-            DefaultButton(
+            DynamicButton(
               text: '확인',
               press: onPressed,
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   TextFormField buildEmailFormField() {

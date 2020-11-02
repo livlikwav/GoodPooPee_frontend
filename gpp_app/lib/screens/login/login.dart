@@ -16,10 +16,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: EmptyAppBar(), //empty_app_bar_widget
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: EmptyAppBar(), //empty_app_bar_widget
+        body: _buildBody(context),
+      ),
     );
   }
 

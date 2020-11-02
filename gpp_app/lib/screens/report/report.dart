@@ -3,9 +3,8 @@ import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
-import 'package:gpp_app/screens/report/async/get_weekly_report.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
-import 'package:gpp_app/screens/report/components/empty_card.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
 import 'package:gpp_app/screens/report/widgets/weekly_report_card.dart';
 import 'package:gpp_app/util/my_logger.dart';
@@ -14,8 +13,9 @@ import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'async/get_daily_report.dart';
-import 'async/get_total_report.dart';
+import 'package:gpp_app/services/report/get_daily_report.dart';
+import 'package:gpp_app/services/report/get_weekly_report.dart';
+import 'package:gpp_app/services/report/get_total_report.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -78,11 +78,13 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('배변훈련 리포트')),
-      drawer: DrawerMenu(),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('배변훈련 리포트')),
+        drawer: DrawerMenu(),
+        body: _buildBody(context),
+      ),
     );
   }
 
@@ -104,15 +106,24 @@ class _ReportScreenState extends State<ReportScreen> {
                     getBlockSizeHorizontal(5),
                     0,
                   ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        DailyReportCard(dailyReport),
-                        WeeklyReportCard(weeklyReport, todaysDate),
-                        TotalReportCard(totalReport),
-                      ],
-                    ),
-                  ),
+                  child: OrientationBuilder(builder: (context, orientation) {
+                    if (orientation == Orientation.landscape) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      // Orientation.portrait
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            DailyReportCard(dailyReport),
+                            WeeklyReportCard(weeklyReport, todaysDate),
+                            TotalReportCard(totalReport),
+                          ],
+                        ),
+                      );
+                    }
+                  }),
                 )
           // Not ready
           : Center(

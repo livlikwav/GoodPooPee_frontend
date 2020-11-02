@@ -11,10 +11,12 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(),
-      body: _buildBody(),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(),
+        body: _buildBody(),
+      ),
     );
   }
 
@@ -23,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       width: double.infinity,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: getBlockSizeVertical(4),
+          horizontal: getBlockSizeHorizontal(10),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -37,12 +39,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: getBlockSizeVertical(3)),
               RegisterForm(),
-              SizedBox(height: getBlockSizeVertical(3)),
-              Text(
-                'By creating account you agree to our Terms of Service and Privacy Policy',
-                textAlign: TextAlign.center,
-                style: footerStyle,
-              ),
             ],
           ),
         ),

@@ -35,7 +35,7 @@ class PetProfile with ChangeNotifier {
 
   void setUserAuth(UserAuth userAuth) {
     id = userAuth.pet.id;
-    userId = userAuth.pet.userId;
+    userId = userAuth.user.id; // Pet model user Id is null *
     name = userAuth.pet.name;
     breed = userAuth.pet.breed;
     gender = userAuth.pet.gender;

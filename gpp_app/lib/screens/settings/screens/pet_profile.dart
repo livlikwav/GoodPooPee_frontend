@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
-import 'package:gpp_app/screens/settings/async/put_pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
-import 'package:gpp_app/widgets/default_button.dart';
+import 'package:gpp_app/widgets/buttons.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:gpp_app/services/post_pet_profile.dart';
+import 'package:gpp_app/services/put_pet_profile.dart';
 
 class SettingPetProfileScreen extends StatefulWidget {
   @override
@@ -47,10 +48,12 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      appBar: AppBar(title: Text('반려견 정보 설정')),
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        appBar: AppBar(title: Text('반려견 정보 설정')),
+        body: _buildBody(context),
+      ),
     );
   }
 
@@ -151,11 +154,19 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         nameController.text == '' ? _petProfile.name : nameController.text;
     _petModel.breed =
         breedController.text == '' ? _petProfile.breed : breedController.text;
+    // Avoid to null error in _petProfile.setPetModel
+    _petModel.birth ??= DateTime.now();
+    _petModel.adoption ??= DateTime.now();
     // update PetProfile provider
     _petProfile.setPetModel(_petModel);
     MyLogger.debug('$_petProfile');
     // PUT pet profile
-    putPetProfile(context, _petModel);
+    if (_petProfile.id != null) {
+      putPetProfile(context, _petModel);
+    } else {
+      // If null, POST new pet profile
+      postPetProfile(context, _petModel);
+    }
   }
 
   Flexible _birthPick(String subtitle) {
@@ -164,7 +175,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         children: [
           _subtitle(subtitle),
           FlatButton(
-            child: Text(_formatDate(_petModel.birth)),
+            child: Text(_formatDate(_petModel.birth ?? DateTime.now())),
             onPressed: () {
               _selectBirth(context);
             },
@@ -180,7 +191,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         children: [
           _subtitle(subtitle),
           FlatButton(
-            child: Text(_formatDate(_petModel.adoption)),
+            child: Text(_formatDate(_petModel.adoption ?? DateTime.now())),
             onPressed: () {
               _selectAdoption(context);
             },
@@ -193,7 +204,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   void _selectBirth(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: _petModel.birth, // Refer step 1
+      initialDate: _petModel.birth ?? DateTime.now(), // Refer step 1
       firstDate: DateTime(2005),
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',
@@ -208,7 +219,7 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   void _selectAdoption(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: _petModel.adoption, // Refer step 1
+      initialDate: _petModel.adoption ?? DateTime.now(), // Refer step 1
       firstDate: DateTime(2005),
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',

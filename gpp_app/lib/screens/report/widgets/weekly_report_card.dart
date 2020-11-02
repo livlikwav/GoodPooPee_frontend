@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
-import 'package:gpp_app/screens/report/async/parsing_weekly.dart';
-import 'package:gpp_app/screens/report/components/empty_card.dart';
+import 'package:gpp_app/services/report/parsing_weekly.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:gpp_app/screens/report/components/percent_card.dart';
 import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/screens/report/components/weekly_bar_chart.dart';
-// import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:intl/intl.dart';
 
@@ -21,11 +20,22 @@ class WeeklyReportCard extends StatefulWidget {
 }
 
 class _WeeklyReportCardState extends State<WeeklyReportCard> {
+  // Avoid crush of layout whenever screen re-build
+  double _boxRadius;
+  double _boxHeight;
+
+  @override
+  void initState() {
+    _boxRadius = getBlockSizeHorizontal(5);
+    _boxHeight = getBlockSizeVertical(70);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
+        borderRadius: BorderRadius.circular(_boxRadius),
         // border: Border.all(
         //   color: Theme.of(context).primaryColor,
         // ),
@@ -34,7 +44,7 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
       margin: const EdgeInsets.all(15.0),
       padding: const EdgeInsets.all(10.0),
       // width: getBlockSizeHorizontal(100),
-      height: getBlockSizeVertical(70),
+      height: _boxHeight,
       child: FutureBuilder(
         future: widget.weeklyReport,
         builder:

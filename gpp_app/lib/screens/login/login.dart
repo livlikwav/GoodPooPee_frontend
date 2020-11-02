@@ -30,16 +30,19 @@ class _LoginScreenState extends State<LoginScreen> {
       physics: NeverScrollableScrollPhysics(),
       child: SizedBox(
         height: getBlockSizeVertical(90),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Expanded(flex: 5, child: buildUpSide()),
-            Expanded(
-              flex: 3,
-              child: buildCenterSide(context),
-            ),
-            Expanded(flex: 2, child: buildDownSide(context, registerTapped)),
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: getBlockSizeHorizontal(10)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(flex: 5, child: UpSide()),
+              Expanded(
+                flex: 3,
+                child: buildCenterSide(context),
+              ),
+              Expanded(flex: 2, child: buildDownSide(context, registerTapped)),
+            ],
+          ),
         ),
       ),
     );

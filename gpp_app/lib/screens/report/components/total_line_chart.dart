@@ -16,8 +16,8 @@ class _TotalLineChartState extends State<TotalLineChart> {
   ChartModel model;
 
   List<Color> gradientColors = [
-    AppColors.orange[200],
-    AppColors.orange[800],
+    AppColors.primaryColor,
+    AppColors.secondaryColor,
   ];
 
   bool showAvg = false;
@@ -59,7 +59,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
               '평균',
               style: TextStyle(
                 fontSize: 12,
-                color: showAvg ? AppColors.orange[600] : Colors.black,
+                color: showAvg ? AppColors.primaryColor : Colors.black,
               ),
             ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
-import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/buttons.dart';
@@ -11,7 +10,7 @@ class SettingPadScreen extends StatefulWidget {
 }
 
 class _SettingPadScreenState extends State<SettingPadScreen> {
-  final Color backgroundColor = AppColors.orange[100];
+  final Color backgroundColor = Colors.white;
   double _imgSize;
   double _paddingX;
   double _margin;

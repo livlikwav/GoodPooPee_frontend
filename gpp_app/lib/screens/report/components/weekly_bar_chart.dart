@@ -13,12 +13,11 @@ class WeeklyBarChart extends StatefulWidget {
   WeeklyBarChart(this.weeklyData);
 
   final List<Color> availableColors = [
-    AppColors.orange[50],
-    AppColors.orange[100],
-    AppColors.orange[200],
-    AppColors.orange[300],
-    AppColors.orange[400],
-    AppColors.orange[500],
+    AppColors.primaryColor.withOpacity(0.2),
+    AppColors.primaryColor.withOpacity(0.4),
+    AppColors.primaryColor.withOpacity(0.6),
+    AppColors.primaryColor.withOpacity(0.8),
+    AppColors.primaryColor.withOpacity(1.0),
   ];
 
   @override
@@ -26,7 +25,7 @@ class WeeklyBarChart extends StatefulWidget {
 }
 
 class _WeeklyBarChartState extends State<WeeklyBarChart> {
-  final Color barBackgroundColor = AppColors.orange[100];
+  final Color barBackgroundColor = Colors.white;
   final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex;
   bool isPlaying = false;

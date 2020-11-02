@@ -2,11 +2,6 @@ import 'package:gpp_app/constants/colors.dart';
 
 import 'package:flutter/material.dart';
 
-final kPrimaryColor = AppColors.orange[700];
-final kAccentColor = AppColors.orange[500];
-final kTextColor = Colors.black;
-final kBackgroundColor = AppColors.orange[100];
-
 final ThemeData themeData = new ThemeData(
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: appBarTheme(),
@@ -15,12 +10,12 @@ final ThemeData themeData = new ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   // Details
   brightness: Brightness.light,
-  primarySwatch: MaterialColor(AppColors.orange[500].value, AppColors.orange),
-  primaryColor: kPrimaryColor,
+  // primarySwatch: MaterialColor(AppColors.orange[500].value, AppColors.orange),
+  primaryColor: AppColors.primaryColor,
   primaryColorBrightness: Brightness.light,
-  accentColor: kAccentColor,
+  accentColor: AppColors.secondaryColor,
   accentColorBrightness: Brightness.light,
-  backgroundColor: kBackgroundColor,
+  backgroundColor: Colors.white,
 );
 
 AppBarTheme appBarTheme() {

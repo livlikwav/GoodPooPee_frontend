@@ -74,7 +74,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
                   height: 4,
                 ),
                 Indicator(
-                  color: AppColors.orange[100],
+                  color: AppColors.primaryColor,
                   text: '실패',
                   isSquare: false,
                 ),
@@ -135,7 +135,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
             );
           case 1:
             return PieChartSectionData(
-              color: AppColors.orange[100],
+              color: AppColors.primaryColor,
               value: failRatio,
               title: failRatio.toInt().toString() + '%',
               radius: radius,

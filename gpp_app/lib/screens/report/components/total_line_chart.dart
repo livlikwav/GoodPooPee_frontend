@@ -17,7 +17,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
 
   List<Color> gradientColors = [
     AppColors.primaryColor,
-    AppColors.secondaryColor,
+    AppColors.accentColor,
   ];
 
   bool showAvg = false;

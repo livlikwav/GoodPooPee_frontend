@@ -11,11 +11,13 @@ class CenterSide extends StatelessWidget {
     return Column(
       children: <Widget>[
         customTextField(
+          context,
           "이메일",
           "이메일을 입력하세요",
           emailCtrl,
         ),
         customTextField(
+          context,
           "비밀번호",
           "비밀번호를 입력하세요",
           pwCtrl,

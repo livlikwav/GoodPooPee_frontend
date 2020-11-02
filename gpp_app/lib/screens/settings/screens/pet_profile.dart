@@ -96,10 +96,11 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                       ],
                     ),
                     _subtitle(nameSubtitle),
-                    customTextField(_petModel.name, nameHint, nameController),
+                    customTextField(
+                        context, _petModel.name, nameHint, nameController),
                     _subtitle(breedSubtitle),
                     customTextField(
-                        _petModel.breed, breedHint, breedController),
+                        context, _petModel.breed, breedHint, breedController),
                     _subtitle(genderSubtitle),
                     Container(
                       margin: EdgeInsets.all(getBlockSizeHorizontal(1)),

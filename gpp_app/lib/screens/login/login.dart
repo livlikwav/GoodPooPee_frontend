@@ -35,12 +35,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Expanded(flex: 5, child: UpSide()),
-              Expanded(
-                flex: 3,
-                child: CenterSide(),
-              ),
-              Expanded(flex: 2, child: DownSide(registerTapped)),
+              UpSide(),
+              CenterSide(),
+              DownSide(registerTapped),
             ],
           ),
         ),

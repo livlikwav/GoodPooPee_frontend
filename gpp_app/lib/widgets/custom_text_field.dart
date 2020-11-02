@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
 
 Widget customTextField(
+  BuildContext context,
   String label,
   String hint,
   TextEditingController controller, {
@@ -12,6 +13,7 @@ Widget customTextField(
       width: double.infinity,
       height: getBlockSizeVertical(7),
       child: TextField(
+        style: Theme.of(context).textTheme.bodyText1,
         controller: controller,
         obscureText: obscure,
         enabled: isEnabled,

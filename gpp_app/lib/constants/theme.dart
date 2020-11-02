@@ -13,11 +13,28 @@ const customTextTheme = const TextTheme(
     fontWeight: FontWeight.normal,
     color: AppColors.primaryColor,
   ),
-  subtitle1: TextStyle(fontSize: 25.0, fontWeight: FontWeight.normal),
-  bodyText1: TextStyle(fontSize: 17.0, fontWeight: FontWeight.normal),
-  bodyText2: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+  subtitle1: TextStyle(
+    fontSize: 25.0,
+    fontWeight: FontWeight.normal,
+  ),
+  subtitle2: TextStyle(
+    fontSize: 25.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.accentColor,
+  ),
+  bodyText1: TextStyle(
+    fontSize: 17.0,
+    fontWeight: FontWeight.normal,
+  ),
+  bodyText2: TextStyle(
+    fontSize: 15.0,
+    fontWeight: FontWeight.normal,
+  ),
   button: TextStyle(
-      fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.normal),
+    fontSize: 15.0,
+    color: Colors.white,
+    fontWeight: FontWeight.normal,
+  ),
 );
 
 final ThemeData themeData = new ThemeData(

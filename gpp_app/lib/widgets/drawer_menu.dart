@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
@@ -17,7 +18,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
   String _userName;
   bool _isPetNull;
   String _petName;
-  String _subTitle;
+  String _petBreed;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
     // check pet null
     _userProfile.petId == null ? _isPetNull = true : _isPetNull = false;
     _petName = _isPetNull ? null : _petProfile.name;
-    _subTitle = _isPetNull ? null : _petProfile.breed;
+    _petBreed = _isPetNull ? null : _petProfile.breed;
     super.initState();
   }
 
@@ -43,22 +44,65 @@ class _DrawerMenuState extends State<DrawerMenu> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
-              child: _dogInfo(
-                _isPetNull,
-                _petName,
-                _subTitle,
-              )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: _isPetNull
+                  ? <Widget>[
+                      Icon(
+                        Icons.pets,
+                        color: AppColors.accentColor,
+                        size: getBlockSizeHorizontal(20),
+                      ),
+                      Text(
+                        '반려견 프로필을 등록해주세요',
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ]
+                  : <Widget>[
+                      Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.6),
+                                offset: const Offset(2.0, 4.0),
+                                blurRadius: 8),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(60.0)),
+                          child: Image.asset(
+                            'assets/images/yorkshire.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: _petName + ' ',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                            TextSpan(
+                                text: _petBreed,
+                                style: Theme.of(context).textTheme.bodyText2),
+                          ],
+                        ),
+                      ),
+                    ],
+            ),
+          ),
           Container(
             child: _userInfo(_userName),
           ),
           _menuTile(context, '내 푸피캠 확인하기', route: Routes.streaming),
-          _divider(),
           _menuTile(context, '배변 기록 확인하기', route: Routes.logs),
           _menuTile(context, '배변훈련 리포트', route: Routes.report),
-          _divider(),
           _menuTile(context, '기기 및 환경설정', route: Routes.settings),
           _menuTile(
             context,
@@ -93,14 +137,6 @@ ListTile _menuTile(BuildContext context, String label,
   );
 }
 
-Divider _divider() {
-  return Divider(
-    color: Colors.black,
-    indent: getBlockSizeHorizontal(10),
-    endIndent: getBlockSizeHorizontal(10),
-  );
-}
-
 Widget _userInfo(String name) {
   return Material(
       child: Column(
@@ -124,10 +160,6 @@ Widget _dogInfo(bool isPetNull, String name, String subtitle) {
       child: Column(
         children: isPetNull
             ? <Widget>[
-                CircleAvatar(
-                  backgroundImage: new AssetImage(Assets.appLogo),
-                ),
-                SizedBox(height: getBlockSizeVertical(2)),
                 Text('반려견 정보가 없습니다',
                     style: new TextStyle(
                       color: Colors.white,
@@ -150,10 +182,6 @@ Widget _dogInfo(bool isPetNull, String name, String subtitle) {
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
                   ),
-                ),
-                SizedBox(height: getBlockSizeVertical(2)),
-                CircleAvatar(
-                  backgroundImage: new AssetImage(Assets.appLogo),
                 ),
                 SizedBox(height: getBlockSizeVertical(2)),
                 Text(

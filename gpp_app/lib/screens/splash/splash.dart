@@ -23,8 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     // You have to call it on your starting screen
     SizeConfig().init(context);
-    return Container(
-      child: Center(child: AppIconWidget(image: Assets.appLogo)),
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: AppIconWidget(image: Assets.appLogo),
+        ),
+      ),
     );
   }
 

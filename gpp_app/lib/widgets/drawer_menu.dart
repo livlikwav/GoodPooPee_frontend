@@ -97,16 +97,56 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     ],
             ),
           ),
-          Container(
-            child: _userInfo(_userName),
-          ),
-          _menuTile(context, '내 푸피캠 확인하기', route: Routes.streaming),
-          _menuTile(context, '배변 기록 확인하기', route: Routes.logs),
-          _menuTile(context, '배변훈련 리포트', route: Routes.report),
-          _menuTile(context, '기기 및 환경설정', route: Routes.settings),
           _menuTile(
-            context,
-            '로그아웃',
+            label: '홈',
+            style: Theme.of(context).textTheme.bodyText2,
+            leading: Icons.home,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.report);
+            },
+          ),
+          _menuTile(
+            label: '내 푸피캠 확인하기',
+            style: Theme.of(context).textTheme.bodyText2,
+            leading: Icons.live_tv,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.streaming);
+            },
+          ),
+          _menuTile(
+            label: '배변 기록 확인하기',
+            leading: Icons.history,
+            style: Theme.of(context).textTheme.bodyText2,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.logs);
+            },
+          ),
+          _menuTile(
+            label: '배변 훈련 리포트',
+            leading: Icons.list,
+            style: Theme.of(context).textTheme.bodyText2,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.report);
+            },
+          ),
+          _menuTile(
+            label: '기기 및 환경설정',
+            leading: Icons.settings,
+            style: Theme.of(context).textTheme.bodyText2,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(Routes.settings);
+            },
+          ),
+          Divider(),
+          _menuTile(
+            label: '로그아웃',
+            leading: Icons.exit_to_app,
+            style: Theme.of(context).textTheme.bodyText2,
             onTap: () {
               // Init multi providers
               Provider.of<UserProfile>(context, listen: false).reset();
@@ -122,84 +162,18 @@ class _DrawerMenuState extends State<DrawerMenu> {
   }
 }
 
-ListTile _menuTile(BuildContext context, String label,
-    {String route, Function onTap}) {
+ListTile _menuTile({
+  @required String label,
+  @required Function onTap,
+  @required TextStyle style,
+  @required IconData leading,
+}) {
   return ListTile(
+    leading: Icon(leading),
     title: Text(
       label,
-      textAlign: TextAlign.center,
+      style: style,
     ),
-    onTap: onTap ??
-        () {
-          Navigator.pop(context);
-          Navigator.of(context).pushNamed(route);
-        },
-  );
-}
-
-Widget _userInfo(String name) {
-  return Material(
-      child: Column(
-    children: <Widget>[
-      SizedBox(height: getBlockSizeVertical(3)),
-      Icon(Icons.portrait),
-      SizedBox(height: getBlockSizeVertical(2)),
-      Text(
-        name,
-        style: new TextStyle(fontWeight: FontWeight.bold),
-      ),
-      SizedBox(height: getBlockSizeVertical(3)),
-    ],
-  ));
-}
-
-Widget _dogInfo(bool isPetNull, String name, String subtitle) {
-  return Container(
-    color: Colors.transparent,
-    child: SingleChildScrollView(
-      child: Column(
-        children: isPetNull
-            ? <Widget>[
-                Text('반려견 정보가 없습니다',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                    )),
-                SizedBox(height: getBlockSizeVertical(2)),
-                Text(
-                  '(기기 및 환경설정\n-> 반려견 정보 설정)',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w100,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ]
-            : <Widget>[
-                Text(
-                  '우리집 굿푸피',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                SizedBox(height: getBlockSizeVertical(2)),
-                Text(
-                  name,
-                  style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: getBlockSizeVertical(1)),
-                Text(
-                  subtitle,
-                  style: new TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-      ),
-    ),
+    onTap: onTap,
   );
 }

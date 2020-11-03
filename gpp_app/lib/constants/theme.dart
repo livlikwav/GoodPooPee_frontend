@@ -3,6 +3,7 @@ import 'package:gpp_app/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 const customTextTheme = const TextTheme(
+  // headline : primaryColor / bold or normal
   headline1: TextStyle(
     fontSize: 30.0,
     fontWeight: FontWeight.bold,
@@ -14,16 +15,32 @@ const customTextTheme = const TextTheme(
     color: AppColors.primaryColor,
   ),
   headline3: TextStyle(
+    fontSize: 25.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryColor,
+  ),
+  headline4: TextStyle(
+    fontSize: 25.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.primaryColor,
+  ),
+  headline5: TextStyle(
     fontSize: 20.0,
     fontWeight: FontWeight.bold,
     color: AppColors.primaryColor,
   ),
-  subtitle1: TextStyle(
-    fontSize: 25.0,
+  headline6: TextStyle(
+    fontSize: 20.0,
     fontWeight: FontWeight.normal,
+    color: AppColors.primaryColor,
+  ),
+  subtitle1: TextStyle(
+    fontSize: 15.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.accentColor,
   ),
   subtitle2: TextStyle(
-    fontSize: 25.0,
+    fontSize: 15.0,
     fontWeight: FontWeight.normal,
     color: AppColors.accentColor,
   ),

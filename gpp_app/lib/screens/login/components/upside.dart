@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/util/size_config.dart';
 import 'package:lottie/lottie.dart';
 
 class UpSide extends StatelessWidget {
@@ -31,7 +32,10 @@ class UpSide extends StatelessWidget {
             ),
           ),
         ),
-        Lottie.asset('assets/lottie/gpp_login.json'),
+        Lottie.asset(
+          'assets/lottie/gpp_login.json',
+          width: getBlockSizeHorizontal(60),
+        ),
       ],
     );
   }

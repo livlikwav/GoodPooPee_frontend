@@ -26,21 +26,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
-      child: SizedBox(
-        height: getBlockSizeVertical(90),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: getBlockSizeHorizontal(10)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              UpSide(),
-              CenterSide(),
-              DownSide(() => Navigator.of(context).pushNamed(Routes.register)),
-            ],
-          ),
-        ),
+    return Padding(
+      padding: EdgeInsets.all(
+        getBlockSizeHorizontal(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          UpSide(),
+          CenterSide(),
+          DownSide(() => Navigator.of(context).pushNamed(Routes.register)),
+        ],
       ),
     );
   }

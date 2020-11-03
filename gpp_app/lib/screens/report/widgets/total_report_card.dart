@@ -18,12 +18,10 @@ class TotalReportCard extends StatefulWidget {
 class _TotalReportCardState extends State<TotalReportCard> {
 // Avoid crush of layout whenever screen re-build
   double _boxRadius;
-  // double _boxHeight;
 
   @override
   void initState() {
     _boxRadius = getBlockSizeHorizontal(5);
-    // _boxHeight = getBlockSizeVertical(70);
     super.initState();
   }
 
@@ -35,9 +33,6 @@ class _TotalReportCardState extends State<TotalReportCard> {
         color: AppColors.backgroundColor,
       ),
       padding: const EdgeInsets.all(5.0),
-      // width: getBlockSizeHorizontal(100),
-      // height: _boxHeight,
-      // child: _getCardBody(),
       child: FutureBuilder(
         future: widget.totalReport,
         builder: (BuildContext context,

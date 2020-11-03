@@ -74,98 +74,115 @@ class _HomeScreenState extends State<HomeScreen> {
         primary: true,
         appBar: customAppBar(),
         drawer: DrawerMenu(),
-        body: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '월간 배변 훈련 그래프',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: isReady
-                    // Is ready
-                    ? isPetNull
-                        // Pet doesnt exists
-                        ? EmptyCard(
-                            text: '반려견 데이터가 존재하지 않습니다.',
-                          )
-                        // Pet exists
-                        : OrientationBuilder(builder: (context, orientation) {
-                            if (orientation == Orientation.landscape) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              // Orientation.portrait
-                              return SingleChildScrollView(
-                                child: Column(
-                                  children: <Widget>[
-                                    TotalReportCard(totalReport),
-                                  ],
-                                ),
-                              );
-                            }
-                          })
-                    // Not ready
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ),
-              ),
-              // Text(
-              //   '즐겨 찾기',
-              //   style: Theme.of(context).textTheme.headline3,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(20.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //     children: [
-              //       FavoriteButton(
-              //           'WOW', Icons.access_alarm, () => print('wow')),
-              //       FavoriteButton(
-              //           'WOW', Icons.access_alarm, () => print('wow')),
-              //       FavoriteButton(
-              //           'WOW', Icons.access_alarm, () => print('wow')),
-              //     ],
-              //   ),
-              // ),
-              Text(
-                '굿푸피를 위한 훈련 가이드',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20),
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            if (orientation == Orientation.landscape) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '월간 배변 훈련 그래프',
+                      style: Theme.of(context).textTheme.headline5,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 0.5,
-                        blurRadius: 3,
-                        offset: Offset(2, 2),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      child: isReady
+                          // Is ready
+                          ? isPetNull
+                              // Pet doesnt exists
+                              ? EmptyCard(
+                                  text: '반려견 데이터가 존재하지 않습니다.',
+                                )
+                              // Pet exists
+                              : OrientationBuilder(
+                                  builder: (context, orientation) {
+                                  if (orientation == Orientation.landscape) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else {
+                                    // Orientation.portrait
+                                    return SingleChildScrollView(
+                                      child: Column(
+                                        children: <Widget>[
+                                          TotalReportCard(totalReport),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                })
+                          // Not ready
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                    ),
+                    // Text(
+                    //   '즐겨 찾기',
+                    //   style: Theme.of(context).textTheme.headline3,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(20.0),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //     children: [
+                    //       FavoriteButton(
+                    //           'WOW', Icons.access_alarm, () => print('wow')),
+                    //       FavoriteButton(
+                    //           'WOW', Icons.access_alarm, () => print('wow')),
+                    //       FavoriteButton(
+                    //           'WOW', Icons.access_alarm, () => print('wow')),
+                    //     ],
+                    //   ),
+                    // ),
+                    Text(
+                      '굿푸피를 위한 훈련 가이드',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 0.5,
+                              blurRadius: 3,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                          color: Colors.white,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          child: MediaListView(
+                            titleTextStyle:
+                                Theme.of(context).textTheme.subtitle1,
+                            titleTextBackGroundColor: Colors.white,
+                            // overlayChild: Icon(Icons.save),
+                            urls: urlList,
+                            // onPressed: (url) {
+                            //   print(url);
+                            // },
+                          ),
+                        ),
                       ),
-                    ],
-                    color: Colors.white,
-                  ),
-                  child: MediaListView(
-                    titleTextStyle: TextStyle(color: Colors.black),
-                    titleTextBackGroundColor: Colors.white,
-                    // overlayChild: Icon(Icons.save),
-                    urls: urlList,
-                    // onPressed: (url) {
-                    //   print(url);
-                    // },
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
+              );
+            }
+          },
         ),
       ),
     );

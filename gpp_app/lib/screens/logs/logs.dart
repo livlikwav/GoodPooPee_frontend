@@ -32,9 +32,7 @@ class _LogsScreenState extends State<LogsScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(
-          title: Text('배변 기록 확인하기'),
-        ),
+        appBar: AppBar(title: null),
         drawer: DrawerMenu(),
         body: ChangeNotifierProvider(
           create: (context) => _logsProvider,

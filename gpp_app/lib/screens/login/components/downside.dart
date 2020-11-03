@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 
 class DownSide extends StatelessWidget {
-  DownSide(this.registerTapped);
-  final Function registerTapped;
+  DownSide(this.onTap);
+  final Function onTap;
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -23,7 +23,7 @@ class DownSide extends StatelessWidget {
                 color: AppColors.primaryColor,
                 fontSize: textTheme.subtitle1.fontSize,
               ),
-              recognizer: TapGestureRecognizer()..onTap = registerTapped,
+              recognizer: TapGestureRecognizer()..onTap = onTap,
             ),
           ],
         ),

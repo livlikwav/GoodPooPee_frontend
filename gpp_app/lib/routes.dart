@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'screens/home/home.dart';
+import 'screens/home/home.dart';
 import 'screens/splash/splash.dart';
 import 'screens/login/login.dart';
 import 'screens/register/register.dart';
@@ -20,6 +20,7 @@ class Routes {
   Routes._();
 
   //static variables
+  static const String home = '/home';
   static const String splash = '/splash';
   static const String login = '/login';
   static const String register = '/register';
@@ -37,6 +38,7 @@ class Routes {
   static const String setting_pad_1 = '/setting_pad_1';
 
   static final routes = <String, WidgetBuilder>{
+    home: (BuildContext context) => HomeScreen(),
     splash: (BuildContext context) => SplashScreen(),
     login: (BuildContext context) => LoginScreen(),
     register: (BuildContext context) => RegisterScreen(),

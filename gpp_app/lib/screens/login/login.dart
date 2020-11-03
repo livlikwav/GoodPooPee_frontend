@@ -37,16 +37,11 @@ class _LoginScreenState extends State<LoginScreen> {
             children: <Widget>[
               UpSide(),
               CenterSide(),
-              DownSide(registerTapped),
+              DownSide(() => Navigator.of(context).pushNamed(Routes.register)),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void registerTapped() {
-    MyLogger.info('Register link tapped');
-    Navigator.of(context).pushNamed(Routes.register);
   }
 }

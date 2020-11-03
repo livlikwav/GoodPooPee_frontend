@@ -262,7 +262,7 @@ class _RegisterFormState extends State<RegisterForm> {
         showYesAlertDialog(
           context,
           '',
-          () => Navigator.of(context).pushNamed(Routes.login),
+          () => Navigator.popUntil(context, ModalRoute.withName(Routes.login)),
         );
       }
     } else {

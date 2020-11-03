@@ -81,7 +81,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('배변훈련 리포트')),
+        appBar: AppBar(title: null),
         drawer: DrawerMenu(),
         body: _buildBody(context),
       ),

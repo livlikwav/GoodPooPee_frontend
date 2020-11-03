@@ -43,5 +43,5 @@ void loginTapped(BuildContext context, String email, String pw) async {
   Provider.of<UserProfile>(context, listen: false).setUserAuth(userAuth);
   Provider.of<PetProfile>(context, listen: false).setUserAuth(userAuth);
   // Route to report(main) screen
-  Navigator.of(context).pushNamed(Routes.report);
+  Navigator.of(context).pushReplacementNamed(Routes.home);
 }

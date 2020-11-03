@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
@@ -13,22 +12,27 @@ class DrawerMenu extends StatefulWidget {
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
-  UserProfile _userProfile;
   PetProfile _petProfile;
-  String _userName;
   bool _isPetNull;
   String _petName;
   String _petBreed;
 
   @override
   void initState() {
-    _userProfile = Provider.of<UserProfile>(context, listen: false);
     _petProfile = Provider.of<PetProfile>(context, listen: false);
-    _userName = _userProfile.lastName + ' ' + _userProfile.firstName + '님';
     // check pet null
-    _userProfile.petId == null ? _isPetNull = true : _isPetNull = false;
-    _petName = _isPetNull ? null : _petProfile.name;
-    _petBreed = _isPetNull ? null : _petProfile.breed;
+    if (_petProfile == null) {
+      throw Exception('Pet Provider is not initialized in login screen.');
+    } else {
+      _petProfile.id == null ? _isPetNull = true : _isPetNull = false;
+      if (_isPetNull) {
+        _petName = null;
+        _petBreed = null;
+      } else {
+        _petName = _petProfile.name;
+        _petBreed = _petProfile.breed;
+      }
+    }
     super.initState();
   }
 
@@ -102,8 +106,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
             style: Theme.of(context).textTheme.bodyText2,
             leading: Icons.home,
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.report);
+              Navigator.pop(context); // pop drawer
+              Navigator.of(context).pushReplacementNamed(Routes.home);
             },
           ),
           _menuTile(
@@ -111,8 +115,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             style: Theme.of(context).textTheme.bodyText2,
             leading: Icons.live_tv,
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.streaming);
+              Navigator.of(context).popAndPushNamed(Routes.streaming);
             },
           ),
           _menuTile(
@@ -120,8 +123,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
             leading: Icons.history,
             style: Theme.of(context).textTheme.bodyText2,
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.logs);
+              Navigator.pop(context); // pop drawer
+              Navigator.of(context).pushReplacementNamed(Routes.logs);
             },
           ),
           _menuTile(
@@ -129,8 +132,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
             leading: Icons.list,
             style: Theme.of(context).textTheme.bodyText2,
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.report);
+              Navigator.pop(context); // pop drawer
+              Navigator.of(context).pushReplacementNamed(Routes.report);
             },
           ),
           _menuTile(
@@ -138,8 +141,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
             leading: Icons.settings,
             style: Theme.of(context).textTheme.bodyText2,
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.settings);
+              Navigator.pop(context); // pop drawer
+              Navigator.of(context).pushReplacementNamed(Routes.settings);
             },
           ),
           SizedBox(
@@ -154,8 +157,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
               Provider.of<UserProfile>(context, listen: false).reset();
               Provider.of<PetProfile>(context, listen: false).reset();
               // Routing
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.login);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  Routes.login, (Route<dynamic> route) => false);
             },
           ),
         ],

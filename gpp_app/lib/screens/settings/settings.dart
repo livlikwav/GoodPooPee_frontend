@@ -10,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('기기 및 환경설정')),
+        appBar: AppBar(title: null),
         drawer: DrawerMenu(),
         body: OrientationBuilder(
           builder: (context, orientation) {

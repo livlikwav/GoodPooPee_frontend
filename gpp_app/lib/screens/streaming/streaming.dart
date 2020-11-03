@@ -125,9 +125,6 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
   return Scaffold(
     primary: true,
     floatingActionButton: CustomStreamingMenu(controller, ppcamId),
-    body: SizedBox(
-      width: double.infinity,
-      child: LiveVideo(ppcamUrl, controller),
-    ),
+    body: LiveVideo(ppcamUrl, controller),
   );
 }

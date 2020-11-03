@@ -55,9 +55,8 @@ class _TotalLineChartState extends State<TotalLineChart> {
           ),
         ),
         Container(
-          alignment: Alignment.topRight,
-          margin: const EdgeInsets.all(10.0),
-          width: getBlockSizeHorizontal(13),
+          alignment: Alignment.topLeft,
+          margin: const EdgeInsets.symmetric(horizontal: 7.0),
           child: FlatButton(
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),

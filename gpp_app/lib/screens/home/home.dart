@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       '월간 배변 훈련 그래프',
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // ),
                     Text(
                       '굿푸피를 위한 훈련 가이드',
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Expanded(
                       child: Container(
@@ -166,8 +166,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             Radius.circular(20),
                           ),
                           child: MediaListView(
-                            titleTextStyle:
-                                Theme.of(context).textTheme.subtitle1,
+                            titleTextStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .fontSize),
+
                             titleTextBackGroundColor: Colors.white,
                             // overlayChild: Icon(Icons.save),
                             urls: urlList,

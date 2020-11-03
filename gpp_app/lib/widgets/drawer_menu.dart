@@ -90,7 +90,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                           children: <TextSpan>[
                             TextSpan(
                               text: _petName + ' ',
-                              style: Theme.of(context).textTheme.subtitle2,
+                              style: Theme.of(context).textTheme.subtitle1,
                             ),
                             TextSpan(
                                 text: _petBreed,

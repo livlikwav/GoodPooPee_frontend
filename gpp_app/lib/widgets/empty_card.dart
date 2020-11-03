@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/widgets/app_icon_widget.dart';
 
 class EmptyCard extends StatelessWidget {
   const EmptyCard({
@@ -21,11 +20,13 @@ class EmptyCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(text),
-          SizedBox(
-            height: getBlockSizeVertical(3),
+          Icon(
+            Icons.pets,
+            color: AppColors.accentColor,
+            size: getBlockSizeHorizontal(20),
           ),
-          AppIconWidget(image: Assets.appLogo),
+          SizedBox(height: getBlockSizeVertical(3)),
+          Text(text),
         ],
       ),
     );

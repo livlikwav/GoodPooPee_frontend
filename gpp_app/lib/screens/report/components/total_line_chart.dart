@@ -29,27 +29,40 @@ class _TotalLineChartState extends State<TotalLineChart> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1,
+          aspectRatio: 1.5,
           child: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(18),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30.0,
+              vertical: 20.0,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(20),
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 0.5,
+                  blurRadius: 3,
+                  offset: Offset(2, 2),
+                ),
+              ],
               color: Colors.white,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: LineChart(
-                showAvg ? avgData() : mainData(),
-              ),
+            child: LineChart(
+              showAvg ? avgData() : mainData(),
             ),
           ),
         ),
         Container(
           alignment: Alignment.topRight,
-          margin: const EdgeInsets.all(15.0),
-          width: getBlockSizeHorizontal(15),
+          margin: const EdgeInsets.all(10.0),
+          width: getBlockSizeHorizontal(13),
           child: FlatButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0)),
+            color: AppColors.backgroundColor,
+            splashColor: AppColors.primaryColor,
             onPressed: () {
               setState(() {
                 showAvg = !showAvg;
@@ -59,7 +72,8 @@ class _TotalLineChartState extends State<TotalLineChart> {
               '평균',
               style: TextStyle(
                 fontSize: 12,
-                color: showAvg ? AppColors.primaryColor : Colors.black,
+                color: showAvg ? AppColors.accentColor : AppColors.primaryColor,
+                fontWeight: showAvg ? FontWeight.bold : FontWeight.normal,
               ),
             ),
           ),
@@ -91,9 +105,9 @@ class _TotalLineChartState extends State<TotalLineChart> {
         LineChartBarData(
           spots: model.chartDataSpots,
           isCurved: true,
-          curveSmoothness: 0.1,
+          curveSmoothness: 0,
           colors: [
-            Colors.orangeAccent,
+            AppColors.primaryColor,
           ],
           barWidth: 7,
           isStrokeCapRound: true,
@@ -135,7 +149,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
         LineChartBarData(
           spots: model.avgDataSpots,
           isCurved: true,
-          colors: [Colors.orangeAccent],
+          colors: [AppColors.accentColor],
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -190,7 +204,7 @@ class ChartModel {
     xSideTitles = SideTitles(
       showTitles: true,
       textStyle: const TextStyle(
-        color: Colors.black,
+        color: AppColors.accentColor,
         fontWeight: FontWeight.normal,
         fontSize: 12,
       ),
@@ -202,7 +216,8 @@ class ChartModel {
             new DateTime(dt.year, dt.month - reverseIndex[val], dt.day);
         return DateFormat('yy-MM').format(targetDt);
       },
-      margin: 15,
+      reservedSize: 12,
+      margin: 20,
     );
   }
 

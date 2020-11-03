@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
@@ -82,15 +83,14 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    // IconButton(
-                    //   iconSize: getBlockSizeHorizontal(20),
-                    //   icon: _userAvatar(),
-                    //   onPressed: _changeImage,
-                    // ),
-                    SizedBox(
-                      width: getBlockSizeHorizontal(80),
-                      height: getBlockSizeVertical(1),
+                    Icon(
+                      Icons.pets,
+                      size: getBlockSizeVertical(5),
+                      color: AppColors.accentColor,
                     ),
+                    SizedBox(
+                        width: getBlockSizeHorizontal(80),
+                        height: getBlockSizeVertical(1)),
                     Row(
                       children: [
                         _birthPick(birthSubtitle),
@@ -178,7 +178,9 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
         children: [
           _subtitle(subtitle),
           FlatButton(
-            child: Text(_formatDate(_petModel.birth ?? DateTime.now())),
+            child: Text(
+              _formatDate(_petModel.birth ?? DateTime.now()),
+            ),
             onPressed: () {
               _selectBirth(context);
             },
@@ -235,13 +237,6 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
   }
 }
 
-// CircleAvatar _userAvatar() {
-//   return CircleAvatar(
-//     radius: getBlockSizeHorizontal(20),
-//     backgroundImage: new AssetImage(Assets.appLogo),
-//   );
-// }
-
 String _formatDate(DateTime datetime) {
   DateFormat formatter = DateFormat('yyyy-MM-dd');
   return formatter.format(datetime);
@@ -253,7 +248,10 @@ Align _subtitle(String text) {
         padding: EdgeInsets.all(
           getBlockSizeHorizontal(2),
         ),
-        child: Text(text)),
+        child: Text(
+          text,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )),
     alignment: Alignment.centerLeft,
   );
 }

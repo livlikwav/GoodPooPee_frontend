@@ -146,7 +146,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             },
           ),
           SizedBox(
-            height: getBlockSizeVertical(35),
+            height: getBlockSizeVertical(30),
           ),
           Divider(),
           _logoutTile(

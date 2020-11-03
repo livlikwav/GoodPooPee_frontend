@@ -19,8 +19,8 @@ Widget customTextField(
         enabled: isEnabled,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 20),
-          enabledBorder: OutlineInputBorder(),
-          border: OutlineInputBorder(),
+          // enabledBorder: OutlineInputBorder(),
+          // border: OutlineInputBorder(),
           labelText: label,
           hintText: hint,
         ),

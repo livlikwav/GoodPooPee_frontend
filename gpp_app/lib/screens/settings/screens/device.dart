@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/buttons.dart';
 import 'package:gpp_app/widgets/custom_app_bar.dart';
@@ -32,10 +33,7 @@ class _SettingDeviceScreenState extends State<SettingDeviceScreen> {
       // height: MediaQuery.of(context).size.height,
       color: Theme.of(context).backgroundColor,
       child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            getBlockSizeHorizontal(5),
-            getBlockSizeHorizontal(5),
-            getBlockSizeHorizontal(5),
+          padding: EdgeInsets.all(
             getBlockSizeHorizontal(5),
           ),
           child: Column(
@@ -49,7 +47,11 @@ class _SettingDeviceScreenState extends State<SettingDeviceScreen> {
                 ),
                 child: Column(
                   children: [
-                    _deviceAvatar(),
+                    Icon(
+                      Icons.network_check,
+                      size: getBlockSizeVertical(5),
+                      color: AppColors.accentColor,
+                    ),
                     SizedBox(
                         width: getBlockSizeHorizontal(80),
                         height: getBlockSizeVertical(1)),
@@ -79,27 +81,21 @@ class _SettingDeviceScreenState extends State<SettingDeviceScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: Colors.black,
+          color: AppColors.primaryColor,
           width: 1.0,
         ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(name),
+          Text(
+            name,
+            style: TextStyle(
+              color: AppColors.accentColor,
+            ),
+          ),
           Text(status),
         ],
-      ),
-    );
-  }
-
-  CircleAvatar _deviceAvatar() {
-    return CircleAvatar(
-      radius: getBlockSizeHorizontal(10),
-      child: Icon(
-        Icons.settings_bluetooth,
-        color: Colors.orange,
-        size: getBlockSizeHorizontal(10),
       ),
     );
   }
@@ -110,7 +106,10 @@ class _SettingDeviceScreenState extends State<SettingDeviceScreen> {
           padding: EdgeInsets.all(
             getBlockSizeHorizontal(2),
           ),
-          child: Text(text)),
+          child: Text(
+            text,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )),
       alignment: Alignment.centerLeft,
     );
   }

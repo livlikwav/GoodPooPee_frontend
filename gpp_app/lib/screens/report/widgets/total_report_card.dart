@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/services/report/parsing_total.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
-import 'package:gpp_app/screens/report/components/percent_card.dart';
-import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/total_line_chart.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/util/size_config.dart';
@@ -33,10 +32,9 @@ class _TotalReportCardState extends State<TotalReportCard> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(_boxRadius),
-        color: Colors.white,
+        color: AppColors.backgroundColor,
       ),
-      margin: const EdgeInsets.all(15.0),
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(5.0),
       // width: getBlockSizeHorizontal(100),
       // height: _boxHeight,
       // child: _getCardBody(),

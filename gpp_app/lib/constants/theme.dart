@@ -13,6 +13,11 @@ const customTextTheme = const TextTheme(
     fontWeight: FontWeight.normal,
     color: AppColors.primaryColor,
   ),
+  headline3: TextStyle(
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryColor,
+  ),
   subtitle1: TextStyle(
     fontSize: 25.0,
     fontWeight: FontWeight.normal,
@@ -49,7 +54,7 @@ final ThemeData themeData = new ThemeData(
   primaryColorBrightness: Brightness.light,
   accentColor: AppColors.accentColor,
   accentColorBrightness: Brightness.light,
-  backgroundColor: Colors.white,
+  backgroundColor: AppColors.backgroundColor,
 );
 
 AppBarTheme appBarTheme() {

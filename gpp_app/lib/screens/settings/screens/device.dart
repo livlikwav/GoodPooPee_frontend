@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/buttons.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 
 class SettingDeviceScreen extends StatefulWidget {
   @override
@@ -18,7 +19,8 @@ class _SettingDeviceScreenState extends State<SettingDeviceScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('푸피캠/푸피스낵바 연결')),
+        // appBar: AppBar(title: Text('푸피캠/푸피스낵바 연결')),
+        appBar: customAppBar(),
         body: _buildBody(context),
       ),
     );

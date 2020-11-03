@@ -3,6 +3,7 @@ import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/buttons.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 
 class SettingPadScreen extends StatefulWidget {
   @override
@@ -21,7 +22,8 @@ class _SettingPadScreenState extends State<SettingPadScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(backgroundColor: backgroundColor, title: Text('')),
+        // appBar: AppBar(backgroundColor: backgroundColor, title: Text('')),
+        appBar: customAppBar(),
         body: OrientationBuilder(
           builder: (context, orientation) {
             if (orientation == Orientation.landscape) {

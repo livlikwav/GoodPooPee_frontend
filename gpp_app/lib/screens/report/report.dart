@@ -4,6 +4,7 @@ import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
 import 'package:gpp_app/screens/report/widgets/weekly_report_card.dart';
@@ -81,7 +82,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: null),
+        appBar: customAppBar(),
         drawer: DrawerMenu(),
         body: _buildBody(context),
       ),

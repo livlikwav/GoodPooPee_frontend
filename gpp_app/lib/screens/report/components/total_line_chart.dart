@@ -29,7 +29,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1.5,
+          aspectRatio: 2,
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 30.0,

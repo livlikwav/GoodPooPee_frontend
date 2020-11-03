@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 
 class SettingFeedbackScreen extends StatefulWidget {
   @override
@@ -19,7 +20,8 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('간식 급여 설정')),
+        // appBar: AppBar(title: Text('간식 급여 설정')),
+        appBar: customAppBar(),
         body: _buildBody(context),
       ),
     );

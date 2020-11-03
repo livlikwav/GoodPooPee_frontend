@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 
 import '../../routes.dart';
@@ -10,7 +11,7 @@ class SettingsScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: null),
+        appBar: customAppBar(),
         drawer: DrawerMenu(),
         body: OrientationBuilder(
           builder: (context, orientation) {

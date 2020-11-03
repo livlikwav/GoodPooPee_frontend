@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/assets.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/buttons.dart';
 
@@ -21,7 +22,7 @@ class _SettingUserProfileScreenState extends State<SettingUserProfileScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('회원 정보 설정')),
+        appBar: customAppBar(),
         body: _buildBody(context),
       ),
     );

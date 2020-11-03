@@ -3,6 +3,7 @@ import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/custom_text_field.dart';
 import 'package:gpp_app/widgets/buttons.dart';
 import 'package:intl/intl.dart';
@@ -51,7 +52,8 @@ class _SettingPetProfileScreenState extends State<SettingPetProfileScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('반려견 정보 설정')),
+        // appBar: AppBar(title: Text('반려견 정보 설정')),
+        appBar: customAppBar(),
         body: _buildBody(context),
       ),
     );

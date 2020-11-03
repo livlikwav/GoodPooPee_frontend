@@ -5,6 +5,7 @@ import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/logs/components/logs_header.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:gpp_app/util/my_logger.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _LogsScreenState extends State<LogsScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: null),
+        appBar: customAppBar(),
         drawer: DrawerMenu(),
         body: ChangeNotifierProvider(
           create: (context) => _logsProvider,

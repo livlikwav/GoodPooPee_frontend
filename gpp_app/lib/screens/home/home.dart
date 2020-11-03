@@ -1,8 +1,10 @@
+import 'package:add_thumbnail/add_thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
+import 'package:gpp_app/screens/home/components/favorite_button.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
 import 'package:gpp_app/services/report/get_total_report.dart';
 import 'package:gpp_app/util/my_logger.dart';
@@ -20,6 +22,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<String> urlList = [
+    "https://youtu.be/vMx6DWiDQUw",
+    "https://youtu.be/mnPlK6NR92U",
+    "https://youtu.be/_jOkOAZ5ih8",
+  ];
   bool isReady = false;
   bool isPetNull = true;
   bool isReportNull = true;
@@ -107,6 +114,55 @@ class _HomeScreenState extends State<HomeScreen> {
                     : Center(
                         child: CircularProgressIndicator(),
                       ),
+              ),
+              // Text(
+              //   '즐겨 찾기',
+              //   style: Theme.of(context).textTheme.headline3,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //     children: [
+              //       FavoriteButton(
+              //           'WOW', Icons.access_alarm, () => print('wow')),
+              //       FavoriteButton(
+              //           'WOW', Icons.access_alarm, () => print('wow')),
+              //       FavoriteButton(
+              //           'WOW', Icons.access_alarm, () => print('wow')),
+              //     ],
+              //   ),
+              // ),
+              Text(
+                '굿푸피를 위한 훈련 가이드',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 0.5,
+                        blurRadius: 3,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                    color: Colors.white,
+                  ),
+                  child: MediaListView(
+                    titleTextStyle: TextStyle(color: Colors.black),
+                    titleTextBackGroundColor: Colors.white,
+                    // overlayChild: Icon(Icons.save),
+                    urls: urlList,
+                    // onPressed: (url) {
+                    //   print(url);
+                    // },
+                  ),
+                ),
               ),
             ],
           ),

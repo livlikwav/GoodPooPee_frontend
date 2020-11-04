@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
-import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/screens/splash/fade_in_logo.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'package:gpp_app/widgets/app_icon_widget.dart';
 import 'package:gpp_app/util/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,9 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: AppIconWidget(image: Assets.appLogo),
-        ),
+        body: FadeInLogo(),
       ),
     );
   }

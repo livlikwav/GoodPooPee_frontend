@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
@@ -38,6 +39,10 @@ class _ReportScreenState extends State<ReportScreen> {
     super.initState();
     // Get today's date (default)
     todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    //DEBUG!!!!!!!!!!!!!
+    todaysDate = DateFormat('yyyy-MM-dd')
+        .format(DateTime.now().subtract(Duration(days: 1)));
+    //DEBUG!!!!!!!!!!!!!
     // MyLogger.debug('Present datetime is $todaysDate');
     getReports(context);
   }
@@ -82,6 +87,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
+        backgroundColor: AppColors.backgroundColor,
         appBar: customAppBar(),
         drawer: DrawerMenu(),
         body: _buildBody(context),
@@ -91,7 +97,6 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget _buildBody(context) {
     return Container(
-      color: Theme.of(context).backgroundColor,
       child: isReady
           // Is ready
           ? isPetNull
@@ -113,9 +118,22 @@ class _ReportScreenState extends State<ReportScreen> {
                       // Orientation.portrait
                       return SingleChildScrollView(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text(
+                              '오늘의 굿푸피',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
                             DailyReportCard(dailyReport),
+                            Text(
+                              '이번주 굿푸피',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
                             WeeklyReportCard(weeklyReport, todaysDate),
+                            Text(
+                              '전체 통계',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
                             TotalReportCard(totalReport),
                           ],
                         ),

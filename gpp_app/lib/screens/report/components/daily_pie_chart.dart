@@ -30,9 +30,21 @@ class _DailyPieChartState extends State<DailyPieChart> {
 
     return AspectRatio(
       aspectRatio: 1.3,
-      child: Card(
-        elevation: 0,
-        color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(2, 2),
+            ),
+          ],
+          color: Colors.white,
+        ),
         child: Row(
           children: <Widget>[
             SizedBox(

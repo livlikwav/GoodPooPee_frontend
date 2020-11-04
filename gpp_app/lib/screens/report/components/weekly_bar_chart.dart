@@ -33,7 +33,7 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.5,
+      aspectRatio: 2,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(

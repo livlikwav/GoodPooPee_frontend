@@ -21,18 +21,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: getBlockSizeHorizontal(10),
             ),
-            child: Column(
-              children: [
-                SizedBox(height: getBlockSizeVertical(3)),
-                Center(
-                  child: Text(
-                    '굿푸피 계정을 등록하세요',
-                    style: Theme.of(context).textTheme.headline3,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: getBlockSizeVertical(3)),
+                  Center(
+                    child: Text(
+                      '굿푸피 계정을 등록하세요',
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.headline3.color,
+                        fontSize: getBlockSizeHorizontal(7),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: getBlockSizeVertical(3)),
-                RegisterForm(),
-              ],
+                  SizedBox(height: getBlockSizeVertical(3)),
+                  RegisterForm(),
+                ],
+              ),
             ),
           ),
         ),

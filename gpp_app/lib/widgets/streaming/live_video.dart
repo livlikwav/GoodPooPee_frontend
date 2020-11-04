@@ -21,14 +21,16 @@ class _LiveVideoState extends State<LiveVideo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        child: VlcPlayer(
-          // aspectRatio: 4 / 3,
-          aspectRatio: 16 / 9,
-          url: widget.url,
-          controller: widget.controller,
-          placeholder: Center(
-            child: CircularProgressIndicator(),
+      body: Center(
+        child: SizedBox(
+          child: VlcPlayer(
+            // aspectRatio: 4 / 3,
+            aspectRatio: 16 / 9,
+            url: widget.url,
+            controller: widget.controller,
+            placeholder: Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
         ),
       ),

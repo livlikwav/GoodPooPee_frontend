@@ -54,38 +54,37 @@ class _StreamingScreenState extends State<StreamingScreen> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
     ]);
-    return SafeArea(
-        child: isPpcamProfileNull
-            // Server request
-            ? FutureBuilder(
-                future: _ppcamModel,
-                builder:
-                    (BuildContext context, AsyncSnapshot<PpcamModel> snapshot) {
-                  Widget child;
-                  // Future complete with data
-                  if (snapshot.hasData) {
-                    child = _getBody(context, _controller,
-                        snapshot.data.ipAddress, snapshot.data.id);
-                    // Future complete with error
-                  } else if (snapshot.hasError) {
-                    DioError error = snapshot.error;
-                    if (error.response != null &&
-                        error.response.statusCode == 404) {
-                      child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
-                      // Unknown error
-                    } else {
-                      child = _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
-                    }
-                    // Future incomplete
-                  } else {
-                    child = Center(child: CircularProgressIndicator());
-                  }
-                  return child;
-                },
-              )
-            // Already have ppcam profile
-            : _getBody(context, _controller, _ppcamProfile.ipAddress,
-                _ppcamProfile.id));
+    return isPpcamProfileNull
+        // Server request
+        ? FutureBuilder(
+            future: _ppcamModel,
+            builder:
+                (BuildContext context, AsyncSnapshot<PpcamModel> snapshot) {
+              Widget child;
+              // Future complete with data
+              if (snapshot.hasData) {
+                child = _getBody(context, _controller, snapshot.data.ipAddress,
+                    snapshot.data.id);
+                // Future complete with error
+              } else if (snapshot.hasError) {
+                DioError error = snapshot.error;
+                if (error.response != null &&
+                    error.response.statusCode == 404) {
+                  child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
+                  // Unknown error
+                } else {
+                  child = _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
+                }
+                // Future incomplete
+              } else {
+                child = Center(child: CircularProgressIndicator());
+              }
+              return child;
+            },
+          )
+        // Already have ppcam profile
+        : _getBody(
+            context, _controller, _ppcamProfile.ipAddress, _ppcamProfile.id);
   }
 
   @override
@@ -117,10 +116,12 @@ Widget _alertBody(BuildContext context, String text) {
 Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
     String ppcamUrl, int ppcamId) {
   // ============ FOR TEST ===============
-  ppcamUrl =
-      'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
+  // ppcamUrl =
+  //     'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
   // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
   // ppcamUrl = 'http://172.20.10.2:8090';
+  ppcamUrl =
+      'https://gpp-images-1.s3.ap-northeast-2.amazonaws.com/gpp_streaming.MOV';
   // =====================================
   return Scaffold(
     primary: true,

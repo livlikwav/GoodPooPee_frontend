@@ -6,8 +6,10 @@ class EmptyCard extends StatelessWidget {
   const EmptyCard({
     Key key,
     this.text,
+    this.isDense = false,
   }) : super(key: key);
   final String text;
+  final bool isDense;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,9 @@ class EmptyCard extends StatelessWidget {
             style: TextStyle(
               color: AppColors.primaryColor,
               fontWeight: FontWeight.bold,
+              fontSize: isDense
+                  ? getBlockSizeHorizontal(3)
+                  : getBlockSizeHorizontal(5),
             ),
           ),
         ],

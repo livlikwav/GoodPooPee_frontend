@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
-import 'package:gpp_app/screens/logs/components/alert_card.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:intl/intl.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -16,6 +16,7 @@ class PhotoListItem extends StatefulWidget {
 class _PhotoListItemState extends State<PhotoListItem> {
   String imgUrl;
   String dateString;
+  bool isImageSucceed = true;
 
   @override
   void didChangeDependencies() {
@@ -66,7 +67,10 @@ Widget _buildImage(String imgUrl) {
     image: imgUrl,
     imageErrorBuilder: (context, error, stackTrace) {
       // CHECK *********** : Still show exception on debug console?
-      return AlertCard('이미지를 불러오는 도중 오류가 발생했습니다.');
+      return EmptyCard(
+        text: '이미지를 불러오는 도중 오류가 발생했습니다.',
+        isDense: true,
+      );
     },
   );
 }

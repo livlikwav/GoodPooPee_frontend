@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/screens/logs/components/logs_header.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:gpp_app/util/my_logger.dart';
+import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:provider/provider.dart';
+import 'package:rulers/rulers.dart';
 
-import 'components/alert_card.dart';
 import 'components/photo_list.dart';
 
 class LogsScreen extends StatefulWidget {
@@ -67,7 +70,12 @@ class _LogsScreenState extends State<LogsScreen> {
     // Get provider in context to listen change
     LogsProvider updateProvider = Provider.of<LogsProvider>(context);
     return Container(
-      padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0),
+      padding: const EdgeInsets.fromLTRB(
+        0.0,
+        10.0, // TOP
+        30.0, // RIGHT
+        0.0,
+      ),
       width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height,
       color: Theme.of(context).backgroundColor,
@@ -76,8 +84,8 @@ class _LogsScreenState extends State<LogsScreen> {
         children: [
           LogsHeader(),
           updateProvider.isPetNull
-              ? AlertCard(
-                  '반려견 데이터가 존재하지 않습니다.',
+              ? EmptyCard(
+                  text: '반려견 데이터가 존재하지 않습니다.',
                 )
               : FutureBuilder(
                   future: updateProvider.petRecords,
@@ -87,20 +95,49 @@ class _LogsScreenState extends State<LogsScreen> {
                     // Future complete with data
                     if (snapshot.hasData) {
                       child = Expanded(
-                        child: PhotoList(snapshot.data),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: getBlockSizeHorizontal(12),
+                              height: double.infinity,
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: RulerWidget(
+                                  scaleColor: AppColors.backgroundColor,
+                                  scaleSize: getBlockSizeHorizontal(12),
+                                  limit: 10,
+                                  interval: 4,
+                                  normalBarColor: AppColors.primaryColor,
+                                  axis: Axis.vertical,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(
+                                  0.0, // LEFT
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                ),
+                                child: PhotoList(snapshot.data),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                       // Future complete with error
                     } else if (snapshot.hasError) {
                       DioError error = snapshot.error;
                       if (error.response != null &&
                           error.response.statusCode == 404) {
-                        child = AlertCard(
-                          '오늘의 배변 기록이 존재하지 않습니다.',
+                        child = EmptyCard(
+                          text: '배변 기록이 존재하지 않습니다.',
                         );
                         // Unknown error
                       } else {
-                        child = AlertCard(
-                          '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
+                        EmptyCard(
+                          text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
                         );
                       }
                       // Future incomplete

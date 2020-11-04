@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
-import 'package:gpp_app/screens/logs/components/alert_card.dart';
 import 'package:gpp_app/screens/logs/components/photo_list_item.dart';
 import 'package:gpp_app/util/my_logger.dart';
+import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
+import 'package:rulers/rulers.dart';
 
 class PhotoList extends StatefulWidget {
   PhotoList(this.petRecords);
@@ -43,7 +46,7 @@ class _PhotoListState extends State<PhotoList> {
       );
     } else {
       // There is response, but no data (error)
-      return AlertCard('기록을 불러오는 중 오류가 발생했습니다.');
+      return EmptyCard(text: '기록을 불러오는 중 오류가 발생했습니다.');
     }
   }
 

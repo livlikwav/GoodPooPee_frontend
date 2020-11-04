@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class _LogsHeaderState extends State<LogsHeader> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.orange,
+            color: AppColors.accentColor,
           ),
           // margin: const EdgeInsets.fromLTRB(0, 10.0, 20.0, 10.0),
           padding: const EdgeInsets.all(7.0),

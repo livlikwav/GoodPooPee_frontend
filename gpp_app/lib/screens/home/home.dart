@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '월간 배변 훈련 그래프',
+                          '당신의 굿푸피',
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         GestureDetector(

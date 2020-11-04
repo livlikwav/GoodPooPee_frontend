@@ -58,7 +58,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                         ? <Widget>[
                             Icon(
                               Icons.pets,
-                              color: AppColors.accentColor,
+                              // color: AppColors.accentColor,
+                              color: Colors.black.withOpacity(0.5),
                               size: getBlockSizeHorizontal(20),
                             ),
                             Text(

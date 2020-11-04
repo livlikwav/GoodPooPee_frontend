@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
+import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/screens/logs/components/logs_header.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:gpp_app/util/my_logger.dart';
@@ -33,7 +34,17 @@ class _LogsScreenState extends State<LogsScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: customAppBar(),
+        appBar: customAppBar(
+          refreshIcon: IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: '새로고침',
+            onPressed: () {
+              setState(() {
+                Navigator.of(context).popAndPushNamed(Routes.logs);
+              });
+            },
+          ),
+        ),
         drawer: DrawerMenu(),
         body: ChangeNotifierProvider(
           create: (context) => _logsProvider,

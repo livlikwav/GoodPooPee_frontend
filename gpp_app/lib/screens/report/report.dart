@@ -4,6 +4,7 @@ import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
+import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
 import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
@@ -40,8 +41,8 @@ class _ReportScreenState extends State<ReportScreen> {
     // Get today's date (default)
     todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     //DEBUG!!!!!!!!!!!!!
-    todaysDate = DateFormat('yyyy-MM-dd')
-        .format(DateTime.now().subtract(Duration(days: 1)));
+    // todaysDate = DateFormat('yyyy-MM-dd')
+    //     .format(DateTime.now().subtract(Duration(days: 1)));
     //DEBUG!!!!!!!!!!!!!
     // MyLogger.debug('Present datetime is $todaysDate');
     getReports(context);
@@ -88,7 +89,17 @@ class _ReportScreenState extends State<ReportScreen> {
       child: Scaffold(
         primary: true,
         backgroundColor: AppColors.backgroundColor,
-        appBar: customAppBar(),
+        appBar: customAppBar(
+          refreshIcon: IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: '새로고침',
+            onPressed: () {
+              setState(() {
+                Navigator.of(context).popAndPushNamed(Routes.report);
+              });
+            },
+          ),
+        ),
         drawer: DrawerMenu(),
         body: _buildBody(context),
       ),

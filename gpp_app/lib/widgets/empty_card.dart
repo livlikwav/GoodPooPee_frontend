@@ -12,6 +12,7 @@ class EmptyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(getBlockSizeHorizontal(5)),
       ),
@@ -22,11 +23,17 @@ class EmptyCard extends StatelessWidget {
         children: <Widget>[
           Icon(
             Icons.pets,
-            color: AppColors.accentColor,
-            size: getBlockSizeHorizontal(20),
+            color: AppColors.primaryColor,
+            size: getBlockSizeHorizontal(15),
           ),
-          SizedBox(height: getBlockSizeVertical(3)),
-          Text(text),
+          SizedBox(height: getBlockSizeVertical(1)),
+          Text(
+            text,
+            style: TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );

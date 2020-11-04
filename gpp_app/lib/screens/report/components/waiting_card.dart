@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
 
 class WaitingCard extends StatelessWidget {
@@ -19,7 +20,13 @@ class WaitingCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(text),
+          Text(
+            text,
+            style: TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           SizedBox(
             height: getBlockSizeVertical(3),
           ),

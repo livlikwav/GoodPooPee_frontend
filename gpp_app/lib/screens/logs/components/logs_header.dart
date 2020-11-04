@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/screens/logs/components/menu_chips.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
+import 'package:gpp_app/util/size_config.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -22,31 +24,34 @@ class _LogsHeaderState extends State<LogsHeader> {
     // Init provider
     _logsProvider = Provider.of<LogsProvider>(context);
 
-    return GestureDetector(
-      onTap: () {
-        // ShowDatePicker
-        _selectDate(context);
-      },
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: AppColors.accentColor,
-          ),
-          // margin: const EdgeInsets.fromLTRB(0, 10.0, 20.0, 10.0),
-          padding: const EdgeInsets.all(7.0),
-          child: Text(
-            _formatDate(_logsProvider.datetime),
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              // fontSize: getBlockSizeHorizontal(5),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        MenuChips(),
+        GestureDetector(
+          onTap: () {
+            // ShowDatePicker
+            _selectDate(context);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.accentColor,
+            ),
+            // margin: const EdgeInsets.fromLTRB(0, 10.0, 20.0, 10.0),
+            padding: const EdgeInsets.all(7.0),
+            child: Text(
+              _formatDate(_logsProvider.datetime),
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                // fontSize: getBlockSizeHorizontal(5),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 

@@ -82,7 +82,10 @@ class _LogsScreenState extends State<LogsScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          LogsHeader(),
+          Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: LogsHeader(),
+          ),
           updateProvider.isPetNull
               ? Padding(
                   padding: const EdgeInsets.all(8.0),

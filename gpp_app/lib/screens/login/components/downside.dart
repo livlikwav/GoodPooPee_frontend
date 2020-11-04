@@ -11,7 +11,7 @@ class DownSide extends StatelessWidget {
     return Center(
       child: RichText(
         text: TextSpan(
-          style: textTheme.bodyText1,
+          style: textTheme.bodyText2,
           children: [
             TextSpan(
               text: '아직 굿푸피 계정이 없으신가요? ',

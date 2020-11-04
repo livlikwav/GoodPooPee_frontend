@@ -12,6 +12,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         primary: true,
         appBar: AppBar(),
         body: SizedBox(
@@ -20,20 +21,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: getBlockSizeHorizontal(10),
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: getBlockSizeVertical(3)),
-                  Center(
-                    child: Text(
-                      '굿푸피 계정을 등록하세요',
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
+            child: Column(
+              children: [
+                SizedBox(height: getBlockSizeVertical(3)),
+                Center(
+                  child: Text(
+                    '굿푸피 계정을 등록하세요',
+                    style: Theme.of(context).textTheme.headline3,
                   ),
-                  SizedBox(height: getBlockSizeVertical(3)),
-                  RegisterForm(),
-                ],
-              ),
+                ),
+                SizedBox(height: getBlockSizeVertical(3)),
+                RegisterForm(),
+              ],
             ),
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
+import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/screens/home/components/favorite_button.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
 import 'package:gpp_app/services/report/get_total_report.dart';
@@ -85,9 +86,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '월간 배변 훈련 그래프',
-                      style: Theme.of(context).textTheme.subtitle1,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '월간 배변 훈련 그래프',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        GestureDetector(
+                          child: Icon(
+                            Icons.play_circle_filled,
+                            color: AppColors.accentColor,
+                          ),
+                          onTap: () => Navigator.of(context)
+                              .pushReplacementNamed(Routes.report),
+                        ),
+                      ],
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 15.0),

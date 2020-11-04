@@ -31,9 +31,11 @@ class _TotalLineChartState extends State<TotalLineChart> {
         AspectRatio(
           aspectRatio: 2,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30.0,
-              vertical: 20.0,
+            padding: const EdgeInsets.fromLTRB(
+              30.0,
+              35.0,
+              30.0,
+              10.0,
             ),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(

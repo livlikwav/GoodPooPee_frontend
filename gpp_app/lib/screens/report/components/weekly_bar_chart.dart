@@ -33,14 +33,42 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1,
+      aspectRatio: 1.5,
       child: Container(
-        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        color: Colors.white,
-        child: Stack(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(2, 2),
+            ),
+          ],
+          color: Colors.white,
+        ),
+        child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: Icon(
+                  isPlaying ? Icons.pause : Icons.play_circle_filled,
+                  color: AppColors.primaryColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isPlaying = !isPlaying;
+                    if (isPlaying) {
+                      refreshState();
+                    }
+                  });
+                },
+              ),
+            ),
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -48,7 +76,12 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
                 children: <Widget>[
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.fromLTRB(
+                        15.0,
+                        0.0,
+                        15.0,
+                        15.0,
+                      ),
                       child: BarChart(
                         isPlaying ? randomData() : mainBarData(),
                         swapAnimationDuration: animDuration,
@@ -58,26 +91,6 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 15.0, 0),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: IconButton(
-                  icon: Icon(
-                    isPlaying ? Icons.pause : Icons.play_arrow,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isPlaying = !isPlaying;
-                      if (isPlaying) {
-                        refreshState();
-                      }
-                    });
-                  },
-                ),
-              ),
-            )
           ],
         ),
       ),
@@ -88,7 +101,7 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = Colors.orangeAccent,
+    Color barColor = AppColors.primaryColor,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
@@ -126,7 +139,7 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
-            tooltipBgColor: Colors.orangeAccent,
+            tooltipBgColor: AppColors.accentColor,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               String weekDay;
               switch (group.x.toInt()) {
@@ -171,9 +184,8 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          textStyle: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
-          margin: 16,
+          textStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14),
+          margin: 10,
           getTitles: (double value) {
             switch (value.toInt()) {
               case 0:
@@ -216,25 +228,24 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          textStyle: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
-          margin: 16,
+          textStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14),
+          margin: 10,
           getTitles: (double value) {
             switch (value.toInt()) {
               case 0:
-                return '월';
+                return getKstWeekday(widget.weeklyData.datetimeList[6]);
               case 1:
-                return '화';
+                return getKstWeekday(widget.weeklyData.datetimeList[5]);
               case 2:
-                return '수';
+                return getKstWeekday(widget.weeklyData.datetimeList[4]);
               case 3:
-                return '목';
+                return getKstWeekday(widget.weeklyData.datetimeList[3]);
               case 4:
-                return '금';
+                return getKstWeekday(widget.weeklyData.datetimeList[2]);
               case 5:
-                return '토';
+                return getKstWeekday(widget.weeklyData.datetimeList[1]);
               case 6:
-                return '일';
+                return getKstWeekday(widget.weeklyData.datetimeList[0]);
               default:
                 return '';
             }

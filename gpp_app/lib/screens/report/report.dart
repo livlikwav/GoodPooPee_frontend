@@ -101,11 +101,8 @@ class _ReportScreenState extends State<ReportScreen> {
                 )
               // Pet exists
               : Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    getBlockSizeHorizontal(5),
-                    getBlockSizeHorizontal(5),
-                    getBlockSizeHorizontal(5),
-                    0,
+                  padding: EdgeInsets.all(
+                    getBlockSizeHorizontal(7),
                   ),
                   child: OrientationBuilder(builder: (context, orientation) {
                     if (orientation == Orientation.landscape) {

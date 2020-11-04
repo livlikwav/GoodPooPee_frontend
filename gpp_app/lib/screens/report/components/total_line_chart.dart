@@ -207,7 +207,7 @@ class ChartModel {
       textStyle: const TextStyle(
         color: AppColors.accentColor,
         fontWeight: FontWeight.normal,
-        fontSize: 12,
+        fontSize: 13,
       ),
       getTitles: (value) {
         int val = value.toInt();

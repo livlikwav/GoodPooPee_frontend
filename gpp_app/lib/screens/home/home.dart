@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return Center(child: CircularProgressIndicator());
             } else {
               return Padding(
-                padding: const EdgeInsets.all(25.0),
+                padding: EdgeInsets.all(getBlockSizeHorizontal(7)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -36,7 +36,7 @@ class EmptyCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: isDense
                   ? getBlockSizeHorizontal(3)
-                  : getBlockSizeHorizontal(5),
+                  : getBlockSizeHorizontal(4),
             ),
           ),
         ],

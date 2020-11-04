@@ -84,8 +84,11 @@ class _LogsScreenState extends State<LogsScreen> {
         children: [
           LogsHeader(),
           updateProvider.isPetNull
-              ? EmptyCard(
-                  text: '반려견 데이터가 존재하지 않습니다.',
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _paddingEmptyCard(
+                    text: '반려견 데이터가 존재하지 않습니다.',
+                  ),
                 )
               : FutureBuilder(
                   future: updateProvider.petRecords,
@@ -131,12 +134,12 @@ class _LogsScreenState extends State<LogsScreen> {
                       DioError error = snapshot.error;
                       if (error.response != null &&
                           error.response.statusCode == 404) {
-                        child = EmptyCard(
+                        child = _paddingEmptyCard(
                           text: '배변 기록이 존재하지 않습니다.',
                         );
                         // Unknown error
                       } else {
-                        EmptyCard(
+                        _paddingEmptyCard(
                           text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
                         );
                       }
@@ -151,4 +154,19 @@ class _LogsScreenState extends State<LogsScreen> {
       ),
     );
   }
+}
+
+Widget _paddingEmptyCard({String text}) {
+  text ??= 'error';
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(
+      30.0,
+      0.0,
+      0.0,
+      0.0,
+    ),
+    child: EmptyCard(
+      text: text,
+    ),
+  );
 }

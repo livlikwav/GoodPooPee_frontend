@@ -73,7 +73,7 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
   }
 }
 
-Column _getCardBody(WeeklyData weeklyData) {
+Widget _getCardBody(WeeklyData weeklyData) {
   String dtString = DateFormat('yyyy-MM-dd')
           .format(weeklyData.datetime.subtract(Duration(days: 6))) +
       ' - ' +
@@ -81,13 +81,13 @@ Column _getCardBody(WeeklyData weeklyData) {
   // Return widget
   return Column(
     children: <Widget>[
+      WeeklyBarChart(weeklyData),
       // statCard(
       //   '주간 배변훈련 리포트',
       //   dtString,
       //   Colors.white,
       //   titleLogo: true,
       // ),
-      WeeklyBarChart(weeklyData),
       // Row(
       //   children: [
       //     statCard(

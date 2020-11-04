@@ -26,60 +26,114 @@ class _TotalLineChartState extends State<TotalLineChart> {
   Widget build(BuildContext context) {
     // init model
     model = ChartModel(widget.totalData);
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 2,
-          child: Container(
+    final String progressString = widget.totalData.progressRatio != 999
+        ? widget.totalData.progressRatio.toString() + '%'
+        // If it is first month, progress = meanRatio (it start from 0%)
+        : widget.totalData.meanRatio.toString() + '%';
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 0.5,
+            blurRadius: 3,
+            offset: Offset(2, 2),
+          ),
+        ],
+        color: Colors.white,
+      ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: Icon(
+                  showAvg ? Icons.pause : Icons.play_circle_filled,
+                  color: AppColors.primaryColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    showAvg = !showAvg;
+                  });
+                },
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  color: AppColors.backgroundColor,
+                ),
+                margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
+                padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(color: AppColors.primaryColor),
+                    children: [
+                      TextSpan(
+                        text: '평균 성공률 ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: '${widget.totalData.meanRatio}% ',
+                      ),
+                      TextSpan(
+                        text: '진척률 ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: '$progressString',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          Container(
             padding: const EdgeInsets.fromLTRB(
               30.0,
-              35.0,
+              0.0,
               30.0,
               10.0,
             ),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 0.5,
-                  blurRadius: 3,
-                  offset: Offset(2, 2),
-                ),
-              ],
-              color: Colors.white,
-            ),
-            child: LineChart(
-              showAvg ? avgData() : mainData(),
-            ),
-          ),
-        ),
-        Container(
-          alignment: Alignment.topLeft,
-          margin: const EdgeInsets.symmetric(horizontal: 7.0),
-          child: FlatButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)),
-            color: AppColors.backgroundColor,
-            splashColor: AppColors.primaryColor,
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              '평균',
-              style: TextStyle(
-                fontSize: 12,
-                color: showAvg ? AppColors.accentColor : AppColors.primaryColor,
-                fontWeight: showAvg ? FontWeight.bold : FontWeight.normal,
+            child: AspectRatio(
+              aspectRatio: 2,
+              child: LineChart(
+                showAvg ? avgData() : mainData(),
               ),
             ),
           ),
-        ),
-      ],
+          // Container(
+          //   alignment: Alignment.topLeft,
+          //   margin: const EdgeInsets.symmetric(horizontal: 7.0),
+          //   child: FlatButton(
+          //     shape: RoundedRectangleBorder(
+          //         borderRadius: new BorderRadius.circular(30.0)),
+          //     color: AppColors.backgroundColor,
+          //     splashColor: AppColors.primaryColor,
+          //     onPressed: () {
+          //       setState(() {
+          //         showAvg = !showAvg;
+          //       });
+          //     },
+          //     child: Text(
+          //       '평균',
+          //       style: TextStyle(
+          //         fontSize: 12,
+          //         color: showAvg ? AppColors.accentColor : AppColors.primaryColor,
+          //         fontWeight: showAvg ? FontWeight.bold : FontWeight.normal,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 
@@ -196,7 +250,7 @@ class ChartModel {
     chartDataSpots = List.generate(data.length, (index) {
       return FlSpot(
         (reverseIndex[index]).toDouble(),
-        data.ratioMap[data.dtList[index]].toDouble(),
+        data.ratioMap[data.dtList[data.length - index - 1]].toDouble(),
       );
     });
     // Init avgDataSpots

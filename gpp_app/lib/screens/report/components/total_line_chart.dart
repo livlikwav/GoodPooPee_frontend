@@ -75,7 +75,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
                     style: TextStyle(color: AppColors.primaryColor),
                     children: [
                       TextSpan(
-                        text: '평균 성공률 ',
+                        text: '평균 ',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       TextSpan(

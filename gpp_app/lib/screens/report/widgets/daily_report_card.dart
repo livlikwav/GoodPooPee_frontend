@@ -93,7 +93,7 @@ Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
     isVisible = true;
   }
   return Container(
-    padding: EdgeInsets.all(getBlockSizeHorizontal(5)),
+    padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
     child: Row(
       children: <Widget>[
         // statCard(
@@ -133,61 +133,89 @@ Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
         //     ),
         //   ],
         // ),
-        Column(
-          children: [
-            Container(
-              width: getBlockSizeHorizontal(20),
-              height: getBlockSizeVertical(12),
-              child: LiquidLinearProgressIndicator(
-                value: dailyReport.ratio,
-                valueColor: AlwaysStoppedAnimation(AppColors.primaryColor),
-                backgroundColor: Colors.white,
-                borderColor: Colors.white,
-                borderWidth: 5.0,
-                borderRadius: 12.0,
-                direction: Axis.vertical,
-                center: Text(
-                  "${dailyReport.ratio * 100}%",
-                  style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
-                    color: isVisible ? AppColors.accentColor : Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Text(
-              '성공률',
-              style: TextStyle(
-                color: Theme.of(context).textTheme.subtitle1.color,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        Expanded(
+        Flexible(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    '${dailyReport.success.toString()}',
-                    style: TextStyle(
-                        color: AppColors.accentColor,
-                        fontSize:
-                            Theme.of(context).textTheme.headline3.fontSize),
+                  Column(
+                    children: [
+                      Text(
+                        '성공',
+                        style: TextStyle(
+                          color: AppColors.accentColor,
+                          fontSize:
+                              Theme.of(context).textTheme.subtitle1.fontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '${dailyReport.success.toString()}회',
+                        style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize:
+                                Theme.of(context).textTheme.subtitle1.fontSize),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '${dailyReport.count.toString()}',
-                    style: TextStyle(
-                        color: AppColors.accentColor,
-                        fontSize:
-                            Theme.of(context).textTheme.headline3.fontSize),
+                  Column(
+                    children: [
+                      Text(
+                        '총',
+                        style: TextStyle(
+                          color: AppColors.accentColor,
+                          fontSize:
+                              Theme.of(context).textTheme.subtitle1.fontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '${dailyReport.count.toString()}회',
+                        style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize:
+                                Theme.of(context).textTheme.subtitle1.fontSize),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Text('WOW'),
+              // Text('WOW'),
+            ],
+          ),
+        ),
+        Flexible(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: getBlockSizeVertical(12),
+                child: LiquidLinearProgressIndicator(
+                  value: dailyReport.ratio,
+                  valueColor: AlwaysStoppedAnimation(AppColors.primaryColor),
+                  backgroundColor: Colors.white,
+                  borderColor: Colors.white,
+                  borderWidth: 5.0,
+                  borderRadius: 12.0,
+                  direction: Axis.vertical,
+                  center: Text(
+                    "${dailyReport.ratio * 100}%",
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
+                      color: isVisible ? AppColors.accentColor : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              // Text(
+              //   '성공률',
+              //   style: TextStyle(
+              //     color: Theme.of(context).textTheme.subtitle1.color,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
             ],
           ),
         ),

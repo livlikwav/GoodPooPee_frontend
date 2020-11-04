@@ -26,7 +26,7 @@ class WeeklyBarChart extends StatefulWidget {
 }
 
 class _WeeklyBarChartState extends State<WeeklyBarChart> {
-  final Color barBackgroundColor = Colors.white;
+  final Color barBackgroundColor = AppColors.primaryColor.withOpacity(0.3);
   final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex;
   bool isPlaying = false;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pad_model.dart';
 import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
 import 'package:gpp_app/services/put_pad.dart';
@@ -18,9 +19,15 @@ class CustomPadMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return FabCircularMenu(
       // Ring rendered before orientation changed
+      fabOpenIcon: Icon(
+        Icons.menu,
+        color: Colors.white,
+      ),
       ringDiameter: _ringDiameter,
       ringWidth: _ringWidth,
       fabOpenColor: Colors.white,
+      fabColor: AppColors.primaryColor,
+      ringColor: AppColors.primaryColor,
       children: <Widget>[
         _backMenu(context),
         _resetMenu(context),

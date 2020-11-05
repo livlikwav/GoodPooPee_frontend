@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           child: Icon(
-                            Icons.play_circle_filled,
+                            Icons.more_horiz,
                             color: AppColors.accentColor,
                           ),
                           onTap: () => Navigator.of(context)

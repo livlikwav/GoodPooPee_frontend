@@ -68,42 +68,53 @@ class _DrawerMenuState extends State<DrawerMenu> {
                             ),
                           ]
                         : <Widget>[
-                            Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.6),
-                                      offset: const Offset(2.0, 4.0),
-                                      blurRadius: 8),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(60.0)),
-                                child: Image.asset(
-                                  'assets/images/yorkshire.jpg',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: _petName + ' ',
-                                    style:
-                                        Theme.of(context).textTheme.subtitle1,
+                            Row(
+                              // alignment: Alignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.6),
+                                          offset: const Offset(2.0, 4.0),
+                                          blurRadius: 8),
+                                    ],
                                   ),
-                                  TextSpan(
-                                      text: _petBreed,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2),
-                                ],
-                              ),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(60.0)),
+                                    child: Image.asset(
+                                      'assets/images/spitz.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                // SizedBox(width: getBlockSizeHorizontal(5)),
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        _petName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      ),
+                                      Text(
+                                        _petBreed,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                   ),

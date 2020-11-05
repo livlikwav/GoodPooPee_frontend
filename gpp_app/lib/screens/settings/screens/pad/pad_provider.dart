@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/my_logger.dart';
 
 class PadProvider extends ChangeNotifier {
@@ -71,7 +72,7 @@ Widget _getCircle({
     left: posX - 20.0,
     top: posY - 20.0,
     child: CircleAvatar(
-      backgroundColor: Colors.orange.withOpacity(0.7),
+      backgroundColor: AppColors.primaryColor.withOpacity(0.7),
       child: Text(
         '$number',
         style: TextStyle(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/screens/logs/components/menu_chips.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
-import 'package:gpp_app/util/size_config.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -63,6 +62,19 @@ class _LogsHeaderState extends State<LogsHeader> {
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',
       locale: Locale('ko', 'KO'),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: Colors.black,
+            colorScheme: ColorScheme.light(
+              primary: AppColors.accentColor,
+              secondary: AppColors.accentColor,
+            ),
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child,
+        );
+      },
     );
     if (picked != null && picked != _logsProvider.datetime)
       _logsProvider.updateRecords(context, picked);

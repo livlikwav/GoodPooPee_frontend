@@ -9,7 +9,7 @@ class MenuChips extends StatefulWidget {
 
 class _MenuChipsState extends State<MenuChips> {
   List<bool> _selectionList = [true, false, false]; //default
-  final Color _selectedColor = AppColors.accentColor;
+  // final Color _selectedColor = AppColors.accentColor;
   final Color _backgroundColor = AppColors.primaryColor.withOpacity(0.5);
   final double _fontSize = getBlockSizeHorizontal(3);
   @override
@@ -18,7 +18,8 @@ class _MenuChipsState extends State<MenuChips> {
       child: Wrap(
         children: [
           ChoiceChip(
-            selectedColor: _selectedColor,
+            // selectedColor: _selectedColor,
+            selectedColor: AppColors.accentColor,
             backgroundColor: _backgroundColor,
             label: Text(
               '전체',
@@ -36,7 +37,8 @@ class _MenuChipsState extends State<MenuChips> {
           ),
           SizedBox(width: getBlockSizeHorizontal(2)),
           ChoiceChip(
-            selectedColor: _selectedColor,
+            // selectedColor: _selectedColor,
+            selectedColor: Colors.green,
             backgroundColor: _backgroundColor,
             label: Text(
               '성공',
@@ -54,7 +56,8 @@ class _MenuChipsState extends State<MenuChips> {
           ),
           SizedBox(width: getBlockSizeHorizontal(2)),
           ChoiceChip(
-            selectedColor: _selectedColor,
+            // selectedColor: _selectedColor,
+            selectedColor: Colors.red,
             backgroundColor: _backgroundColor,
             label: Text(
               '실패',

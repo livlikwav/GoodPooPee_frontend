@@ -42,8 +42,8 @@ class CustomPadMenu extends StatelessWidget {
       icon: Icon(Icons.check),
       onPressed: () {
         // PUT PAD
-        List<double> _reqList = Provider.of<PadProvider>(context, listen: false)
-            .getPosListOfCamera();
+        List<double> _reqList =
+            Provider.of<PadProvider>(context, listen: false).getPadResult();
         PadModel _padModel = PadModel.byList(_reqList);
         putPad(context, _padModel);
       },
@@ -55,7 +55,7 @@ class CustomPadMenu extends StatelessWidget {
       color: Colors.white,
       icon: Icon(Icons.loop),
       onPressed: () {
-        Provider.of<PadProvider>(context, listen: false).reset();
+        Provider.of<PadProvider>(context, listen: false).resetPosList();
       },
     );
   }

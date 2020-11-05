@@ -12,7 +12,6 @@ import 'package:gpp_app/services/get_ppcam.dart';
 import 'package:gpp_app/services/get_video_thumbnail.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
-import 'package:gpp_app/widgets/streaming/live_video.dart';
 import 'package:provider/provider.dart';
 
 class PadCheckingScreen extends StatefulWidget {
@@ -56,18 +55,15 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screenSize
+    // (long, short) == (width, height)
+    double screenWidth = MediaQuery.of(context).size.height; //device height
     // set Landscape orientation at every build time
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
     ]);
-    // Get screenSize
-    double screenWidth = MediaQuery.of(context)
-        .size
-        .height; // MediaQuery orientation is portrait
-    double sreeenHeight =
-        MediaQuery.of(context).size.width; // MediaQuery orientation is portrait
     return ChangeNotifierProvider(
-      create: (context) => PadProvider(screenWidth, sreeenHeight),
+      create: (context) => PadProvider(screenWidth: screenWidth),
       child: Builder(
         builder: (context) => isPpcamProfileNull
             // Server request

@@ -16,7 +16,11 @@ class LiveVideoThumbnail extends StatefulWidget {
 }
 
 class _LiveVideoThumbnailState extends State<LiveVideoThumbnail> {
+  PadProvider _padProvider;
   Future<Uint8List> image;
+  // Horizontal:100 == screen Height
+  final double _screenHeight = getBlockSizeHorizontal(100);
+
   @override
   void initState() {
     image = VideoThumbnail.thumbnailData(
@@ -24,13 +28,15 @@ class _LiveVideoThumbnailState extends State<LiveVideoThumbnail> {
       imageFormat: ImageFormat.JPEG,
       maxWidth: getBlockSizeVertical(100)
           .toInt(), // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
-      quality: 25,
+      quality: 100, // 0 - 100
     );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _padProvider = Provider.of<PadProvider>(context, listen: false);
+
     return FutureBuilder(
       future: image,
       builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
@@ -40,14 +46,25 @@ class _LiveVideoThumbnailState extends State<LiveVideoThumbnail> {
         if (snapshot.hasData) {
           child = Center(
             child: GestureDetector(
-                onTapDown: (TapDownDetails details) {
-                  MyLogger.debug('Tapped ${details.globalPosition}');
-                  Provider.of<PadProvider>(context, listen: false).add(
-                    details.globalPosition.dx,
-                    details.globalPosition.dy,
-                  );
-                },
-                child: Image.memory(snapshot.data)),
+              onTapDown: (TapDownDetails details) {
+                MyLogger.debug('Tapped ${details.globalPosition}');
+                _padProvider.addPos(
+                  posX: details.globalPosition.dx,
+                  posY: details.globalPosition.dy,
+                  screenHeight: _screenHeight,
+                );
+              },
+              child: Container(
+                height: _screenHeight,
+                child: AspectRatio(
+                  aspectRatio: _padProvider.videoRatio,
+                  child: FittedBox(
+                    child: Image.memory(snapshot.data),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
           );
           // Future complete with error
         } else if (snapshot.hasError) {

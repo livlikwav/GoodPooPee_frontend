@@ -5,7 +5,7 @@ import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
-import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
+import 'package:gpp_app/screens/report/components/notice.dart';
 import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
@@ -16,7 +16,6 @@ import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'package:gpp_app/services/report/get_daily_report.dart';
 import 'package:gpp_app/services/report/get_weekly_report.dart';
 import 'package:gpp_app/services/report/get_total_report.dart';
 
@@ -31,7 +30,6 @@ class _ReportScreenState extends State<ReportScreen> {
   bool isReportNull = true;
   String todaysDate;
   int petId;
-  Future<DailyReport> dailyReport;
   Future<List<DailyReport>> weeklyReport;
   Future<List<MonthlyReport>> totalReport;
 
@@ -59,11 +57,6 @@ class _ReportScreenState extends State<ReportScreen> {
       isPetNull = false;
       MyLogger.info('Pet id is $petId');
       // Get report models from server
-      dailyReport = getDailyReport(
-        context,
-        DioClient.serverUrl + 'pet/' + petId.toString() + '/report/daily',
-        todaysDate,
-      );
       weeklyReport = getWeeklyReport(
         context,
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/weekly',
@@ -135,7 +128,11 @@ class _ReportScreenState extends State<ReportScreen> {
                               '성적표',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
-                            DailyReportCard(dailyReport),
+                            Text(
+                              '알림장',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            NoticeWidget(weeklyReport),
                             Text(
                               '생활 기록부',
                               style: Theme.of(context).textTheme.subtitle1,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/services/report/parsing_total.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/shadow_container.dart';
 import 'package:intl/intl.dart';
 
 class TotalLineChart extends StatefulWidget {
@@ -30,21 +31,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
         ? widget.totalData.progressRatio.toString() + '%'
         // If it is first month, progress = meanRatio (it start from 0%)
         : widget.totalData.meanRatio.toString() + '%';
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(20),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0.5,
-            blurRadius: 3,
-            offset: Offset(2, 2),
-          ),
-        ],
-        color: Colors.white,
-      ),
+    return ShadowContainer(
       child: Column(
         children: <Widget>[
           Row(

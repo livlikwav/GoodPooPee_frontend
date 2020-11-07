@@ -142,6 +142,7 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
   // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
   ppcamUrl =
       'https://gpp-images-1.s3.ap-northeast-2.amazonaws.com/gpp_streaming.MOV';
+  // ppcamUrl = 'http://172.16.101.111:8090';
   // =====================================
   return Scaffold(
     primary: true,

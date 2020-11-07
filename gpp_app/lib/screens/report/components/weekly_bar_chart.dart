@@ -7,6 +7,7 @@ import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/services/report/parsing_weekly.dart';
 import 'package:gpp_app/util/kst_weekday.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/shadow_container.dart';
 import 'package:intl/intl.dart';
 
 class WeeklyBarChart extends StatefulWidget {
@@ -35,82 +36,84 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 2,
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: Icon(
-                  isPlaying ? Icons.pause : Icons.play_circle_filled,
-                  color: AppColors.primaryColor,
-                ),
-                onPressed: () {
-                  setState(() {
-                    isPlaying = !isPlaying;
-                    if (isPlaying) {
-                      refreshState();
-                    }
-                  });
-                },
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(20),
+      child: ShadowContainer(
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    isPlaying ? Icons.pause : Icons.play_circle_filled,
+                    color: AppColors.primaryColor,
                   ),
-                  color: AppColors.backgroundColor,
+                  onPressed: () {
+                    setState(() {
+                      isPlaying = !isPlaying;
+                      if (isPlaying) {
+                        refreshState();
+                      }
+                    });
+                  },
                 ),
-                margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
-                padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: AppColors.primaryColor),
-                    children: [
-                      TextSpan(
-                        text: '평균 ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: '${widget.weeklyData.meanRatio}% ',
-                      ),
-                      TextSpan(
-                        text: '최고 ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: '${widget.weeklyData.maxRatio}%',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      15.0,
-                      0.0,
-                      15.0,
-                      15.0,
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(20),
                     ),
-                    child: BarChart(
-                      isPlaying ? randomData() : mainBarData(),
-                      swapAnimationDuration: animDuration,
+                    color: AppColors.backgroundColor,
+                  ),
+                  margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
+                  padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(color: AppColors.primaryColor),
+                      children: [
+                        TextSpan(
+                          text: '평균 ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text: '${widget.weeklyData.meanRatio}% ',
+                        ),
+                        TextSpan(
+                          text: '최고 ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text: '${widget.weeklyData.maxRatio}%',
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        15.0,
+                        0.0,
+                        15.0,
+                        15.0,
+                      ),
+                      child: BarChart(
+                        isPlaying ? randomData() : mainBarData(),
+                        swapAnimationDuration: animDuration,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

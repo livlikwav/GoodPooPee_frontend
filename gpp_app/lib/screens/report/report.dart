@@ -5,6 +5,7 @@ import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
+import 'package:gpp_app/screens/report/components/grade_card.dart';
 import 'package:gpp_app/screens/report/components/notice.dart';
 import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
@@ -128,6 +129,7 @@ class _ReportScreenState extends State<ReportScreen> {
                               '성적표',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
+                            GradeCard(weeklyReport),
                             Text(
                               '알림장',
                               style: Theme.of(context).textTheme.subtitle1,

@@ -6,20 +6,19 @@ import 'package:gpp_app/services/report/parsing_weekly.dart';
 import 'package:gpp_app/widgets/shadow_container.dart';
 import 'package:intl/intl.dart';
 
-class NoticeWidget extends StatefulWidget {
-  NoticeWidget(this.weeklyReport);
+class GradeCard extends StatefulWidget {
+  GradeCard(this.weeklyReport);
   final Future<List<DailyReport>> weeklyReport;
   @override
-  _NoticeWidgetState createState() => _NoticeWidgetState();
+  _GradeCardState createState() => _GradeCardState();
 }
 
-class _NoticeWidgetState extends State<NoticeWidget> {
+class _GradeCardState extends State<GradeCard> {
   final String todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return ShadowContainer(
       child: Container(
-        padding: const EdgeInsets.all(20.0),
         width: double.infinity,
         child: FutureBuilder(
           future: widget.weeklyReport,
@@ -30,16 +29,14 @@ class _NoticeWidgetState extends State<NoticeWidget> {
             // Future complete with data
             if (snapshot.hasData) {
               WeeklyData weeklyData = WeeklyData(snapshot.data, todaysDate);
-              child = Text(
-                _getNoticeText(weeklyData.meanRatio),
-              );
+              child = _getCardBody();
               // Future complete with error
             } else if (snapshot.hasError) {
               DioError error = snapshot.error;
               if (error.response != null && error.response.statusCode == 404) {
-                child = Text('오늘은 알림장 내용이 없습니다.');
+                child = Text('HES');
               } else {
-                child = Text('오류');
+                child = Text('HES');
               }
               // Future incomplete
             } else {
@@ -54,32 +51,18 @@ class _NoticeWidgetState extends State<NoticeWidget> {
       ),
     );
   }
-}
 
-String _getNoticeText(int ratio) {
-  const List<String> strList = [
-    '수',
-    '우',
-    '미',
-    '양',
-    '가',
-  ];
-  // Ratio Check
-  if (ratio < 0 || ratio > 100) {
-    return '부모님 학생 상태가 좀 이상한 것 같습니다.';
-  }
-
-  // switch case
-  if (ratio >= 80) {
-    return strList[0];
-  } else if (ratio >= 60) {
-    return strList[1];
-  } else if (ratio >= 40) {
-    return strList[2];
-  } else if (ratio >= 20) {
-    return strList[3];
-  } else {
-    // 0 ~ 20
-    return strList[4];
+  Widget _getCardBody() {
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('1'),
+          Text('2'),
+          Text('3'),
+        ],
+      ),
+    );
   }
 }

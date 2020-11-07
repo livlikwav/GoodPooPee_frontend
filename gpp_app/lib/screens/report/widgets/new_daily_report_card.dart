@@ -7,15 +7,15 @@ import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
-class DailyReportCard extends StatefulWidget {
-  final Future<DailyReport> dailyReport;
-  DailyReportCard(this.dailyReport);
+class NewDailyReportCard extends StatefulWidget {
+  final DailyReport dailyReport;
+  NewDailyReportCard(this.dailyReport);
 
   @override
-  State<StatefulWidget> createState() => _DailyReportCardState();
+  State<StatefulWidget> createState() => _NewDailyReportCardState();
 }
 
-class _DailyReportCardState extends State<DailyReportCard> {
+class _NewDailyReportCardState extends State<NewDailyReportCard> {
   // Avoid crush of layout whenever screen re-build
   double _boxRadius;
   @override
@@ -47,37 +47,38 @@ class _DailyReportCardState extends State<DailyReportCard> {
           ],
           color: Colors.white,
         ),
-        child: FutureBuilder(
-          future: widget.dailyReport,
-          builder: (BuildContext context, AsyncSnapshot<DailyReport> snapshot) {
-            Widget child;
+        child: _getCardBody(context, widget.dailyReport),
+        // child: FutureBuilder(
+        //   future: widget.dailyReport,
+        //   builder: (BuildContext context, AsyncSnapshot<DailyReport> snapshot) {
+        //     Widget child;
 
-            // Future complete with data
-            if (snapshot.hasData) {
-              child = _getCardBody(context, snapshot.data);
-              // Future complete with error
-            } else if (snapshot.hasError) {
-              DioError error = snapshot.error;
-              if (error.response != null && error.response.statusCode == 404) {
-                child = _getCardBody(context, null);
-                // child = EmptyCard(
-                //   text: '오늘의 배변 기록이 존재하지 않습니다.',
-                // );
-              } else {
-                child = EmptyCard(
-                  text: '오류',
-                );
-              }
-              // Future incomplete
-            } else {
-              child = WaitingCard(
-                text: '로딩중',
-              );
-            }
+        //     // Future complete with data
+        //     if (snapshot.hasData) {
+        //       child = _getCardBody(context, snapshot.data);
+        //       // Future complete with error
+        //     } else if (snapshot.hasError) {
+        //       DioError error = snapshot.error;
+        //       if (error.response != null && error.response.statusCode == 404) {
+        //         child = _getCardBody(context, null);
+        //         // child = EmptyCard(
+        //         //   text: '오늘의 배변 기록이 존재하지 않습니다.',
+        //         // );
+        //       } else {
+        //         child = EmptyCard(
+        //           text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
+        //         );
+        //       }
+        //       // Future incomplete
+        //     } else {
+        //       child = WaitingCard(
+        //         text: '데이터를 불러오는 중입니다.',
+        //       );
+        //     }
 
-            return child;
-          },
-        ),
+        //     return child;
+        //   },
+        // ),
       ),
     );
   }
@@ -188,43 +189,6 @@ Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
             ],
           ),
         ),
-        // statCard(
-        //   '일간 배변훈련 리포트',
-        //   dailyReport.date,
-        //   Colors.white,
-        //   titleLogo: true,
-        // ),
-        // DailyPieChart(dailyReport.ratio),
-        // Row(
-        //   children: [
-        //     statCard(
-        //       dailyReport.count.toString() + '회',
-        //       '총 배변 횟수',
-        //       Colors.white,
-        //     ),
-        //     statCard(
-        //       dailyReport.success.toString() + '회',
-        //       '성공 횟수',
-        //       Colors.orangeAccent,
-        //     ),
-        //   ],
-        // ),
-        // Row(
-        //   children: [
-        //     statCard(
-        //       '훈련 진척도',
-        //       '당일 성공률 - 전일 성공률',
-        //       Colors.white,
-        //       flex: 3,
-        //     ),
-        //     percentCard(
-        //       Icons.arrow_upward,
-        //       (dailyReport.ratio * 100).toInt().toString() + '%',
-        //       Colors.orange,
-        //       Colors.white,
-        //     ),
-        //   ],
-        // ),
       ],
     ),
   );

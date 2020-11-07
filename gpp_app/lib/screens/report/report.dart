@@ -132,7 +132,7 @@ class _ReportScreenState extends State<ReportScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              '가정 통신문',
+                              '성적표',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             DailyReportCard(dailyReport),

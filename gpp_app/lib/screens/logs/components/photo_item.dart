@@ -26,12 +26,26 @@ class _PhotoItemState extends State<PhotoItem> {
     dateString = DateFormat('HH:mm:ss').format(widget.petRecord.timestamp);
     return Container(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '$dateString',
-            style: TextStyle(
-              color: AppColors.primaryColor,
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 10.0),
+                  color: AppColors.primaryColor,
+                  width: getBlockSizeHorizontal(5),
+                  height: getBlockSizeVertical(0.5),
+                ),
+                Text(
+                  '$dateString',
+                  style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(

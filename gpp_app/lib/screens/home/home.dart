@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '당신의 굿푸피',
+                          '오늘의 배변 노트',
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         GestureDetector(
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     //   ),
                     // ),
                     Text(
-                      '굿푸피를 위한 훈련 가이드',
+                      '부모 참고서',
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Expanded(

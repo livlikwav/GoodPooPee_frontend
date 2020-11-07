@@ -129,7 +129,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   },
                 ),
                 _menuTile(
-                  label: '내 푸피캠 확인하기',
+                  label: '수업 참관하기',
                   style: Theme.of(context).textTheme.bodyText2,
                   leading: Icons.live_tv,
                   onTap: () {
@@ -137,7 +137,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   },
                 ),
                 _menuTile(
-                  label: '배변 기록 확인하기',
+                  label: '숙제 확인',
                   leading: Icons.history,
                   style: Theme.of(context).textTheme.bodyText2,
                   onTap: () {
@@ -146,7 +146,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   },
                 ),
                 _menuTile(
-                  label: '배변 훈련 리포트',
+                  label: '가정 통신문',
                   leading: Icons.list,
                   style: Theme.of(context).textTheme.bodyText2,
                   onTap: () {
@@ -192,7 +192,10 @@ ListTile _menuTile({
   @required IconData leading,
 }) {
   return ListTile(
-    leading: Icon(leading),
+    leading: Icon(
+      leading,
+      color: AppColors.primaryColor,
+    ),
     title: Text(
       label,
       style: style,

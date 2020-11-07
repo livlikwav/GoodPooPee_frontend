@@ -104,19 +104,9 @@ class _LogsScreenState extends State<LogsScreen> {
                         child: Row(
                           children: [
                             Container(
-                              width: getBlockSizeHorizontal(12),
-                              height: double.infinity,
-                              child: FittedBox(
-                                fit: BoxFit.fill,
-                                child: RulerWidget(
-                                  scaleColor: AppColors.backgroundColor,
-                                  scaleSize: getBlockSizeHorizontal(12),
-                                  limit: 10,
-                                  interval: 4,
-                                  normalBarColor: AppColors.primaryColor,
-                                  axis: Axis.vertical,
-                                ),
-                              ),
+                              margin: const EdgeInsets.only(left: 20.0),
+                              color: AppColors.primaryColor,
+                              width: getBlockSizeHorizontal(1),
                             ),
                             Expanded(
                               child: Container(
@@ -170,6 +160,24 @@ Widget _paddingEmptyCard({String text}) {
     ),
     child: EmptyCard(
       text: text,
+    ),
+  );
+}
+
+Widget _staticRuler() {
+  return Container(
+    width: getBlockSizeHorizontal(12),
+    height: double.infinity,
+    child: FittedBox(
+      fit: BoxFit.fill,
+      child: RulerWidget(
+        scaleColor: AppColors.backgroundColor,
+        scaleSize: getBlockSizeHorizontal(12),
+        limit: 10,
+        interval: 4,
+        normalBarColor: AppColors.primaryColor,
+        axis: Axis.vertical,
+      ),
     ),
   );
 }

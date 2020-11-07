@@ -2,10 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
-import 'package:gpp_app/screens/report/components/daily_pie_chart.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
-import 'package:gpp_app/screens/report/components/percent_card.dart';
-import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
@@ -62,9 +59,10 @@ class _DailyReportCardState extends State<DailyReportCard> {
             } else if (snapshot.hasError) {
               DioError error = snapshot.error;
               if (error.response != null && error.response.statusCode == 404) {
-                child = EmptyCard(
-                  text: '오늘의 배변 기록이 존재하지 않습니다.',
-                );
+                child = _getCardBody(context, null);
+                // child = EmptyCard(
+                //   text: '오늘의 배변 기록이 존재하지 않습니다.',
+                // );
               } else {
                 child = EmptyCard(
                   text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
@@ -86,16 +84,110 @@ class _DailyReportCardState extends State<DailyReportCard> {
 }
 
 Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
+  bool isNull;
   bool isVisible;
-  if (dailyReport.ratio > 0.5) {
+  if (dailyReport == null) {
+    isNull = true;
     isVisible = false;
   } else {
-    isVisible = true;
+    isNull = false;
+    if (dailyReport.ratio > 0.5) {
+      isVisible = false;
+    } else {
+      isVisible = true;
+    }
   }
   return Container(
     padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
     child: Row(
       children: <Widget>[
+        Flexible(
+          flex: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        '성공',
+                        style: TextStyle(
+                          color: AppColors.accentColor,
+                          fontSize:
+                              Theme.of(context).textTheme.subtitle1.fontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        isNull ? '0회' : '${dailyReport.success.toString()}회',
+                        style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize:
+                                Theme.of(context).textTheme.subtitle1.fontSize),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        '총',
+                        style: TextStyle(
+                          color: AppColors.accentColor,
+                          fontSize:
+                              Theme.of(context).textTheme.subtitle1.fontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        isNull ? '0회' : '${dailyReport.count.toString()}회',
+                        style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize:
+                                Theme.of(context).textTheme.subtitle1.fontSize),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              // Text('WOW'),
+            ],
+          ),
+        ),
+        Flexible(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: getBlockSizeVertical(12),
+                child: LiquidLinearProgressIndicator(
+                  value: isNull ? 100.0 : dailyReport.ratio,
+                  valueColor: AlwaysStoppedAnimation(AppColors.primaryColor),
+                  backgroundColor: Colors.white,
+                  borderColor: Colors.white,
+                  borderWidth: 5.0,
+                  borderRadius: 12.0,
+                  direction: Axis.vertical,
+                  center: Text(
+                    isNull ? '100%' : "${dailyReport.ratio * 100}%",
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
+                      color: isVisible ? AppColors.accentColor : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              // Text(
+              //   '성공률',
+              //   style: TextStyle(
+              //     color: Theme.of(context).textTheme.subtitle1.color,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
+            ],
+          ),
+        ),
         // statCard(
         //   '일간 배변훈련 리포트',
         //   dailyReport.date,
@@ -133,92 +225,6 @@ Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
         //     ),
         //   ],
         // ),
-        Flexible(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        '성공',
-                        style: TextStyle(
-                          color: AppColors.accentColor,
-                          fontSize:
-                              Theme.of(context).textTheme.subtitle1.fontSize,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '${dailyReport.success.toString()}회',
-                        style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontSize:
-                                Theme.of(context).textTheme.subtitle1.fontSize),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        '총',
-                        style: TextStyle(
-                          color: AppColors.accentColor,
-                          fontSize:
-                              Theme.of(context).textTheme.subtitle1.fontSize,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '${dailyReport.count.toString()}회',
-                        style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontSize:
-                                Theme.of(context).textTheme.subtitle1.fontSize),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              // Text('WOW'),
-            ],
-          ),
-        ),
-        Flexible(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: getBlockSizeVertical(12),
-                child: LiquidLinearProgressIndicator(
-                  value: dailyReport.ratio,
-                  valueColor: AlwaysStoppedAnimation(AppColors.primaryColor),
-                  backgroundColor: Colors.white,
-                  borderColor: Colors.white,
-                  borderWidth: 5.0,
-                  borderRadius: 12.0,
-                  direction: Axis.vertical,
-                  center: Text(
-                    "${dailyReport.ratio * 100}%",
-                    style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
-                      color: isVisible ? AppColors.accentColor : Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              // Text(
-              //   '성공률',
-              //   style: TextStyle(
-              //     color: Theme.of(context).textTheme.subtitle1.color,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
-            ],
-          ),
-        ),
       ],
     ),
   );

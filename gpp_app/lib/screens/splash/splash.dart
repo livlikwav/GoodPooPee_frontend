@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     // You have to call it on your starting screen
-    SizeConfig().init(context);
+    SizeConfig.init(context);
     return SafeArea(
       child: Scaffold(
         body: FadeInLogo(),

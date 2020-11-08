@@ -77,9 +77,7 @@ class _LiveVideoThumbnailState extends State<LiveVideoThumbnail> {
           // Future incomplete
         } else {
           child = Center(
-            child: WaitingCard(
-              text: '데이터를 불러오는 중입니다.',
-            ),
+            child: WaitingCard(),
           );
         }
 

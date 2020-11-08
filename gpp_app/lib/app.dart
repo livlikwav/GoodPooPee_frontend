@@ -24,7 +24,7 @@ class GppApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: Strings.appName,
-        theme: themeData,
+        theme: Themes.themeData,
         home: SplashScreen(),
         routes: Routes.routes,
         debugShowCheckedModeBanner: false,

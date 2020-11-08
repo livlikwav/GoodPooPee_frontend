@@ -4,7 +4,7 @@ import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/provider/daily_report_provider.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
-import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
+import 'package:gpp_app/widgets/reports/daily_report_card.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
@@ -91,25 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               text: '반려견 데이터가 존재하지 않습니다.',
                             )
                           // Pet exists
-                          : OrientationBuilder(
-                              builder: (context, orientation) {
-                                if (orientation == Orientation.landscape) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  // Orientation.portrait
-                                  return SingleChildScrollView(
-                                    child: Column(
-                                      children: <Widget>[
-                                        DailyReportCard(
-                                            _dailyReportProvider.dailyReport),
-                                      ],
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
+                          : DailyReportCard(_dailyReportProvider.dailyReport),
                     ),
                     Text(
                       '부모 참고서',

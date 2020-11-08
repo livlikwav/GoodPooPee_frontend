@@ -43,9 +43,7 @@ class _NoticeWidgetState extends State<NoticeWidget> {
               }
               // Future incomplete
             } else {
-              child = WaitingCard(
-                text: '로딩중',
-              );
+              child = WaitingCard();
             }
 
             return child;

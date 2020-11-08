@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class SizeConfig {
+  SizeConfig._();
   // Scale size by 100 * 100 grid
   static MediaQueryData _mediaQueryData;
   static double screenWidth;
@@ -15,7 +16,7 @@ class SizeConfig {
   static double safeBlockHorizontal;
   static double safeBlockVertical;
 
-  void init(BuildContext context) {
+  static void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     // init size config
     screenWidth = _mediaQueryData.size.width;

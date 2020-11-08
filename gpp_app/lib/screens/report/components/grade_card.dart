@@ -40,9 +40,7 @@ class _GradeCardState extends State<GradeCard> {
               }
               // Future incomplete
             } else {
-              child = WaitingCard(
-                text: '로딩중',
-              );
+              child = WaitingCard();
             }
 
             return child;

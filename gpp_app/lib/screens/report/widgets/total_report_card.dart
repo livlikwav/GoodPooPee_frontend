@@ -56,9 +56,7 @@ class _TotalReportCardState extends State<TotalReportCard> {
             }
             // Future incomplete
           } else {
-            child = WaitingCard(
-              text: '데이터를 불러오는 중입니다.',
-            );
+            child = WaitingCard();
           }
 
           return child;

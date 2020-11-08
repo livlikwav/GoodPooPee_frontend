@@ -34,7 +34,7 @@ class _PhotoItemState extends State<PhotoItem> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 10.0),
-                  color: AppColors.primaryColor,
+                  color: Colors.grey,
                   width: getBlockSizeHorizontal(5),
                   height: getBlockSizeVertical(0.5),
                 ),

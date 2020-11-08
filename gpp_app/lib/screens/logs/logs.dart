@@ -49,8 +49,13 @@ class _LogsScreenState extends State<LogsScreen> {
           ),
         ),
         drawer: DrawerMenu(),
-        body: ChangeNotifierProvider(
-          create: (context) => _logsProvider,
+        body: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => _logsProvider),
+            ChangeNotifierProvider(
+              create: (context) => ValueNotifier<FILTER>(FILTER.total),
+            ),
+          ],
           child: OrientationBuilder(
             builder: (context, orientation) {
               if (orientation == Orientation.landscape) {
@@ -105,7 +110,7 @@ class _LogsScreenState extends State<LogsScreen> {
                           children: [
                             Container(
                               margin: const EdgeInsets.only(left: 20.0),
-                              color: AppColors.primaryColor,
+                              color: Colors.grey,
                               width: getBlockSizeHorizontal(1),
                             ),
                             Expanded(

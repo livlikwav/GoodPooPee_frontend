@@ -8,8 +8,8 @@ class ShadowContainer extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(3.0),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(20),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(20),
         ),
         boxShadow: [
           BoxShadow(

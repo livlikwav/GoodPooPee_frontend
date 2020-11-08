@@ -36,84 +36,82 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 2,
-      child: ShadowContainer(
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    isPlaying ? Icons.pause : Icons.play_circle_filled,
-                    color: AppColors.primaryColor,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isPlaying = !isPlaying;
-                      if (isPlaying) {
-                        refreshState();
-                      }
-                    });
-                  },
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: Icon(
+                  isPlaying ? Icons.pause : Icons.play_circle_filled,
+                  color: AppColors.primaryColor,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    color: AppColors.backgroundColor,
+                onPressed: () {
+                  setState(() {
+                    isPlaying = !isPlaying;
+                    if (isPlaying) {
+                      refreshState();
+                    }
+                  });
+                },
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
                   ),
-                  margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
-                  padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(color: AppColors.primaryColor),
-                      children: [
-                        TextSpan(
-                          text: '평균 ',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        TextSpan(
-                          text: '${widget.weeklyData.meanRatio}% ',
-                        ),
-                        TextSpan(
-                          text: '최고 ',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        TextSpan(
-                          text: '${widget.weeklyData.maxRatio}%',
-                        ),
-                      ],
+                  color: AppColors.backgroundColor,
+                ),
+                margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
+                padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(color: AppColors.primaryColor),
+                    children: [
+                      TextSpan(
+                        text: '평균 ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: '${widget.weeklyData.meanRatio}% ',
+                      ),
+                      TextSpan(
+                        text: '최고 ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: '${widget.weeklyData.maxRatio}%',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      15.0,
+                      0.0,
+                      15.0,
+                      15.0,
+                    ),
+                    child: BarChart(
+                      isPlaying ? randomData() : mainBarData(),
+                      swapAnimationDuration: animDuration,
                     ),
                   ),
                 ),
               ],
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        15.0,
-                        0.0,
-                        15.0,
-                        15.0,
-                      ),
-                      child: BarChart(
-                        isPlaying ? randomData() : mainBarData(),
-                        swapAnimationDuration: animDuration,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:add_thumbnail/add_thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/constants/layouts.dart';
 import 'package:gpp_app/models/provider/daily_report_provider.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
@@ -9,6 +10,7 @@ import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
+import 'package:gpp_app/widgets/shadow_container.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,28 +63,31 @@ class _HomeScreenState extends State<HomeScreen> {
               return Center(child: CircularProgressIndicator());
             } else {
               return Padding(
-                padding: EdgeInsets.all(getBlockSizeHorizontal(7)),
+                padding: EdgeInsets.all(getBlockSizeVertical(3)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '오늘의 배변 노트',
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                        GestureDetector(
-                          child: Icon(
-                            Icons.more_horiz,
-                            color: AppColors.accentColor,
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '오늘의 배변 노트',
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
-                          onTap: () => Navigator.of(context)
-                              .pushReplacementNamed(Routes.report),
-                        ),
-                      ],
+                          GestureDetector(
+                            child: Icon(
+                              Icons.more_horiz,
+                              color: AppColors.accentColor,
+                            ),
+                            onTap: () => Navigator.of(context)
+                                .pushReplacementNamed(Routes.report),
+                          ),
+                        ],
+                      ),
                     ),
+                    Layouts.customSpacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
                       child: isPetNull
@@ -93,28 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           // Pet exists
                           : DailyReportCard(_dailyReportProvider.dailyReport),
                     ),
+                    Layouts.customSpacer(),
                     Text(
                       '부모 참고서',
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
+                    Layouts.customSpacer(),
                     Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0.5,
-                              blurRadius: 3,
-                              offset: Offset(2, 2),
-                            ),
-                          ],
-                          color: Colors.white,
-                        ),
+                      child: ShadowContainer(
                         child: ClipRRect(
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/constants/layouts.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
@@ -129,16 +130,21 @@ class _ReportScreenState extends State<ReportScreen> {
                               '성적표',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
+                            Layouts.customSpacer(),
                             GradeCard(weeklyReport),
+                            Layouts.customSpacer(),
                             Text(
                               '알림장',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
+                            Layouts.customSpacer(),
                             NoticeWidget(weeklyReport),
+                            Layouts.customSpacer(),
                             Text(
                               '생활 기록부',
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
+                            Layouts.customSpacer(),
                             WeeklyReportCard(weeklyReport, todaysDate),
                             TotalReportCard(totalReport),
                           ],

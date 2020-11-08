@@ -9,6 +9,7 @@ import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/screens/report/components/weekly_bar_chart.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/shadow_container.dart';
 import 'package:intl/intl.dart';
 
 class WeeklyReportCard extends StatefulWidget {
@@ -32,12 +33,7 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(_boxRadius),
-        color: AppColors.backgroundColor,
-      ),
-      padding: const EdgeInsets.all(5.0),
+    return ShadowContainer(
       child: FutureBuilder(
         future: widget.weeklyReport,
         builder:

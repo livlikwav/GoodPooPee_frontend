@@ -85,7 +85,7 @@ Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
                       ),
                       Text(
                         _model.dateString,
-                        style: Styles.subtitle(Colors.black),
+                        style: Styles.subtitle2(Colors.black),
                       ),
                     ],
                   ),
@@ -108,7 +108,7 @@ Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
                           Text(' '),
                           Text(
                             _model.timeString,
-                            style: Styles.subtitle(Colors.grey),
+                            style: Styles.subtitle2(Colors.grey),
                           ),
                         ],
                       ),
@@ -121,7 +121,7 @@ Widget _getCardBody(BuildContext context, DailyReport dailyReport) {
                           Text(' '),
                           Text(
                             _model.hintString,
-                            style: Styles.subtitle(Colors.pink),
+                            style: Styles.subtitle2(Colors.pink),
                           ),
                         ],
                       ),

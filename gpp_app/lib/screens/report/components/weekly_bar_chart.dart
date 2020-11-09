@@ -3,21 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/services/report/parsing_weekly.dart';
 import 'package:gpp_app/util/kst_weekday.dart';
-import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:intl/intl.dart';
 
 class WeeklyBarChart extends StatefulWidget {
   final WeeklyData weeklyData;
   WeeklyBarChart(this.weeklyData);
-
-  // final List<Color> availableColors = [
-  //   AppColors.primaryColor.withOpacity(0.2),
-  //   AppColors.primaryColor.withOpacity(0.4),
-  //   AppColors.primaryColor.withOpacity(0.6),
-  //   AppColors.primaryColor.withOpacity(0.8),
-  //   AppColors.primaryColor.withOpacity(1.0),
-  // ];
 
   @override
   _WeeklyBarChartState createState() => _WeeklyBarChartState();
@@ -129,10 +120,13 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
       Color barColor;
       if (value > 66) {
         barColor = Colors.green;
-      } else if (value > 33) {
-        barColor = Colors.lightGreen;
+        // barColor = AppColors.primaryColor;
+      } else if (value > 50) {
+        // barColor = Colors.lightGreen;
+        barColor = AppColors.primaryColor;
       } else {
-        barColor = Colors.yellow;
+        // barColor = Colors.yellow;
+        barColor = AppColors.primaryColor.withOpacity(0.6);
       }
       return makeGroupData(
         i,

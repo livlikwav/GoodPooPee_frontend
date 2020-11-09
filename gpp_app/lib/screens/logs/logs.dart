@@ -32,11 +32,12 @@ class _LogsScreenState extends State<LogsScreen> {
     super.initState();
 
     Fluttertoast.showToast(
-      msg: " 슬라이드하여 아이의 배변 숙제를 채점해보세요! ",
+      msg: " 슬라이드하여 아이의 배변 숙제를 채점해보세요 ",
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: AppColors.primaryColor.withOpacity(0.6),
+      timeInSecForIosWeb: 2,
+      // backgroundColor: AppColors.primaryColor.withOpacity(0.6),
+      backgroundColor: Colors.lightGreen,
       textColor: Colors.white,
       fontSize: 15.0,
     );

@@ -59,7 +59,7 @@ class _WeeklyPieChartState extends State<WeeklyPieChart> {
     double val2 = 100 - weeklyData.meanRatio.toDouble();
     return List.generate(2, (i) {
       final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 25 : 16;
+      // final double fontSize = isTouched ? 25 : 16;
       final double val1Radius =
           isTouched ? getBlockSizeHorizontal(4) : getBlockSizeHorizontal(3);
       final double val2Radius =

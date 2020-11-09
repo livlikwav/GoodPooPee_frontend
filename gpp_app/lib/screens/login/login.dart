@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
-import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 // build screen

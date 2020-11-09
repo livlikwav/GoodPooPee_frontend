@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/services/report/parsing_total.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/widgets/shadow_container.dart';
 import 'package:intl/intl.dart';
 
 class TotalLineChart extends StatefulWidget {
@@ -17,8 +16,12 @@ class _TotalLineChartState extends State<TotalLineChart> {
   ChartModel model;
 
   List<Color> gradientColors = [
-    AppColors.primaryColor,
-    AppColors.accentColor,
+    Colors.lightGreen,
+    Colors.green,
+    // Colors.yellow,
+    // AppColors.backgroundColor,
+    // AppColors.primaryColor,
+    // AppColors.accentColor,
   ];
 
   bool showAvg = false;
@@ -32,53 +35,38 @@ class _TotalLineChartState extends State<TotalLineChart> {
         // If it is first month, progress = meanRatio (it start from 0%)
         : widget.totalData.meanRatio.toString() + '%';
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: Icon(
-                showAvg ? Icons.pause : Icons.play_circle_filled,
-                color: AppColors.primaryColor,
-              ),
-              onPressed: () {
-                setState(() {
-                  showAvg = !showAvg;
-                });
-              },
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(20),
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(20),
+            color: AppColors.backgroundColor,
+          ),
+          margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
+          padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(color: AppColors.primaryColor),
+              children: [
+                TextSpan(
+                  text: '평균 성공률 ',
                 ),
-                color: AppColors.backgroundColor,
-              ),
-              margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
-              padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(color: AppColors.primaryColor),
-                  children: [
-                    TextSpan(
-                      text: '평균 ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text: '${widget.totalData.meanRatio}% ',
-                    ),
-                    TextSpan(
-                      text: '진척률 ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text: '$progressString',
-                    ),
-                  ],
+                TextSpan(
+                  text: '${widget.totalData.meanRatio}% ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              ),
+                TextSpan(
+                  text: '진척률 ',
+                ),
+                TextSpan(
+                  text: '$progressString',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
 
         Container(
@@ -146,9 +134,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
           spots: model.chartDataSpots,
           isCurved: true,
           curveSmoothness: 0,
-          colors: [
-            AppColors.primaryColor,
-          ],
+          colors: gradientColors,
           barWidth: 7,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -244,7 +230,7 @@ class ChartModel {
     xSideTitles = SideTitles(
       showTitles: true,
       textStyle: const TextStyle(
-        color: AppColors.accentColor,
+        color: Colors.black,
         fontWeight: FontWeight.normal,
         fontSize: 13,
       ),

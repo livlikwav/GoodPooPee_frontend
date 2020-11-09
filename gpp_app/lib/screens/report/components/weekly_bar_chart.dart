@@ -1,26 +1,23 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/services/report/parsing_weekly.dart';
 import 'package:gpp_app/util/kst_weekday.dart';
+import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/widgets/shadow_container.dart';
 import 'package:intl/intl.dart';
 
 class WeeklyBarChart extends StatefulWidget {
   final WeeklyData weeklyData;
   WeeklyBarChart(this.weeklyData);
 
-  final List<Color> availableColors = [
-    AppColors.primaryColor.withOpacity(0.2),
-    AppColors.primaryColor.withOpacity(0.4),
-    AppColors.primaryColor.withOpacity(0.6),
-    AppColors.primaryColor.withOpacity(0.8),
-    AppColors.primaryColor.withOpacity(1.0),
-  ];
+  // final List<Color> availableColors = [
+  //   AppColors.primaryColor.withOpacity(0.2),
+  //   AppColors.primaryColor.withOpacity(0.4),
+  //   AppColors.primaryColor.withOpacity(0.6),
+  //   AppColors.primaryColor.withOpacity(0.8),
+  //   AppColors.primaryColor.withOpacity(1.0),
+  // ];
 
   @override
   _WeeklyBarChartState createState() => _WeeklyBarChartState();
@@ -28,65 +25,47 @@ class WeeklyBarChart extends StatefulWidget {
 
 class _WeeklyBarChartState extends State<WeeklyBarChart> {
   final Color barBackgroundColor = AppColors.primaryColor.withOpacity(0.3);
-  final Duration animDuration = const Duration(milliseconds: 250);
+  // final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex;
-  bool isPlaying = false;
+  // bool isPlaying = false;
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 2,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: Icon(
-                  isPlaying ? Icons.pause : Icons.play_circle_filled,
-                  color: AppColors.primaryColor,
-                ),
-                onPressed: () {
-                  setState(() {
-                    isPlaying = !isPlaying;
-                    if (isPlaying) {
-                      refreshState();
-                    }
-                  });
-                },
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(20),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(20),
+              color: AppColors.backgroundColor,
+            ),
+            margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
+            padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(color: AppColors.primaryColor),
+                children: [
+                  TextSpan(
+                    text: '평균 성공률 ',
                   ),
-                  color: AppColors.backgroundColor,
-                ),
-                margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
-                padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: AppColors.primaryColor),
-                    children: [
-                      TextSpan(
-                        text: '평균 ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: '${widget.weeklyData.meanRatio}% ',
-                      ),
-                      TextSpan(
-                        text: '최고 ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: '${widget.weeklyData.maxRatio}%',
-                      ),
-                    ],
+                  TextSpan(
+                    text: '${widget.weeklyData.meanRatio}% ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
+                  TextSpan(
+                    text: '최고 ',
+                  ),
+                  TextSpan(
+                    text: '${widget.weeklyData.maxRatio}%',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
           Expanded(
             child: Column(
@@ -103,8 +82,7 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
                       15.0,
                     ),
                     child: BarChart(
-                      isPlaying ? randomData() : mainBarData(),
-                      swapAnimationDuration: animDuration,
+                      mainBarData(),
                     ),
                   ),
                 ),
@@ -146,10 +124,21 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
     return List.generate(7, (i) {
       String dtString =
           DateFormat('EEE').format(widget.weeklyData.datetimeList[6 - i]);
+      double value = widget.weeklyData.ratioList[dtString].toDouble();
+      // MyLogger.debug('value = $value');
+      Color barColor;
+      if (value > 66) {
+        barColor = Colors.green;
+      } else if (value > 33) {
+        barColor = Colors.lightGreen;
+      } else {
+        barColor = Colors.yellow;
+      }
       return makeGroupData(
         i,
         widget.weeklyData.ratioList[dtString].toDouble(),
         isTouched: i == touchedIndex,
+        barColor: barColor,
       );
     });
   }
@@ -203,7 +192,11 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          textStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14),
+          textStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            // fontWeight: FontWeight.bold,
+          ),
           margin: 10,
           getTitles: (double value) {
             switch (value.toInt()) {
@@ -236,90 +229,5 @@ class _WeeklyBarChartState extends State<WeeklyBarChart> {
       ),
       barGroups: showingGroups(),
     );
-  }
-
-  BarChartData randomData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        enabled: false,
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          textStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14),
-          margin: 10,
-          getTitles: (double value) {
-            switch (value.toInt()) {
-              case 0:
-                return getKstWeekday(widget.weeklyData.datetimeList[6]);
-              case 1:
-                return getKstWeekday(widget.weeklyData.datetimeList[5]);
-              case 2:
-                return getKstWeekday(widget.weeklyData.datetimeList[4]);
-              case 3:
-                return getKstWeekday(widget.weeklyData.datetimeList[3]);
-              case 4:
-                return getKstWeekday(widget.weeklyData.datetimeList[2]);
-              case 5:
-                return getKstWeekday(widget.weeklyData.datetimeList[1]);
-              case 6:
-                return getKstWeekday(widget.weeklyData.datetimeList[0]);
-              default:
-                return '';
-            }
-          },
-        ),
-        leftTitles: SideTitles(
-          showTitles: false,
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, Random().nextInt(70).toDouble() + 30,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 1:
-            return makeGroupData(1, Random().nextInt(70).toDouble() + 30,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 2:
-            return makeGroupData(2, Random().nextInt(70).toDouble() + 30,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 3:
-            return makeGroupData(3, Random().nextInt(70).toDouble() + 30,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 4:
-            return makeGroupData(4, Random().nextInt(70).toDouble() + 30,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 5:
-            return makeGroupData(5, Random().nextInt(70).toDouble() + 30,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 6:
-            return makeGroupData(6, Random().nextInt(70).toDouble() + 30,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          default:
-            return null;
-        }
-      }),
-    );
-  }
-
-  Future<dynamic> refreshState() async {
-    setState(() {});
-    await Future<dynamic>.delayed(
-        animDuration + const Duration(milliseconds: 50));
-    if (isPlaying) {
-      refreshState();
-    }
   }
 }

@@ -58,14 +58,14 @@ class _TotalReportCardState extends State<TotalReportCard> {
 
 Widget _getCardBody(TotalData totalData) {
   // final String titleString = totalData.lastDate + '월';
-  final String meanRatioString = totalData.meanRatio.toString() + '%';
-  final String meanSuccessString = totalData.meanSuccess.toString() + '회';
-  final String infoString =
-      totalData.firstDate + '월부터 ' + totalData.periodMonth.toString() + '개월째';
-  final String progressString = totalData.progressRatio != 999
-      ? totalData.progressRatio.toString() + '%'
-      // If it is first month, progress = meanRatio (it start from 0%)
-      : totalData.meanRatio.toString() + '%';
+  // final String meanRatioString = totalData.meanRatio.toString() + '%';
+  // final String meanSuccessString = totalData.meanSuccess.toString() + '회';
+  // final String infoString =
+  //     totalData.firstDate + '월부터 ' + totalData.periodMonth.toString() + '개월째';
+  // final String progressString = totalData.progressRatio != 999
+  //     ? totalData.progressRatio.toString() + '%'
+  //     // If it is first month, progress = meanRatio (it start from 0%)
+  //     : totalData.meanRatio.toString() + '%';
 
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,

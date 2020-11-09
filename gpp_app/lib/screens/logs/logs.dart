@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
@@ -12,7 +11,6 @@ import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:provider/provider.dart';
-import 'package:rulers/rulers.dart';
 
 import 'components/photo_list.dart';
 
@@ -169,20 +167,20 @@ Widget _paddingEmptyCard({String text}) {
   );
 }
 
-Widget _staticRuler() {
-  return Container(
-    width: getBlockSizeHorizontal(12),
-    height: double.infinity,
-    child: FittedBox(
-      fit: BoxFit.fill,
-      child: RulerWidget(
-        scaleColor: AppColors.backgroundColor,
-        scaleSize: getBlockSizeHorizontal(12),
-        limit: 10,
-        interval: 4,
-        normalBarColor: AppColors.primaryColor,
-        axis: Axis.vertical,
-      ),
-    ),
-  );
-}
+// Widget _staticRuler() {
+//   return Container(
+//     width: getBlockSizeHorizontal(12),
+//     height: double.infinity,
+//     child: FittedBox(
+//       fit: BoxFit.fill,
+//       child: RulerWidget(
+//         scaleColor: AppColors.backgroundColor,
+//         scaleSize: getBlockSizeHorizontal(12),
+//         limit: 10,
+//         interval: 4,
+//         normalBarColor: AppColors.primaryColor,
+//         axis: Axis.vertical,
+//       ),
+//     ),
+//   );
+// }

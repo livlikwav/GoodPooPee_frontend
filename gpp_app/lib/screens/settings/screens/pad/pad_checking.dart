@@ -11,6 +11,7 @@ import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
 import 'package:gpp_app/services/get_ppcam.dart';
 import 'package:gpp_app/services/get_video_thumbnail.dart';
 import 'package:gpp_app/util/my_logger.dart';
+import 'package:gpp_app/widgets/streaming/alert_scafold.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -85,10 +86,11 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
                     DioError error = snapshot.error;
                     if (error.response != null &&
                         error.response.statusCode == 404) {
-                      child = _alertBody(context, '사용하는 푸피캠을 연결해주세요');
+                      child = alertScafold(context, '사용하는 푸피캠을 연결해주세요');
                       // Unknown error
                     } else {
-                      child = _alertBody(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
+                      child =
+                          alertScafold(context, '푸피캠 정보를 불러오는 중 오류가 발생했습니다');
                     }
                     // Future incomplete
                   } else {
@@ -114,24 +116,6 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     super.dispose();
   }
-}
-
-Widget _alertBody(BuildContext context, String text) {
-  return Scaffold(
-    floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-      child: Icon(
-        Icons.exit_to_app,
-        color: Colors.white,
-      ),
-      backgroundColor: Colors.orange,
-    ),
-    body: Center(
-      child: Text(text),
-    ),
-  );
 }
 
 Widget _getBody(BuildContext context, CustomVlcPlayerController controller,

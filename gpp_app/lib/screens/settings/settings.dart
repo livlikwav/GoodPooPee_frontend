@@ -28,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Widget _buildBody(context) {
-    final TextStyle _textStyle = Theme.of(context).textTheme.subtitle1;
+    final TextStyle _textStyle = Theme.of(context).textTheme.bodyText1;
     return Container(
       color: AppColors.backgroundColor,
       height: double.infinity,

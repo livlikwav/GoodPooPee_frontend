@@ -1,16 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/services/report/parsing_weekly.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
-import 'package:gpp_app/screens/report/components/percent_card.dart';
-import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/screens/report/components/weekly_bar_chart.dart';
-import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/shadow_container.dart';
-import 'package:intl/intl.dart';
 
 class WeeklyReportCard extends StatefulWidget {
   final Future<List<DailyReport>> weeklyReport;
@@ -23,11 +18,9 @@ class WeeklyReportCard extends StatefulWidget {
 
 class _WeeklyReportCardState extends State<WeeklyReportCard> {
   // Avoid crush of layout whenever screen re-build
-  double _boxRadius;
 
   @override
   void initState() {
-    _boxRadius = getBlockSizeHorizontal(5);
     super.initState();
   }
 
@@ -52,7 +45,7 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
               );
             } else {
               child = EmptyCard(
-                text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
+                text: '오류',
               );
             }
             // Future incomplete
@@ -68,50 +61,9 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
 }
 
 Widget _getCardBody(WeeklyData weeklyData) {
-  String dtString = DateFormat('yyyy-MM-dd')
-          .format(weeklyData.datetime.subtract(Duration(days: 6))) +
-      ' - ' +
-      DateFormat('yyyy-MM-dd').format(weeklyData.datetime);
-  // Return widget
   return Column(
     children: <Widget>[
       WeeklyBarChart(weeklyData),
-      // statCard(
-      //   '주간 배변훈련 리포트',
-      //   dtString,
-      //   Colors.white,
-      //   titleLogo: true,
-      // ),
-      // Row(
-      //   children: [
-      //     statCard(
-      //       weeklyData.meanRatio.toString() + '%',
-      //       '평균 성공률',
-      //       Colors.orangeAccent,
-      //     ),
-      //     statCard(
-      //       weeklyData.meanSuccess.toString() + '회',
-      //       '평균 성공 횟수',
-      //       Colors.orangeAccent,
-      //     ),
-      //   ],
-      // ),
-      // Row(
-      //   children: [
-      //     statCard(
-      //       '최고 배변 성공률',
-      //       '1주일 동안 제일 기특했던 하루',
-      //       Colors.white,
-      //       flex: 3,
-      //     ),
-      //     percentCard(
-      //       Icons.check,
-      //       weeklyData.maxRatio.toString() + '%',
-      //       Colors.orange,
-      //       Colors.white,
-      //     ),
-      //   ],
-      // ),
     ],
   );
 }

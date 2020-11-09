@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/constants/styles.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
@@ -153,7 +152,8 @@ class DailyReportModel {
     if (dailyReport != null) {
       title =
           '${dailyReport.success.toString()}회 / ${dailyReport.count.toString()}회';
-      timeString = '${dailyReport.lastModifiedDate}';
+      DateTime parsed = DateTime.parse(dailyReport.lastModifiedDate);
+      timeString = '${DateFormat('HH:mm:ss').format(parsed)}';
       ratio = dailyReport.ratio;
     } else {
       title = '배변 기록 없음';

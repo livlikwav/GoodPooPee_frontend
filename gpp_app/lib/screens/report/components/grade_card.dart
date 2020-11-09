@@ -75,7 +75,8 @@ class _GradeCardState extends State<GradeCard> {
                       iconColor: Colors.green,
                     ),
                     leftPartition(
-                      val: '${weeklyData.meanSuccess}회',
+                      val:
+                          '${weeklyData.meanSuccess}회 / ${weeklyData.meanCount}회',
                       title: '평균 성공 횟수',
                       icon: Icons.check_circle,
                       color: AppColors.primaryColor.withOpacity(0.5),
@@ -190,13 +191,13 @@ Widget bottomPartition(WeeklyData weeklyData) {
     children: [
       verticalItem(
         color: Colors.green,
-        title: '평균 배변 횟수',
-        subtitle: '${weeklyData.meanCount}회',
+        title: '총 성공 횟수',
+        subtitle: '${weeklyData.sumSuccess}회 / ${weeklyData.sumCount}회',
       ),
       verticalItem(
         color: AppColors.primaryColor,
-        title: '최고 성공률',
-        subtitle: '${weeklyData.maxRatio}%',
+        title: '성공률 분포',
+        subtitle: '최소 ${weeklyData.minRatio}%\n~최대 ${weeklyData.maxRatio}%',
       ),
       verticalItem(
         color: Colors.red,

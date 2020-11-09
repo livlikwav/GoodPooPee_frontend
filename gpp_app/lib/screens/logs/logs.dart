@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
@@ -28,6 +30,16 @@ class _LogsScreenState extends State<LogsScreen> {
     _logsProvider = LogsProvider(_user.petId);
     _logsProvider.initRecords(context);
     super.initState();
+
+    Fluttertoast.showToast(
+      msg: " 슬라이드하여 아이의 배변 숙제를 채점해보세요! ",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: AppColors.primaryColor.withOpacity(0.6),
+      textColor: Colors.white,
+      fontSize: 15.0,
+    );
   }
 
   @override
@@ -106,11 +118,7 @@ class _LogsScreenState extends State<LogsScreen> {
                       child = Expanded(
                         child: Row(
                           children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 20.0),
-                              color: Colors.grey,
-                              width: getBlockSizeHorizontal(1),
-                            ),
+                            _getIndicator(),
                             Expanded(
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(
@@ -150,6 +158,18 @@ class _LogsScreenState extends State<LogsScreen> {
       ),
     );
   }
+}
+
+Widget _getIndicator() {
+  return Container(
+    margin: const EdgeInsets.only(left: 20.0),
+    decoration: BoxDecoration(
+      // color: Colors.grey,
+      color: AppColors.primaryColor.withOpacity(0.5),
+      // borderRadius: BorderRadius.vertical(bottom: Radius.circular(100)),
+    ),
+    width: getBlockSizeHorizontal(1),
+  );
 }
 
 Widget _paddingEmptyCard({String text}) {

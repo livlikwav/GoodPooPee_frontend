@@ -49,6 +49,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
         children: [
           Expanded(
             child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               children: <Widget>[
                 _drawerHeader(),
@@ -60,8 +61,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ),
                 _menuItem(
                   context: context,
-                  text: '수업 참관하기',
-                  icon: Icons.live_tv,
+                  text: '수업 참관',
+                  icon: Icons.people,
                   route: Routes.streaming,
                   isReplacement: false,
                 ),
@@ -74,7 +75,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 _menuItem(
                   context: context,
                   text: '가정 통신문',
-                  icon: Icons.list,
+                  icon: Icons.event_note,
                   route: Routes.report,
                 ),
                 _menuItem(

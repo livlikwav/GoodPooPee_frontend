@@ -25,7 +25,7 @@ class _MenuChipsState extends State<MenuChips> {
         children: [
           ChoiceChip(
             // selectedColor: _selectedColor,
-            selectedColor: AppColors.accentColor,
+            selectedColor: AppColors.primaryColor,
             backgroundColor: _backgroundColor,
             label: Text(
               '전체',

@@ -34,14 +34,20 @@ class _PhotoItemState extends State<PhotoItem> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 10.0),
-                  color: Colors.grey,
+                  decoration: BoxDecoration(
+                    // color: Colors.grey,
+                    color: AppColors.primaryColor.withOpacity(0.5),
+                    borderRadius:
+                        BorderRadius.horizontal(right: Radius.circular(100)),
+                  ),
                   width: getBlockSizeHorizontal(5),
                   height: getBlockSizeVertical(0.5),
                 ),
                 Text(
                   '$dateString',
                   style: TextStyle(
-                    color: AppColors.primaryColor,
+                    color: Colors.black,
+                    // color: AppColors.primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -89,25 +95,35 @@ class _PhotoItemState extends State<PhotoItem> {
 
 Widget getStatus(String result) {
   double _size = getBlockSizeHorizontal(7);
+  Widget child;
   if (result == 'SUCCESS') {
-    return Icon(
+    child = Icon(
       Icons.check_circle,
       color: Colors.green,
       size: _size,
     );
   } else if (result == 'FAIL') {
-    return Icon(
+    child = Icon(
       Icons.cancel,
       color: Colors.red,
       size: _size,
     );
   } else {
-    return Icon(
+    child = Icon(
       Icons.error,
       color: Colors.grey,
       size: _size,
     );
   }
+  // return child;
+  return Container(
+    width: getBlockSizeHorizontal(7),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(100),
+    ),
+    child: Center(child: child),
+  );
 }
 
 Widget getPhotoItem(PetRecord petRecord) {

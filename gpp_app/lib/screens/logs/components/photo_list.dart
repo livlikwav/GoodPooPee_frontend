@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/screens/logs/components/photo_item.dart';
 import 'package:gpp_app/util/my_logger.dart';
@@ -35,8 +33,10 @@ class _PhotoListState extends State<PhotoList> {
       return ListView.builder(
         itemCount: records.length,
         itemBuilder: (BuildContext context, int index) {
-          // return PhotoItem(records[index]);
-          return _buildSlidable(index, context, records[index]);
+          return PhotoItem(
+            petRecord: records[index],
+            key: ValueKey(index),
+          );
         },
       );
     } else {
@@ -71,45 +71,5 @@ class _PhotoListState extends State<PhotoList> {
       }
     }
     return result;
-  }
-
-  Widget _buildSlidable(
-    int index,
-    BuildContext context,
-    PetRecord petRecord,
-  ) {
-    return Slidable(
-      key: ValueKey(index),
-      actionPane: SlidableDrawerActionPane(),
-      secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: '정답',
-          color: AppColors.backgroundColor,
-          icon: Icons.check_circle,
-          foregroundColor: Colors.green,
-          onTap: () {
-            MyLogger.debug('PhotoListItem: $index Correct tapped');
-            setState(() {
-              petRecord.result = 'SUCCESS';
-            });
-          },
-        ),
-        IconSlideAction(
-          caption: '오답',
-          color: AppColors.backgroundColor,
-          icon: Icons.cancel,
-          foregroundColor: Colors.red,
-          onTap: () {
-            MyLogger.debug('PhotoListItem: $index Incorrect tapped');
-            setState(() {
-              petRecord.result = 'FAIL';
-            });
-          },
-        ),
-      ],
-      child: PhotoItem(
-        petRecord,
-      ),
-    );
   }
 }

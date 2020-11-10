@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/network/user_auth_interceptor.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
+import 'package:gpp_app/widgets/check_dialog.dart';
 
 void putPetProfile(
   BuildContext context,
@@ -34,8 +35,16 @@ void putPetProfile(
   }
   // PUT Successed
   MyLogger.debug('response data : ${response.data}');
-  showYesAlertDialog(context, '', () {
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  });
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return CheckDialog(
+        onTapFunc: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      );
+    },
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gpp_app/models/json/pet_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
@@ -6,7 +7,7 @@ import 'package:gpp_app/models/network/user_auth_interceptor.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
+import 'package:gpp_app/widgets/check_dialog.dart';
 import 'package:provider/provider.dart';
 
 void postPetProfile(
@@ -44,8 +45,16 @@ void postPetProfile(
   _userProfile.id = newPetId;
   _petProfile.id = newPetId;
   // Navigate
-  showYesAlertDialog(context, '', () {
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  });
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return CheckDialog(
+        onTapFunc: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      );
+    },
+  );
 }

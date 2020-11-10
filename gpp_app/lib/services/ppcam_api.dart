@@ -5,7 +5,6 @@ import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/network/user_auth_interceptor.dart';
 import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 class PpcamApi {

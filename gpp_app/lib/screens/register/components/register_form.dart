@@ -7,7 +7,7 @@ import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/buttons.dart';
 import 'package:gpp_app/widgets/form_error.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
+import 'package:gpp_app/widgets/check_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../../routes.dart';
@@ -259,10 +259,16 @@ class _RegisterFormState extends State<RegisterForm> {
       }
       // if valid, show success dialog
       if (response != null && response.statusCode == 200) {
-        showYesAlertDialog(
-          context,
-          '',
-          () => Navigator.popUntil(context, ModalRoute.withName(Routes.login)),
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return CheckDialog(
+              onTapFunc: () {
+                Navigator.popUntil(context, ModalRoute.withName(Routes.login));
+              },
+            );
+          },
         );
       }
     } else {

@@ -6,7 +6,7 @@ import 'package:gpp_app/models/provider/pet_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'package:gpp_app/widgets/no_alert_dialog.dart';
+import 'package:gpp_app/widgets/warning_dialog.dart';
 import 'package:provider/provider.dart';
 
 void loginTapped(BuildContext context, String email, String pw) async {
@@ -26,10 +26,16 @@ void loginTapped(BuildContext context, String email, String pw) async {
     );
     // Handling exception
   } on DioError {
-    showNoAlertDialog(
-      context,
-      '아이디 또는 비밀번호를\n확인하세요',
-      () => Navigator.of(context).pop(),
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return WarningDialog(
+          onTapFunc: () {
+            Navigator.of(context).pop();
+          },
+        );
+      },
     );
     return;
   }

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 void showImageDialog(BuildContext context, Uint8List image) async {
   return showDialog<void>(
@@ -18,7 +18,7 @@ void showImageDialog(BuildContext context, Uint8List image) async {
               // Save img
               // final result = await ImageGallerySaver.saveImage(image);
               // print(result);
-              ImageGallerySaver.saveImage(image);
+              // ImageGallerySaver.saveImage(image);
               Navigator.of(context).pop();
             },
           ),

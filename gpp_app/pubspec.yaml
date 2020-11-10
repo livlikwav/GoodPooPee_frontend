@@ -113,4 +113,4 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/gpp_icon.png"
+  image_path: "assets/icons/gpp_logo.png"

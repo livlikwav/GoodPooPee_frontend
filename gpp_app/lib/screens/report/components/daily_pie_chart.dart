@@ -30,9 +30,21 @@ class _DailyPieChartState extends State<DailyPieChart> {
 
     return AspectRatio(
       aspectRatio: 1.3,
-      child: Card(
-        elevation: 0,
-        color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(2, 2),
+            ),
+          ],
+          color: Colors.white,
+        ),
         child: Row(
           children: <Widget>[
             SizedBox(
@@ -74,7 +86,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
                   height: 4,
                 ),
                 Indicator(
-                  color: AppColors.orange[100],
+                  color: AppColors.primaryColor,
                   text: '실패',
                   isSquare: false,
                 ),
@@ -135,7 +147,7 @@ class _DailyPieChartState extends State<DailyPieChart> {
             );
           case 1:
             return PieChartSectionData(
-              color: AppColors.orange[100],
+              color: AppColors.primaryColor,
               value: failRatio,
               title: failRatio.toInt().toString() + '%',
               radius: radius,

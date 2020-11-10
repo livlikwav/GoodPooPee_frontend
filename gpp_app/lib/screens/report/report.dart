@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/constants/layouts.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/models/json/monthly_report.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
-import 'package:gpp_app/screens/report/widgets/daily_report_card.dart';
+import 'package:gpp_app/routes.dart';
+import 'package:gpp_app/screens/report/components/grade_card.dart';
+import 'package:gpp_app/screens/report/components/notice.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:gpp_app/screens/report/widgets/total_report_card.dart';
 import 'package:gpp_app/screens/report/widgets/weekly_report_card.dart';
@@ -13,7 +18,6 @@ import 'package:gpp_app/widgets/drawer_menu.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'package:gpp_app/services/report/get_daily_report.dart';
 import 'package:gpp_app/services/report/get_weekly_report.dart';
 import 'package:gpp_app/services/report/get_total_report.dart';
 
@@ -28,7 +32,6 @@ class _ReportScreenState extends State<ReportScreen> {
   bool isReportNull = true;
   String todaysDate;
   int petId;
-  Future<DailyReport> dailyReport;
   Future<List<DailyReport>> weeklyReport;
   Future<List<MonthlyReport>> totalReport;
 
@@ -37,6 +40,10 @@ class _ReportScreenState extends State<ReportScreen> {
     super.initState();
     // Get today's date (default)
     todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    //DEBUG!!!!!!!!!!!!!
+    // todaysDate = DateFormat('yyyy-MM-dd')
+    //     .format(DateTime.now().subtract(Duration(days: 1)));
+    //DEBUG!!!!!!!!!!!!!
     // MyLogger.debug('Present datetime is $todaysDate');
     getReports(context);
   }
@@ -52,11 +59,6 @@ class _ReportScreenState extends State<ReportScreen> {
       isPetNull = false;
       MyLogger.info('Pet id is $petId');
       // Get report models from server
-      dailyReport = getDailyReport(
-        context,
-        DioClient.serverUrl + 'pet/' + petId.toString() + '/report/daily',
-        todaysDate,
-      );
       weeklyReport = getWeeklyReport(
         context,
         DioClient.serverUrl + 'pet/' + petId.toString() + '/report/weekly',
@@ -81,7 +83,18 @@ class _ReportScreenState extends State<ReportScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('배변훈련 리포트')),
+        backgroundColor: AppColors.backgroundColor,
+        appBar: customAppBar(
+          refreshIcon: IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: '새로고침',
+            onPressed: () {
+              setState(() {
+                Navigator.of(context).popAndPushNamed(Routes.report);
+              });
+            },
+          ),
+        ),
         drawer: DrawerMenu(),
         body: _buildBody(context),
       ),
@@ -90,7 +103,6 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget _buildBody(context) {
     return Container(
-      color: Theme.of(context).backgroundColor,
       child: isReady
           // Is ready
           ? isPetNull
@@ -100,11 +112,8 @@ class _ReportScreenState extends State<ReportScreen> {
                 )
               // Pet exists
               : Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    getBlockSizeHorizontal(5),
-                    getBlockSizeHorizontal(5),
-                    getBlockSizeHorizontal(5),
-                    0,
+                  padding: EdgeInsets.all(
+                    getBlockSizeHorizontal(7),
                   ),
                   child: OrientationBuilder(builder: (context, orientation) {
                     if (orientation == Orientation.landscape) {
@@ -115,8 +124,27 @@ class _ReportScreenState extends State<ReportScreen> {
                       // Orientation.portrait
                       return SingleChildScrollView(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            DailyReportCard(dailyReport),
+                            Text(
+                              '성적표',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            Layouts.customSpacer(),
+                            GradeCard(weeklyReport),
+                            Layouts.customSpacer(),
+                            Text(
+                              '알림장',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            Layouts.customSpacer(),
+                            NoticeWidget(weeklyReport),
+                            Layouts.customSpacer(),
+                            Text(
+                              '생활 기록부',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            Layouts.customSpacer(),
                             WeeklyReportCard(weeklyReport, todaysDate),
                             TotalReportCard(totalReport),
                           ],

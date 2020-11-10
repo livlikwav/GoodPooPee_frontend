@@ -1,20 +1,33 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/text_style.dart';
+import 'package:gpp_app/constants/colors.dart';
 
-Widget buildDownSide(BuildContext context, Function registerTapped) {
-  return Center(
+class DownSide extends StatelessWidget {
+  DownSide(this.onTap);
+  final Function onTap;
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    return Center(
       child: RichText(
-          text: new TextSpan(children: [
-    new TextSpan(
-        text: '아직 굿푸피 계정이 없으신가요? ',
-        style: new TextStyle(fontSize: pStyle.fontSize, color: Colors.black)),
-    new TextSpan(
-        text: '회원가입',
-        style: new TextStyle(
-            fontSize: h2Style.fontSize,
-            color: Theme.of(context).accentColor,
-            fontWeight: FontWeight.bold),
-        recognizer: new TapGestureRecognizer()..onTap = registerTapped)
-  ])));
+        text: TextSpan(
+          style: textTheme.bodyText2,
+          children: [
+            TextSpan(
+              text: '아직 굿푸피 계정이 없으신가요? ',
+            ),
+            TextSpan(
+              text: '회원가입',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryColor,
+                fontSize: textTheme.subtitle1.fontSize,
+              ),
+              recognizer: TapGestureRecognizer()..onTap = onTap,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

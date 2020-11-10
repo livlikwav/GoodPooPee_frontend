@@ -11,7 +11,12 @@ class WeeklyData {
   Map<String, int> ratioList;
   int meanRatio;
   int meanSuccess;
+  int meanCount;
   int maxRatio = 0;
+  int minRatio = 100;
+  int sumSuccess;
+  int sumCount;
+  String term;
 
   WeeklyData(List<DailyReport> weeklyReport, String todaysDate) {
     this.datetime = DateTime.parse(todaysDate);
@@ -38,14 +43,19 @@ class WeeklyData {
       }
       // Compute values
       this.maxRatio = max(maxRatio, ratio);
+      this.minRatio = min(minRatio, ratio);
       sumCount += weeklyReport[i].count;
       sumSuccess += weeklyReport[i].success;
     }
+    this.sumCount = sumCount;
+    this.sumSuccess = sumSuccess;
     this.meanRatio = (sumSuccess * 100) ~/ sumCount;
     this.meanSuccess = sumSuccess ~/ length;
     this.ratioList = ratioTmpList.map((key, value) {
       return MapEntry(DateFormat('EEE').format(key), value);
     });
+    this.meanCount = sumCount ~/ length;
+    this.term = '${weeklyReport[0].date}\n~${weeklyReport[length - 1].date}';
     // MyLogger.debug('${toString()}');
   }
 

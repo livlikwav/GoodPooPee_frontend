@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
-import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/util/size_config.dart';
 import 'package:gpp_app/widgets/empty_app_bar_widget.dart';
 // build screen
@@ -18,35 +17,27 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         primary: true,
-        appBar: EmptyAppBar(), //empty_app_bar_widget
+        appBar: EmptyAppBar(),
         body: _buildBody(context),
       ),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
-      child: SizedBox(
-        height: getBlockSizeVertical(90),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Expanded(flex: 5, child: buildUpSide()),
-            Expanded(
-              flex: 3,
-              child: buildCenterSide(context),
-            ),
-            Expanded(flex: 2, child: buildDownSide(context, registerTapped)),
-          ],
-        ),
+    return Padding(
+      padding: EdgeInsets.all(
+        getBlockSizeHorizontal(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          UpSide(),
+          CenterSide(),
+          DownSide(() => Navigator.of(context).pushNamed(Routes.register)),
+        ],
       ),
     );
-  }
-
-  void registerTapped() {
-    MyLogger.info('Register link tapped');
-    Navigator.of(context).pushNamed(Routes.register);
   }
 }

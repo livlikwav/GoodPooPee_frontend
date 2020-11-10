@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:gpp_app/models/json/daily_report.dart';
 import 'package:gpp_app/services/report/parsing_weekly.dart';
 import 'package:gpp_app/widgets/empty_card.dart';
-import 'package:gpp_app/screens/report/components/percent_card.dart';
-import 'package:gpp_app/screens/report/components/stat_card.dart';
 import 'package:gpp_app/screens/report/components/waiting_card.dart';
 import 'package:gpp_app/screens/report/components/weekly_bar_chart.dart';
-import 'package:gpp_app/util/size_config.dart';
-import 'package:intl/intl.dart';
+import 'package:gpp_app/widgets/shadow_container.dart';
 
 class WeeklyReportCard extends StatefulWidget {
   final Future<List<DailyReport>> weeklyReport;
@@ -21,30 +18,15 @@ class WeeklyReportCard extends StatefulWidget {
 
 class _WeeklyReportCardState extends State<WeeklyReportCard> {
   // Avoid crush of layout whenever screen re-build
-  double _boxRadius;
-  double _boxHeight;
 
   @override
   void initState() {
-    _boxRadius = getBlockSizeHorizontal(5);
-    _boxHeight = getBlockSizeVertical(70);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(_boxRadius),
-        // border: Border.all(
-        //   color: Theme.of(context).primaryColor,
-        // ),
-        color: Colors.white,
-      ),
-      margin: const EdgeInsets.all(15.0),
-      padding: const EdgeInsets.all(10.0),
-      // width: getBlockSizeHorizontal(100),
-      height: _boxHeight,
+    return ShadowContainer(
       child: FutureBuilder(
         future: widget.weeklyReport,
         builder:
@@ -63,14 +45,12 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
               );
             } else {
               child = EmptyCard(
-                text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
+                text: '오류',
               );
             }
             // Future incomplete
           } else {
-            child = WaitingCard(
-              text: '데이터를 불러오는 중입니다.',
-            );
+            child = WaitingCard();
           }
 
           return child;
@@ -80,55 +60,10 @@ class _WeeklyReportCardState extends State<WeeklyReportCard> {
   }
 }
 
-Column _getCardBody(WeeklyData weeklyData) {
-  String dtString = DateFormat('yyyy-MM-dd')
-          .format(weeklyData.datetime.subtract(Duration(days: 6))) +
-      ' - ' +
-      DateFormat('yyyy-MM-dd').format(weeklyData.datetime);
-  // Return widget
+Widget _getCardBody(WeeklyData weeklyData) {
   return Column(
     children: <Widget>[
-      Row(
-        children: [
-          statCard(
-            '주간 배변훈련 리포트',
-            dtString,
-            Colors.white,
-            titleLogo: true,
-          ),
-        ],
-      ),
-      Flexible(flex: 3, child: WeeklyBarChart(weeklyData)),
-      Row(
-        children: [
-          statCard(
-            weeklyData.meanRatio.toString() + '%',
-            '평균 성공률',
-            Colors.orangeAccent,
-          ),
-          statCard(
-            weeklyData.meanSuccess.toString() + '회',
-            '평균 성공 횟수',
-            Colors.orangeAccent,
-          ),
-        ],
-      ),
-      Row(
-        children: [
-          statCard(
-            '최고 배변 성공률',
-            '1주일 동안 제일 기특했던 하루',
-            Colors.white,
-            flex: 3,
-          ),
-          percentCard(
-            Icons.check,
-            weeklyData.maxRatio.toString() + '%',
-            Colors.orange,
-            Colors.white,
-          ),
-        ],
-      ),
+      WeeklyBarChart(weeklyData),
     ],
   );
 }

@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gpp_app/models/json/pad_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/network/user_auth_interceptor.dart';
 import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'package:gpp_app/widgets/yes_alert_dialog.dart';
+import 'package:gpp_app/widgets/check_dialog.dart';
 import 'package:provider/provider.dart';
 
 void putPad(
@@ -40,9 +41,17 @@ void putPad(
   // PUT Successed
   MyLogger.debug(
       'PUT success code is ${response.statusCode}. So there is no resp body. ${response.data}');
-  showYesAlertDialog(context, '', () {
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  });
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return CheckDialog(
+        onTapFunc: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      );
+    },
+  );
 }

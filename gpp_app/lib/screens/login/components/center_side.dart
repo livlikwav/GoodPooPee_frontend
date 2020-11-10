@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:gpp_app/services/login_tap.dart';
-import 'package:gpp_app/util/size_config.dart';
-import 'package:gpp_app/widgets/custom_text_field.dart';
-import 'package:gpp_app/widgets/buttons.dart';
+import 'package:gpp_app/widgets/rounded_button.dart';
+import 'package:gpp_app/widgets/rounded_input_field.dart';
 
-Widget buildCenterSide(BuildContext context) {
-  TextEditingController emailCtrl = TextEditingController();
-  TextEditingController pwCtrl = TextEditingController();
+class CenterSide extends StatefulWidget {
+  @override
+  _CenterSideState createState() => _CenterSideState();
+}
 
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: getBlockSizeHorizontal(10)),
-    child: Column(
+class _CenterSideState extends State<CenterSide> {
+  String emailText;
+  String pwText;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: <Widget>[
-        SizedBox(height: getBlockSizeVertical(1)),
-        customTextField(
-          "이메일",
-          "이메일을 입력하세요",
-          emailCtrl,
+        RoundedInputField(
+          hintText: '이메일',
+          onChanged: (value) => emailText = value,
         ),
-        SizedBox(height: getBlockSizeVertical(1)),
-        customTextField(
-          "비밀번호",
-          "비밀번호를 입력하세요",
-          pwCtrl,
-          obscure: true,
+        RoundedInputField(
+          hintText: '비밀번호',
+          onChanged: (value) => pwText = value,
+          icon: Icons.lock,
+          isObscure: true,
         ),
-        SizedBox(height: getBlockSizeVertical(1)),
-        DefaultButton(
-            text: '확인',
-            press: () {
-              loginTapped(context, emailCtrl.text, pwCtrl.text);
-            }),
+        RoundedButton(
+          text: '확인',
+          press: () {
+            loginTapped(context, emailText, pwText);
+            print(emailText);
+          },
+        ),
       ],
-    ),
-  );
+    );
+  }
 }

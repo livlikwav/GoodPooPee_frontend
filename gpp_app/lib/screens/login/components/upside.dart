@@ -1,29 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/assets.dart';
-import 'package:gpp_app/constants/text_style.dart';
-import 'package:gpp_app/widgets/app_icon_widget.dart';
+import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/util/size_config.dart';
+import 'package:lottie/lottie.dart';
 
-Widget buildUpSide() {
-  return Column(
-    children: <Widget>[
-      Expanded(
-          flex: 1,
-          child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text('굿푸피', style: h1Style))),
-      Expanded(
-        flex: 2,
-        child: Center(child: AppIconWidget(image: Assets.appLogo)),
-      ),
-      Expanded(
-          flex: 1,
-          child: Align(
-              alignment: Alignment.topCenter,
-              child: Text('반려견 지능형 배변훈련 서비스',
-                  style: new TextStyle(
-                    fontSize: h3Style.fontSize,
-                    color: Colors.black,
-                  )))),
-    ],
-  );
+class UpSide extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: RichText(
+            text: TextSpan(
+              style: textTheme.headline2,
+              children: <TextSpan>[
+                TextSpan(
+                  text: '굿퍼피의 시작은,\n',
+                ),
+                TextSpan(
+                  text: '굿푸피',
+                  style: TextStyle(
+                      color: AppColors.accentColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: '로부터.',
+                ),
+              ],
+            ),
+          ),
+        ),
+        Lottie.asset(
+          'assets/lottie/gpp_login.json',
+          width: getBlockSizeHorizontal(60),
+        ),
+      ],
+    );
+  }
 }

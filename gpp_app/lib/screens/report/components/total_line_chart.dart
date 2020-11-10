@@ -16,8 +16,12 @@ class _TotalLineChartState extends State<TotalLineChart> {
   ChartModel model;
 
   List<Color> gradientColors = [
-    AppColors.orange[200],
-    AppColors.orange[800],
+    Colors.lightGreen,
+    Colors.green,
+    // Colors.yellow,
+    // AppColors.backgroundColor,
+    // AppColors.primaryColor,
+    // AppColors.accentColor,
   ];
 
   bool showAvg = false;
@@ -26,44 +30,82 @@ class _TotalLineChartState extends State<TotalLineChart> {
   Widget build(BuildContext context) {
     // init model
     model = ChartModel(widget.totalData);
-    return Stack(
+    final String progressString = widget.totalData.progressRatio != 999
+        ? widget.totalData.progressRatio.toString() + '%'
+        // If it is first month, progress = meanRatio (it start from 0%)
+        : widget.totalData.meanRatio.toString() + '%';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(18),
-              ),
-              color: Colors.white,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: LineChart(
-                showAvg ? avgData() : mainData(),
-              ),
-            ),
-          ),
-        ),
         Container(
-          alignment: Alignment.topRight,
-          margin: const EdgeInsets.all(15.0),
-          width: getBlockSizeHorizontal(15),
-          child: FlatButton(
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              '평균',
-              style: TextStyle(
-                fontSize: 12,
-                color: showAvg ? AppColors.orange[600] : Colors.black,
-              ),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(20),
+            ),
+            color: AppColors.backgroundColor,
+          ),
+          margin: EdgeInsets.all(getBlockSizeHorizontal(2)),
+          padding: EdgeInsets.all(getBlockSizeHorizontal(2)),
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(color: AppColors.primaryColor),
+              children: [
+                TextSpan(
+                  text: '평균 성공률 ',
+                ),
+                TextSpan(
+                  text: '${widget.totalData.meanRatio}% ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: '진척률 ',
+                ),
+                TextSpan(
+                  text: '$progressString',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
         ),
+
+        Container(
+          padding: const EdgeInsets.fromLTRB(
+            30.0,
+            0.0,
+            30.0,
+            10.0,
+          ),
+          child: AspectRatio(
+            aspectRatio: 2,
+            child: LineChart(
+              showAvg ? avgData() : mainData(),
+            ),
+          ),
+        ),
+        // Container(
+        //   alignment: Alignment.topLeft,
+        //   margin: const EdgeInsets.symmetric(horizontal: 7.0),
+        //   child: FlatButton(
+        //     shape: RoundedRectangleBorder(
+        //         borderRadius: new BorderRadius.circular(30.0)),
+        //     color: AppColors.backgroundColor,
+        //     splashColor: AppColors.primaryColor,
+        //     onPressed: () {
+        //       setState(() {
+        //         showAvg = !showAvg;
+        //       });
+        //     },
+        //     child: Text(
+        //       '평균',
+        //       style: TextStyle(
+        //         fontSize: 12,
+        //         color: showAvg ? AppColors.accentColor : AppColors.primaryColor,
+        //         fontWeight: showAvg ? FontWeight.bold : FontWeight.normal,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -91,10 +133,8 @@ class _TotalLineChartState extends State<TotalLineChart> {
         LineChartBarData(
           spots: model.chartDataSpots,
           isCurved: true,
-          curveSmoothness: 0.1,
-          colors: [
-            Colors.orangeAccent,
-          ],
+          curveSmoothness: 0,
+          colors: gradientColors,
           barWidth: 7,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -135,7 +175,7 @@ class _TotalLineChartState extends State<TotalLineChart> {
         LineChartBarData(
           spots: model.avgDataSpots,
           isCurved: true,
-          colors: [Colors.orangeAccent],
+          colors: [AppColors.accentColor],
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -181,7 +221,7 @@ class ChartModel {
     chartDataSpots = List.generate(data.length, (index) {
       return FlSpot(
         (reverseIndex[index]).toDouble(),
-        data.ratioMap[data.dtList[index]].toDouble(),
+        data.ratioMap[data.dtList[data.length - index - 1]].toDouble(),
       );
     });
     // Init avgDataSpots
@@ -192,7 +232,7 @@ class ChartModel {
       textStyle: const TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.normal,
-        fontSize: 12,
+        fontSize: 13,
       ),
       getTitles: (value) {
         int val = value.toInt();
@@ -202,7 +242,8 @@ class ChartModel {
             new DateTime(dt.year, dt.month - reverseIndex[val], dt.day);
         return DateFormat('yy-MM').format(targetDt);
       },
-      margin: 15,
+      reservedSize: 12,
+      margin: 20,
     );
   }
 

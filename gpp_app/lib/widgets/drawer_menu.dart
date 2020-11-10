@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/provider/pet_profile.dart';
+import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/util/size_config.dart';
@@ -12,22 +13,27 @@ class DrawerMenu extends StatefulWidget {
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
-  UserProfile _userProfile;
   PetProfile _petProfile;
-  String _userName;
   bool _isPetNull;
   String _petName;
-  String _subTitle;
+  String _petBreed;
 
   @override
   void initState() {
-    _userProfile = Provider.of<UserProfile>(context, listen: false);
     _petProfile = Provider.of<PetProfile>(context, listen: false);
-    _userName = _userProfile.lastName + ' ' + _userProfile.firstName + '님';
     // check pet null
-    _userProfile.petId == null ? _isPetNull = true : _isPetNull = false;
-    _petName = _isPetNull ? null : _petProfile.name;
-    _subTitle = _isPetNull ? null : _petProfile.breed;
+    if (_petProfile == null) {
+      throw Exception('Pet Provider is not initialized in login screen.');
+    } else {
+      _petProfile.id == null ? _isPetNull = true : _isPetNull = false;
+      if (_isPetNull) {
+        _petName = null;
+        _petBreed = null;
+      } else {
+        _petName = _petProfile.name;
+        _petBreed = _petProfile.breed;
+      }
+    }
     super.initState();
   }
 
@@ -39,139 +45,228 @@ class _DrawerMenuState extends State<DrawerMenu> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
-              child: _dogInfo(
-                _isPetNull,
-                _petName,
-                _subTitle,
-              )),
-          Container(
-            child: _userInfo(_userName),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                _drawerHeader(),
+                _menuItem(
+                  context: context,
+                  text: '홈',
+                  icon: Icons.home,
+                  route: Routes.home,
+                ),
+                _menuItem(
+                  context: context,
+                  text: '수업 참관',
+                  icon: Icons.people,
+                  route: Routes.streaming,
+                  isReplacement: false,
+                ),
+                _menuItem(
+                  context: context,
+                  text: '숙제 확인',
+                  icon: Icons.history,
+                  route: Routes.logs,
+                ),
+                _menuItem(
+                  context: context,
+                  text: '가정 통신문',
+                  icon: Icons.event_note,
+                  route: Routes.report,
+                ),
+                _menuItem(
+                  context: context,
+                  text: '기기 및 환경설정',
+                  icon: Icons.settings,
+                  route: Routes.settings,
+                ),
+              ],
+            ),
           ),
-          _menuTile(context, '내 푸피캠 확인하기', route: Routes.streaming),
-          _divider(),
-          _menuTile(context, '배변 기록 확인하기', route: Routes.logs),
-          _menuTile(context, '배변훈련 리포트', route: Routes.report),
-          _divider(),
-          _menuTile(context, '기기 및 환경설정', route: Routes.settings),
-          _menuTile(
-            context,
-            '로그아웃',
+          Divider(),
+          _logoutTile(
+            label: '로그아웃',
+            style: Theme.of(context).textTheme.bodyText2,
             onTap: () {
               // Init multi providers
               Provider.of<UserProfile>(context, listen: false).reset();
               Provider.of<PetProfile>(context, listen: false).reset();
+              Provider.of<PpcamProfile>(context, listen: false).reset();
               // Routing
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed(Routes.login);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  Routes.login, (Route<dynamic> route) => false);
             },
           ),
         ],
       ),
     );
   }
-}
 
-ListTile _menuTile(BuildContext context, String label,
-    {String route, Function onTap}) {
-  return ListTile(
-    title: Text(
-      label,
-      textAlign: TextAlign.center,
-    ),
-    onTap: onTap ??
-        () {
-          Navigator.pop(context);
-          Navigator.of(context).pushNamed(route);
-        },
-  );
-}
-
-Divider _divider() {
-  return Divider(
-    color: Colors.black,
-    indent: getBlockSizeHorizontal(10),
-    endIndent: getBlockSizeHorizontal(10),
-  );
-}
-
-Widget _userInfo(String name) {
-  return Material(
+  Widget _drawerHeader() {
+    return DrawerHeader(
       child: Column(
-    children: <Widget>[
-      SizedBox(height: getBlockSizeVertical(3)),
-      Icon(Icons.portrait),
-      SizedBox(height: getBlockSizeVertical(2)),
-      Text(
-        name,
-        style: new TextStyle(fontWeight: FontWeight.bold),
-      ),
-      SizedBox(height: getBlockSizeVertical(3)),
-    ],
-  ));
-}
-
-Widget _dogInfo(bool isPetNull, String name, String subtitle) {
-  return Container(
-    color: Colors.transparent,
-    child: SingleChildScrollView(
-      child: Column(
-        children: isPetNull
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: _isPetNull
             ? <Widget>[
-                CircleAvatar(
-                  backgroundImage: new AssetImage(Assets.appLogo),
+                Icon(
+                  Icons.pets,
+                  // color: AppColors.accentColor,
+                  color: Colors.black.withOpacity(0.5),
+                  size: getBlockSizeHorizontal(20),
                 ),
-                SizedBox(height: getBlockSizeVertical(2)),
-                Text('반려견 정보가 없습니다',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                    )),
-                SizedBox(height: getBlockSizeVertical(2)),
                 Text(
-                  '(기기 및 환경설정\n-> 반려견 정보 설정)',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w100,
-                  ),
-                  textAlign: TextAlign.center,
+                  '반려견 프로필을 등록해주세요',
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
               ]
             : <Widget>[
-                Text(
-                  '우리집 굿푸피',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                SizedBox(height: getBlockSizeVertical(2)),
-                CircleAvatar(
-                  backgroundImage: new AssetImage(Assets.appLogo),
-                ),
-                SizedBox(height: getBlockSizeVertical(2)),
-                Text(
-                  name,
-                  style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: getBlockSizeVertical(1)),
-                Text(
-                  subtitle,
-                  style: new TextStyle(
-                    color: Colors.white,
-                  ),
+                Row(
+                  // alignment: Alignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              offset: const Offset(2.0, 4.0),
+                              blurRadius: 8),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(60.0)),
+                        child: Image.asset(
+                          'assets/images/spitz.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    // SizedBox(width: getBlockSizeHorizontal(5)),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            _petName,
+                            // style: Theme.of(context).textTheme.subtitle1,
+                            style: TextStyle(
+                              color: AppColors.accentColor,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  .fontSize,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            _petBreed,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
       ),
+    );
+  }
+}
+
+Widget _menuItem({
+  @required BuildContext context,
+  @required String text,
+  @required IconData icon,
+  @required String route,
+  bool isReplacement = true,
+}) {
+  return Container(
+    margin: const EdgeInsets.only(right: 20.0),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(40),
+      onTap: () {
+        if (isReplacement) {
+          Navigator.of(context).pop(); // pop drawer menu
+          Navigator.of(context).pushReplacementNamed(route);
+        } else {
+          Navigator.of(context).pushNamed(route);
+        }
+      },
+      highlightColor: AppColors.primaryColor,
+      splashColor: AppColors.accentColor,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                20.0, // LEFT
+                0.0,
+                30.0, // RIGHT
+                0.0,
+              ),
+              child: Icon(
+                icon,
+                color: AppColors.accentColor,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                text,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+            ),
+          ],
+        ),
+      ),
     ),
+  );
+}
+
+// ListTile _menuTile({
+//   @required String label,
+//   @required Function onTap,
+//   @required TextStyle style,
+//   @required IconData leading,
+// }) {
+//   return ListTile(
+//     leading: Icon(
+//       leading,
+//       color: AppColors.primaryColor,
+//     ),
+//     title: Text(
+//       label,
+//       style: style,
+//     ),
+//     onTap: onTap,
+//   );
+// }
+
+ListTile _logoutTile({
+  @required String label,
+  @required Function onTap,
+  @required TextStyle style,
+}) {
+  return ListTile(
+    trailing: Icon(Icons.power_settings_new),
+    title: Text(
+      label,
+      style: style,
+    ),
+    onTap: onTap,
   );
 }

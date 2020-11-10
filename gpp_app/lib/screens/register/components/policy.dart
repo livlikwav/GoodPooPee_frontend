@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gpp_app/constants/text_style.dart';
+import 'package:gpp_app/util/size_config.dart';
 import 'package:provider/provider.dart';
 
 class PrivacyPolicy extends StatefulWidget {
@@ -10,6 +10,7 @@ class PrivacyPolicy extends StatefulWidget {
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
   @override
   Widget build(BuildContext context) {
+    TextTheme _textTheme = Theme.of(context).textTheme;
     ValueNotifier provider = Provider.of<ValueNotifier<bool>>(context);
     return Row(
       children: [
@@ -17,7 +18,10 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           child: Text(
             '이용약관 및 개인정보처리방침에 동의합니다.',
             textAlign: TextAlign.center,
-            style: footerStyle,
+            style: TextStyle(
+              color: _textTheme.bodyText2.color,
+              fontSize: getBlockSizeHorizontal(3),
+            ),
           ),
         ),
         Checkbox(

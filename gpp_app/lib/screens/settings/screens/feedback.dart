@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 
 class SettingFeedbackScreen extends StatefulWidget {
   @override
@@ -19,7 +21,8 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(title: Text('간식 급여 설정')),
+        // appBar: AppBar(title: Text('간식 급여 설정')),
+        appBar: customAppBar(),
         body: _buildBody(context),
       ),
     );
@@ -48,7 +51,11 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
                 ),
                 child: Column(
                   children: [
-                    _feedbackAvatar(),
+                    Icon(
+                      Icons.restaurant,
+                      size: getBlockSizeVertical(5),
+                      color: AppColors.accentColor,
+                    ),
                     Container(
                       padding: EdgeInsets.all(getBlockSizeHorizontal(3)),
                       child: Row(
@@ -59,13 +66,13 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: getBlockSizeVertical(5)),
+                    SizedBox(height: getBlockSizeVertical(3)),
                     Container(
                       padding: EdgeInsets.all(getBlockSizeHorizontal(3)),
                       decoration: BoxDecoration(
                         color: isSliderEnabled
                             ? Colors.transparent
-                            : Colors.grey.withOpacity(0.7),
+                            : Colors.grey.withOpacity(0.5),
                         borderRadius:
                             BorderRadius.circular(getBlockSizeHorizontal(5)),
                       ),
@@ -77,25 +84,11 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                        width: getBlockSizeHorizontal(80),
-                        height: getBlockSizeVertical(1)),
                   ],
                 ),
               ),
             ],
           )),
-    );
-  }
-
-  CircleAvatar _feedbackAvatar() {
-    return CircleAvatar(
-      radius: getBlockSizeHorizontal(10),
-      child: Icon(
-        Icons.restaurant,
-        color: Colors.orange,
-        size: getBlockSizeHorizontal(10),
-      ),
     );
   }
 
@@ -105,7 +98,10 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
           padding: EdgeInsets.all(
             getBlockSizeHorizontal(2),
           ),
-          child: Text(text)),
+          child: Text(
+            text,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )),
       alignment: Alignment.centerLeft,
     );
   }
@@ -126,6 +122,7 @@ class _SettingFeedbackScreenState extends State<SettingFeedbackScreen> {
   Widget _buildSlider() {
     return Container(
       child: Slider.adaptive(
+        activeColor: AppColors.accentColor,
         value: feedbackRatio,
         min: 0.0,
         max: 100.0,

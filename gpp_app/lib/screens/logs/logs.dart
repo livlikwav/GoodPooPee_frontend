@@ -1,14 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/pet_record.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
+import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/screens/logs/components/logs_header.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:gpp_app/util/my_logger.dart';
+import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/custom_app_bar.dart';
 import 'package:gpp_app/widgets/drawer_menu.dart';
+import 'package:gpp_app/widgets/empty_card.dart';
 import 'package:provider/provider.dart';
 
-import 'components/alert_card.dart';
 import 'components/photo_list.dart';
 
 class LogsScreen extends StatefulWidget {
@@ -25,6 +30,17 @@ class _LogsScreenState extends State<LogsScreen> {
     _logsProvider = LogsProvider(_user.petId);
     _logsProvider.initRecords(context);
     super.initState();
+
+    Fluttertoast.showToast(
+      msg: " 슬라이드하여 아이의 배변 숙제를 채점해보세요 ",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 2,
+      // backgroundColor: AppColors.primaryColor.withOpacity(0.6),
+      backgroundColor: Colors.lightGreen,
+      textColor: Colors.white,
+      fontSize: 15.0,
+    );
   }
 
   @override
@@ -32,12 +48,25 @@ class _LogsScreenState extends State<LogsScreen> {
     return SafeArea(
       child: Scaffold(
         primary: true,
-        appBar: AppBar(
-          title: Text('배변 기록 확인하기'),
+        appBar: customAppBar(
+          refreshIcon: IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: '새로고침',
+            onPressed: () {
+              setState(() {
+                Navigator.of(context).popAndPushNamed(Routes.logs);
+              });
+            },
+          ),
         ),
         drawer: DrawerMenu(),
-        body: ChangeNotifierProvider(
-          create: (context) => _logsProvider,
+        body: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => _logsProvider),
+            ChangeNotifierProvider(
+              create: (context) => ValueNotifier<FILTER>(FILTER.total),
+            ),
+          ],
           child: OrientationBuilder(
             builder: (context, orientation) {
               if (orientation == Orientation.landscape) {
@@ -57,17 +86,28 @@ class _LogsScreenState extends State<LogsScreen> {
     // Get provider in context to listen change
     LogsProvider updateProvider = Provider.of<LogsProvider>(context);
     return Container(
-      padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0),
+      padding: const EdgeInsets.fromLTRB(
+        0.0,
+        10.0, // TOP
+        30.0, // RIGHT
+        0.0,
+      ),
       width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height,
       color: Theme.of(context).backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          LogsHeader(),
+          Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: LogsHeader(),
+          ),
           updateProvider.isPetNull
-              ? AlertCard(
-                  '반려견 데이터가 존재하지 않습니다.',
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _paddingEmptyCard(
+                    text: '반려견 데이터가 존재하지 않습니다.',
+                  ),
                 )
               : FutureBuilder(
                   future: updateProvider.petRecords,
@@ -77,20 +117,35 @@ class _LogsScreenState extends State<LogsScreen> {
                     // Future complete with data
                     if (snapshot.hasData) {
                       child = Expanded(
-                        child: PhotoList(snapshot.data),
+                        child: Row(
+                          children: [
+                            _getIndicator(),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(
+                                  0.0, // LEFT
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                ),
+                                child: PhotoList(snapshot.data),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                       // Future complete with error
                     } else if (snapshot.hasError) {
                       DioError error = snapshot.error;
                       if (error.response != null &&
                           error.response.statusCode == 404) {
-                        child = AlertCard(
-                          '오늘의 배변 기록이 존재하지 않습니다.',
+                        child = _paddingEmptyCard(
+                          text: '배변 기록이 존재하지 않습니다.',
                         );
                         // Unknown error
                       } else {
-                        child = AlertCard(
-                          '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
+                        _paddingEmptyCard(
+                          text: '데이터를 불러오는 과정에서 오류가 발생하였습니다.',
                         );
                       }
                       // Future incomplete
@@ -105,3 +160,48 @@ class _LogsScreenState extends State<LogsScreen> {
     );
   }
 }
+
+Widget _getIndicator() {
+  return Container(
+    margin: const EdgeInsets.only(left: 20.0),
+    decoration: BoxDecoration(
+      // color: Colors.grey,
+      color: AppColors.primaryColor.withOpacity(0.5),
+      // borderRadius: BorderRadius.vertical(bottom: Radius.circular(100)),
+    ),
+    width: getBlockSizeHorizontal(1),
+  );
+}
+
+Widget _paddingEmptyCard({String text}) {
+  text ??= 'error';
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(
+      30.0,
+      0.0,
+      0.0,
+      0.0,
+    ),
+    child: EmptyCard(
+      text: text,
+    ),
+  );
+}
+
+// Widget _staticRuler() {
+//   return Container(
+//     width: getBlockSizeHorizontal(12),
+//     height: double.infinity,
+//     child: FittedBox(
+//       fit: BoxFit.fill,
+//       child: RulerWidget(
+//         scaleColor: AppColors.backgroundColor,
+//         scaleSize: getBlockSizeHorizontal(12),
+//         limit: 10,
+//         interval: 4,
+//         normalBarColor: AppColors.primaryColor,
+//         axis: Axis.vertical,
+//       ),
+//     ),
+//   );
+// }

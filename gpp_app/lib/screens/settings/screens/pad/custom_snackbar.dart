@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class CustomSnackbar extends StatelessWidget {
         padding: EdgeInsets.all(_padding),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          color: Colors.orange.withOpacity(0.7),
+          color: AppColors.primaryColor.withOpacity(0.7),
         ),
         child: Text(
           strList[length],

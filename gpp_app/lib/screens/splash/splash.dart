@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gpp_app/routes.dart';
-import 'package:gpp_app/constants/assets.dart';
+import 'package:gpp_app/screens/splash/fade_in_logo.dart';
 import 'package:gpp_app/util/my_logger.dart';
-import 'package:gpp_app/widgets/app_icon_widget.dart';
 import 'package:gpp_app/util/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,9 +21,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     // You have to call it on your starting screen
-    SizeConfig().init(context);
-    return Container(
-      child: Center(child: AppIconWidget(image: Assets.appLogo)),
+    SizeConfig.init(context);
+    return SafeArea(
+      child: Scaffold(
+        body: FadeInLogo(),
+      ),
     );
   }
 
@@ -45,6 +46,6 @@ class _SplashScreenState extends State<SplashScreen> {
     //   Navigator.of(context).pushNamed(Routes.login);
     // }
 
-    Navigator.of(context).pushNamed(Routes.login);
+    Navigator.of(context).pushReplacementNamed(Routes.login);
   }
 }

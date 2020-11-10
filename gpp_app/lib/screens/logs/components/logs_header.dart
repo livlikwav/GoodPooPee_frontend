@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gpp_app/constants/colors.dart';
+import 'package:gpp_app/screens/logs/components/menu_chips.dart';
 import 'package:gpp_app/screens/logs/logs_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -21,31 +23,34 @@ class _LogsHeaderState extends State<LogsHeader> {
     // Init provider
     _logsProvider = Provider.of<LogsProvider>(context);
 
-    return GestureDetector(
-      onTap: () {
-        // ShowDatePicker
-        _selectDate(context);
-      },
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.orange,
-          ),
-          // margin: const EdgeInsets.fromLTRB(0, 10.0, 20.0, 10.0),
-          padding: const EdgeInsets.all(7.0),
-          child: Text(
-            _formatDate(_logsProvider.datetime),
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              // fontSize: getBlockSizeHorizontal(5),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        MenuChips(),
+        GestureDetector(
+          onTap: () {
+            // ShowDatePicker
+            _selectDate(context);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.accentColor,
+            ),
+            // margin: const EdgeInsets.fromLTRB(0, 10.0, 20.0, 10.0),
+            padding: const EdgeInsets.all(7.0),
+            child: Text(
+              _formatDate(_logsProvider.datetime),
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                // fontSize: getBlockSizeHorizontal(5),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -57,6 +62,19 @@ class _LogsHeaderState extends State<LogsHeader> {
       lastDate: DateTime.now(),
       helpText: '기록을 확인할 날짜를 선택하세요.',
       locale: Locale('ko', 'KO'),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: Colors.black,
+            colorScheme: ColorScheme.light(
+              primary: AppColors.accentColor,
+              secondary: AppColors.accentColor,
+            ),
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child,
+        );
+      },
     );
     if (picked != null && picked != _logsProvider.datetime)
       _logsProvider.updateRecords(context, picked);

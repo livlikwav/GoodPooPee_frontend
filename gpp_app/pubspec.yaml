@@ -27,14 +27,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   
-  # State management
-  provider: ^4.3.2+2
-  # handling rest api
-  dio: ^3.0.10
-  # platform-specific persistent storage for simple data
-  shared_preferences: '>=0.5.12 <2.0.0'
-  # serialization JSON
-  json_annotation: ^3.0.0
+  provider: ^4.3.2+2 # State management
+  dio: ^3.0.10 # handling rest api
+  shared_preferences: '>=0.5.12 <2.0.0' # platform-specific persistent storage for simple data
+  json_annotation: ^3.0.0 # serialization JSON
 
   intl: ^0.16.1 # provides internationalization and localization facilities, including message translation, plurals and genders, date/number formatting and parsing, and bidirectional text.
   flutter_svg: ^0.18.0 # help us to use SVG in our app
@@ -42,12 +38,16 @@ dependencies:
   fl_chart: ^0.11.1 # A library to draw fantastic charts in Flutter
   flutter_slidable: ^0.5.7 # A Flutter implementation of slidable list item with directional slide actions that can be dismissed.
 
-  # for streaming
-  flutter_vlc_player: ^4.0.2
-  # for local file saving
-  image_gallery_saver: ^1.6.1
-  # loading image
-  transparent_image: ^1.0.0
+  flutter_vlc_player: ^4.0.2 # for streaming
+  image_gallery_saver: ^1.6.1 # for local file saving
+  transparent_image: ^1.0.0 # loading image
+  flutter_launcher_icons: ^0.8.1
+  lottie: ^0.7.0+1
+  add_thumbnail: ^0.0.2
+  liquid_progress_indicator: ^0.3.2
+  rulers: ^1.0.0
+  video_thumbnail: ^0.2.4
+  fluttertoast: ^7.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,6 +59,8 @@ dev_dependencies:
   # serialization JSON
   build_runner: ^1.0.0
   json_serializable: ^3.2.0
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -76,6 +78,7 @@ flutter:
   - assets/images/
   - assets/icons/
   - assets/lang/
+  - assets/lottie/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -88,17 +91,26 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+  fonts:
+    - family: NotoSansKR
+      fonts:
+        - asset: assets/fonts/NotoSansKR-thin.otf
+          weight: 100
+        - asset: assets/fonts/NotoSansKR-light.otf
+          weight: 300
+        - asset: assets/fonts/NotoSansKR-Regular.otf
+          weight: 400
+        - asset: assets/fonts/NotoSansKR-Medium.otf
+          weight: 500
+        - asset: assets/fonts/NotoSansKR-Bold.otf
+          weight: 700
+        - asset: assets/fonts/NotoSansKR-Black.otf
+          weight: 900
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/gpp_icon.png"

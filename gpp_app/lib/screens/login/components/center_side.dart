@@ -26,11 +26,12 @@ class _CenterSideState extends State<CenterSide> {
           isObscure: true,
         ),
         RoundedButton(
-            text: '확인',
-            press: () {
-              loginTapped(context, emailText, pwText);
-              print(emailText);
-            }),
+          text: '확인',
+          press: () {
+            loginTapped(context, emailText, pwText);
+            print(emailText);
+          },
+        ),
       ],
     );
   }

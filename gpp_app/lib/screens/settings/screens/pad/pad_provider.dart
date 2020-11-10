@@ -10,9 +10,9 @@ class PadProvider extends ChangeNotifier {
     MyLogger.debug('Init PadProvider cameraSize:($cameraWidth, $cameraHeight)');
     MyLogger.debug('screenWidth: $screenWidth, videoRatio: $videoRatio');
   }
-  final double cameraWidth = 800.0;
-  final double cameraHeight = 600.0;
-  final double videoRatio = 16 / 9;
+  static final double cameraWidth = 800.0;
+  static final double cameraHeight = 600.0;
+  final double videoRatio = cameraWidth / cameraHeight;
   final double screenWidth;
   List<Widget> widgetList = [];
   List<Pos> padPosList = [];

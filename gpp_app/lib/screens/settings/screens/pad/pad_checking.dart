@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gpp_app/constants/colors.dart';
 import 'package:gpp_app/models/json/ppcam_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/ppcam_profile.dart';
@@ -8,8 +9,10 @@ import 'package:gpp_app/models/provider/user_profile.dart';
 import 'package:gpp_app/screens/settings/screens/pad/custom_pad_menu.dart';
 import 'package:gpp_app/screens/settings/screens/pad/custom_snackbar.dart';
 import 'package:gpp_app/screens/settings/screens/pad/pad_provider.dart';
-import 'package:gpp_app/services/get_ppcam.dart';
-import 'package:gpp_app/services/get_video_thumbnail.dart';
+import 'package:gpp_app/services/ppcam_api.dart';
+import 'package:gpp_app/util/size_config.dart';
+import 'package:gpp_app/widgets/streaming/ip_debug_button.dart';
+import 'package:gpp_app/widgets/streaming/live_video.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/streaming/alert_scafold.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
@@ -37,7 +40,7 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
       MyLogger.debug('Ppcam profile is null, so GET ppcam');
       isPpcamProfileNull = true;
       // GET ppcam profile
-      _ppcamModel = getPpcam(
+      _ppcamModel = PpcamApi.get(
         context,
         DioClient.serverUrl + 'user/' + userId.toString() + '/ppcam',
       );
@@ -121,11 +124,9 @@ class _PadCheckingScreenState extends State<PadCheckingScreen> {
 Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
     String ppcamUrl, int ppcamId) {
   // ============ FOR TEST ===============
-  // ppcamUrl =
-  //     'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
   // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
-  ppcamUrl =
-      'https://gpp-images-1.s3.ap-northeast-2.amazonaws.com/gpp_streaming.MOV';
+  // ppcamUrl =
+  //     'https://gpp-images-1.s3.ap-northeast-2.amazonaws.com/gpp_streaming.MOV';
   // ppcamUrl = 'http://172.16.101.111:8090';
   // =====================================
   return Scaffold(
@@ -135,13 +136,53 @@ Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
       // width: double.infinity,
       child: Stack(
         children: [
-          LiveVideoThumbnail(ppcamUrl),
-          // LiveVideo(ppcamUrl, controller),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: IpDebugButton(),
+          ),
+          _getStreaming(
+            context: context,
+            ppcamUrl: ppcamUrl,
+            controller: controller,
+          ),
           Stack(
             children: Provider.of<PadProvider>(context).widgetList,
           ),
           CustomSnackbar(),
         ],
+      ),
+    ),
+  );
+}
+
+Widget _getStreaming({
+  BuildContext context,
+  String ppcamUrl,
+  CustomVlcPlayerController controller,
+}) {
+  PadProvider _padProvider = Provider.of<PadProvider>(context, listen: false);
+  final double _screenHeight = getBlockSizeHorizontal(100);
+
+  return GestureDetector(
+    onTapDown: (TapDownDetails details) {
+      MyLogger.debug('Tapped ${details.globalPosition}');
+      _padProvider.addPos(
+        posX: details.globalPosition.dx,
+        posY: details.globalPosition.dy,
+        screenHeight: _screenHeight,
+      );
+    },
+    child: Center(
+      child: Container(
+        color: AppColors.backgroundColor,
+        height: _screenHeight,
+        width: _screenHeight * 4 / 3,
+        // child: Text('WOW'),
+        child: LiveVideo(
+          ppcamUrl,
+          controller,
+          videoRatio: _padProvider.videoRatio,
+        ),
       ),
     ),
   );

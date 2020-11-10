@@ -5,11 +5,13 @@ import 'package:gpp_app/models/json/ppcam_model.dart';
 import 'package:gpp_app/models/network/dio_client.dart';
 import 'package:gpp_app/models/provider/ppcam_profile.dart';
 import 'package:gpp_app/models/provider/user_profile.dart';
+import 'package:gpp_app/routes.dart';
 import 'package:gpp_app/screens/streaming/components/custom_streaming_menu.dart';
-import 'package:gpp_app/services/get_ppcam.dart';
+import 'package:gpp_app/services/ppcam_api.dart';
 import 'package:gpp_app/util/my_logger.dart';
 import 'package:gpp_app/widgets/streaming/alert_scafold.dart';
 import 'package:gpp_app/widgets/streaming/custom_vlc_controller.dart';
+import 'package:gpp_app/widgets/streaming/ip_debug_button.dart';
 import 'package:gpp_app/widgets/streaming/live_video.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +34,7 @@ class _StreamingScreenState extends State<StreamingScreen> {
       isPpcamProfileNull = true;
       // GET ppcam profile
       int userId = Provider.of<UserProfile>(context, listen: false).id;
-      _ppcamModel = getPpcam(
+      _ppcamModel = PpcamApi.get(
         context,
         DioClient.serverUrl + 'user/' + userId.toString() + '/ppcam',
       );
@@ -99,17 +101,22 @@ class _StreamingScreenState extends State<StreamingScreen> {
 Widget _getBody(BuildContext context, CustomVlcPlayerController controller,
     String ppcamUrl, int ppcamId) {
   // ============ FOR TEST ===============
-  // ppcamUrl =
-  //     'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
   // ppcamUrl = 'http://beachreachpeach.iptime.org:9981';
-  // ppcamUrl = 'http://172.20.10.2:8090';
   // ppcamUrl =
   //     'https://gpp-images-1.s3.ap-northeast-2.amazonaws.com/gpp_streaming.MOV';
-  ppcamUrl = 'http://172.16.101.111:8090';
+  // ppcamUrl = 'http://172.16.101.111:8090';
   // =====================================
   return Scaffold(
     primary: true,
     floatingActionButton: CustomStreamingMenu(controller, ppcamId),
-    body: LiveVideo(ppcamUrl, controller),
+    body: Stack(
+      children: [
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: IpDebugButton(),
+        ),
+        LiveVideo(ppcamUrl, controller),
+      ],
+    ),
   );
 }

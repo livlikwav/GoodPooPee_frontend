@@ -16,7 +16,6 @@ SW Maestro 11기 팀 우릴봐
 - 오은석
 - 최광선
 
-<!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
 - [Frontend Repo](#frontend-repo)
@@ -27,48 +26,36 @@ SW Maestro 11기 팀 우릴봐
   - [Contact](#contact)
     - [팀 우릴봐](#팀-우릴봐)
 
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 ![gpp_backend](readme_media/gpp_frontend.jpeg)
 
 견주들을 위한 굿푸피 앱을 개발합니다.
 
+중요했던 고려 사항들은 다음과 같습니다.
+
+- 사용자 경험적으로 친숙한 색 테마 
+- 사용자 시나리오 중심의 기능 및 화면 설계
+- 단순한 제어 앱이 아닌 브랜딩을 통한 차별화
+
 ### Built With
 
 - Flutter
+  - Cross-platform mobile application development framework
+- Tools
+  - Adobe Xd
+  - VSCode
+  - Dart debugging tools
+  - Dart profiling tools
   
-<!-- GETTING STARTED -->
 ## Getting Started
 
-아직 개발 단계입니다 ;)
+For running this app in debug mode: run this code below in your CLI.
 
-<!-- ### Prerequisites
-
-- docker
-
-[docker installation page](https://www.docker.com/get-started)
-
-### Installation -->
-
-<!-- 1. Get a free API Key at [https://example.com](https://example.com) -->
-<!-- 1. Clone the repo
-```sh
-git clone https://git.swmgit.org/swmaestro/urillbwa.git
+```bash
+flutter run
 ```
-2. Just 'docker-compose up'
-```sh
-docker-compose up -d
-``` -->
 
-<!-- USAGE EXAMPLES -->
-<!-- ## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_ -->
-
-<!-- CONTACT -->
 ## Contact
 
 ### 팀 우릴봐

@@ -14,7 +14,7 @@ class UpSide extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: RichText(
             text: TextSpan(
-              style: textTheme.headline2,
+              style: textTheme.headline5,
               children: <TextSpan>[
                 TextSpan(
                   text: '굿퍼피의 시작은,\n',

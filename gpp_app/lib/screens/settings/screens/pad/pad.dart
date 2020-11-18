@@ -33,7 +33,7 @@ class _SettingPadScreenState extends State<SettingPadScreen> {
             } else {
               // Orientation.portrait
               _imgSize = getBlockSizeHorizontal(50);
-              _paddingX = getBlockSizeHorizontal(10);
+              _paddingX = getBlockSizeHorizontal(5);
               _margin = getBlockSizeVertical(2);
               return _buildBody(context);
             }

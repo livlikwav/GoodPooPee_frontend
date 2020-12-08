@@ -50,16 +50,6 @@ SW Maestro 11기 팀 우릴봐
   - VSCode
   - Dart debugging tools
   - Dart profiling tools
-<<<<<<< HEAD
-  
-## Getting Started
-
-For running this app in debug mode: run this code below in your CLI.
-
-```bash
-flutter run
-```
-=======
 
 ### Versioning
 
@@ -76,7 +66,6 @@ flutter run
 기기인 푸피캠과 푸피스낵바와 함께 사용하는 어플이므로,  
 기기 출시전 앱 스토어 배포는 불필요했기 때문에,  
 iOS TestFlight, Android apk file을 이용해 테스트까지 완료하였습니다.  
->>>>>>> develop
 
 ## Contact
 

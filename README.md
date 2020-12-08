@@ -22,6 +22,7 @@ SW Maestro 11기 팀 우릴봐
 - [Frontend Repo](#frontend-repo)
   - [Table of Contents](#table-of-contents)
   - [About The Project](#about-the-project)
+    - [Built With](#built-with)
     - [Versioning](#versioning)
     - [Details](#details)
     - [Deployment](#deployment)
@@ -33,6 +34,16 @@ SW Maestro 11기 팀 우릴봐
 ![gpp_frontend](readme_media/gpp_frontend.jpeg)
 
 견주들을 위한 굿푸피 앱을 개발합니다.
+
+### Built With
+
+- Flutter
+  - Cross-platform mobile application development framework
+- Tools
+  - Adobe Xd
+  - VSCode
+  - Dart debugging tools
+  - Dart profiling tools
 
 ### Versioning
 
